@@ -6,7 +6,6 @@ export async function GET() {
     include: {
       generacion: true,
       ciclo: true,
-      fase: true,
     },
   });
 

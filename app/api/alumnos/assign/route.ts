@@ -2,13 +2,13 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { alumnoId, grupoId, faseId } = await req.json();
+  const { alumnoId, grupoId } = await req.json();
 
-  const alumno = await prisma.alumno.update({
-    where: { id: alumnoId },
+  const alumno = await prisma.usuario.update({
+    where: { id_usuario: alumnoId },
     data: {
-      grupoId: grupoId || null,
-      faseId: faseId || null,
+      id_grupo: grupoId || null,
+      // id_generacion: faseId || null,
     },
   });
 
