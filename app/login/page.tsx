@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useAlumnoStore } from "@/store/use-alumno-store";
 // import { cookies } from "next/headers";
 // export default function LoginPage() {
 //   const router = useRouter();
@@ -75,8 +76,43 @@ import Image from "next/image";
 // }
 
 export default function LoginPage() {
-  const [accountNumber, setAccountNumber] = useState("");
-  const [pin, setPin] = useState("");
+  const router = useRouter();
+  const { setSelectedAlumno } = useAlumnoStore();
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ num_cuenta, nip }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error);
+      return;
+    }
+    setError("");
+
+    // Redireccionamos según rol
+    if (data.role === "COORDINADOR") router.push("/coordinador");
+    if (data.role === "ADMIN") router.push("/administrador");
+    if (data.role === "ALUMNO") {
+      setSelectedAlumno({
+        id_usuario: data.meta.id_usuario,
+        nombre: data.meta.nombre,
+        num_cuenta: data.meta.num_cuenta,
+        puntos: data.meta.puntos,
+        grupo: data.meta.grupo,
+      });
+      router.push("/alumno");
+    }
+  }
+  const [num_cuenta, setNum_cuenta] = useState("");
+  const [nip, setNip] = useState("");
+  const [error, setError] = useState("");
 
   return (
     <>
@@ -95,14 +131,14 @@ export default function LoginPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-4">
+                  <form className="space-y-4" onSubmit={handleLogin}>
                     <div className="space-y-2">
                       <Label htmlFor="accountNumber">Número de Cuenta</Label>
                       <Input
                         id="accountNumber"
                         placeholder="318123456"
-                        value={accountNumber}
-                        onChange={(e) => setAccountNumber(e.target.value)}
+                        value={num_cuenta}
+                        onChange={(e) => setNum_cuenta(e.target.value)}
                         required
                         className="h-11"
                       />
@@ -113,15 +149,15 @@ export default function LoginPage() {
                         id="pin"
                         type="password"
                         placeholder="••••"
-                        value={pin}
-                        onChange={(e) => setPin(e.target.value)}
+                        value={nip}
+                        onChange={(e) => setNip(e.target.value)}
                         required
                         className="h-11"
                       />
                     </div>
                     <Button
                       type="submit"
-                      className="w-full h-11 text-base font-medium"
+                      className="w-full h-11 text-base font-medium cursor-pointer"
                     >
                       Acceder al Sistema
                     </Button>
@@ -131,7 +167,12 @@ export default function LoginPage() {
 
               {/* Columna Derecha - Imagen */}
               <div className="hidden md:block relative bg-primary">
-                <Image src="/cu.svg" alt="Login visual" fill className="object-contain" />
+                <Image
+                  src="/cu.svg"
+                  alt="Login visual"
+                  fill
+                  className="object-contain"
+                />
               </div>
             </div>
           </Card>

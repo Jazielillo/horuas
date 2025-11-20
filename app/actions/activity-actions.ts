@@ -7,6 +7,7 @@ import {
   activityFullSchema,
   ActivitySchema,
 } from "@/schemas/activity-schema";
+import { Activity } from "../models";
 
 export async function createActivityAction(formData: ActivitySchema) {
   // 1. Validar lo que viene del formulario
@@ -44,6 +45,20 @@ export async function createActivityAction(formData: ActivitySchema) {
   });
 
   return { ok: true, activity };
+}
+
+export async function updateActivityAction(activity: ActivitySchema, id: number) {
+  console.log("Updating activity in action...", activity);
+  const updatedActivity = await prisma.actividad.update({
+    where: { id_actividad: id },
+    data: {
+      nombre: activity.name,
+      descripcion: activity.description,
+      fecha: new Date(activity.date),
+      puntos: activity.points,
+    },
+  });
+  return { ok: true, updatedActivity };
 }
 
 export async function getAllActivitiesAction() {

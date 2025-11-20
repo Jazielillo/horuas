@@ -21,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import ActivityForm from "@/app/components/forms/activity-form";
 import { AllActivities } from "../components/all-activities";
 import { getAllActivitiesAction } from "@/app/actions/activity-actions";
+import { useActivityStore } from "@/store/use-activity-store";
 
 interface Activity {
   id_actividad: number;
@@ -31,6 +32,7 @@ interface Activity {
 }
 
 const CoordinatorActivities = () => {
+  const { activityList, setActivitySelected, loadActivities } = useActivityStore();
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<any>(null);
@@ -49,22 +51,15 @@ const CoordinatorActivities = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadActivities = async () => {
-      try {
-        const data = await getAllActivitiesAction();
-        setActivities(data);
-      } catch (error) {
-        console.error("Error loading activities:", error);
-      } finally {
-        setLoading(false);
-      }
+    const fetchActivities = async () => {
+      await loadActivities();
+      setLoading(false);
     };
-
-    loadActivities();
-  }, []);
+    fetchActivities();
+  }, [loadActivities]);
 
   const handleEditActivity = (activity: any) => {
-    setEditingActivity(activity);
+    setActivitySelected(activity);
     setIsDialogOpen(true);
   };
 
@@ -90,8 +85,12 @@ const CoordinatorActivities = () => {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button size="lg" onClick={() => setEditingActivity(null)}>
-              <Plus className="w-4 h-4 mr-2" />
+            <Button
+              size="lg"
+              onClick={() => setEditingActivity(null)}
+              className="cursor-pointer"
+            >
+              <Plus className="w-4 h-4 mr-2 cursor-pointer" />
               Nueva Actividad
             </Button>
           </DialogTrigger>
@@ -104,7 +103,7 @@ const CoordinatorActivities = () => {
                 Complete los datos de la actividad extracurricular
               </DialogDescription>
             </DialogHeader>
-            <ActivityForm onSuccess={handleCreateActivity}/>
+            <ActivityForm onSuccess={handleCreateActivity} />
           </DialogContent>
         </Dialog>
       </div>
@@ -120,7 +119,7 @@ const CoordinatorActivities = () => {
         <CardContent>
           <div className="space-y-3">
             <AllActivities
-              activities={activities}
+              activities={activityList}
               handleEditActivity={handleEditActivity}
               handleDeleteActivity={handleDeleteActivity}
             />

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Calendar, Edit, Trash2 } from "lucide-react";
@@ -9,10 +9,10 @@ interface AllActivitiesProps {
   handleDeleteActivity: (id: number) => void;
 }
 
-export function AllActivities({ 
-  activities, 
-  handleEditActivity, 
-  handleDeleteActivity 
+export function AllActivities({
+  activities,
+  handleEditActivity,
+  handleDeleteActivity,
 }: AllActivitiesProps) {
   return (
     <>
@@ -36,6 +36,7 @@ export function AllActivities({
                 <Button
                   size="sm"
                   variant="ghost"
+                  className="cursor-pointer"
                   onClick={() => handleEditActivity(activity)}
                 >
                   <Edit className="w-4 h-4" />
@@ -43,9 +44,10 @@ export function AllActivities({
                 <Button
                   size="sm"
                   variant="ghost"
+                  className="cursor-pointer"
                   onClick={() => handleDeleteActivity(activity.id_actividad)}
                 >
-                  <Trash2 className="w-4 h-4 text-destructive" />
+                  <Trash2 className="w-4 h-4 text-destructive cursor-pointer" />
                 </Button>
               </div>
             </div>

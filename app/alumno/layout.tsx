@@ -25,23 +25,17 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-interface CoordinatorLayoutProps {
+interface AlumnoLayoutProps {
   children: ReactNode;
 }
 
 const navigationItems = [
-  { title: "Dashboard", url: "/coordinator", icon: LayoutDashboard },
-  { title: "Actividades", url: "/coordinador/actividades", icon: Calendar },
-  { title: "Asignar Puntos", url: "/coordinador/asignar-puntos", icon: UserPlus },
-  {
-    title: "Consultas y Reportes",
-    url: "/coordinador/consultar-reportes",
-    icon: FileText,
-  },
+  { title: "Mi progreso", url: "/alumno", icon: LayoutDashboard },
+  { title: "Historial", url: "/alumno/historial", icon: Calendar },
   // { title: "Gestión de Alumnos", url: "/coordinador/gestion-alumnos", icon: Users },
 ];
 
-function CoordinatorSidebar() {
+function AlumnoSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
@@ -60,11 +54,11 @@ function CoordinatorSidebar() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate text-sidebar-foreground">
-                  Coordinador
+                  Alumno
                 </p>
-                <p className="text-xs text-sidebar-foreground/70 truncate">
+                {/* <p className="text-xs text-sidebar-foreground/70 truncate">
                   Deportes
-                </p>
+                </p> */}
               </div>
             </div>
           )}
@@ -78,7 +72,7 @@ function CoordinatorSidebar() {
         </div>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Gestión</SidebarGroupLabel>
+          <SidebarGroupLabel>Navegación</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map((item) => (
@@ -114,11 +108,11 @@ function CoordinatorSidebar() {
   );
 }
 
-const CoordinatorLayout = ({ children }: CoordinatorLayoutProps) => {
+const AlumnoLayout = ({ children }: AlumnoLayoutProps) => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <CoordinatorSidebar />
+        <AlumnoSidebar />
         <div className="flex-1 flex flex-col">
           <header className="h-16 border-b bg-card flex items-center px-6 gap-4">
             <SidebarTrigger />
@@ -133,4 +127,4 @@ const CoordinatorLayout = ({ children }: CoordinatorLayoutProps) => {
   );
 };
 
-export default CoordinatorLayout;
+export default AlumnoLayout;

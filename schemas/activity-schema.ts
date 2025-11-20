@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const activityFormSchema = z.object({
   name: z.string().min(3).max(100),
-  description: z.string().max(500).optional().or(z.literal("")),
+  description: z.string().max(500).or(z.literal("")),
   date: z
     .string()
     .refine((value) => !isNaN(Date.parse(value)), "Fecha inválida"),
