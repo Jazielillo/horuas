@@ -8,7 +8,7 @@ const eslintConfig = defineConfig([
   // Añade aquí tus reglas personalizadas
   {
     rules: {
-      "no-unused-vars": "off",
+      "no-unused-vars": "on",
       "@typescript-eslint/no-explicit-any": "off"
     },
   },

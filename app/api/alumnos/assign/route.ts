@@ -1,16 +1,22 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { assignPointsFormRefined, assignPointsFullSchema } from "@/schemas/assign-points-schema";
+import { assignPointsAction as assignPointsInternal } from "@/app/actions/assign-points-action";
 
 export async function POST(req: Request) {
-  const { alumnoId, grupoId } = await req.json();
+  const body = await req.json();
+  // 1) validate form
+  const check = assignPointsFormRefined.safeParse(body);
+  if (!check.success) {
+    return NextResponse.json({ error: "Validación fallida", details: check.error.flatten().fieldErrors }, { status: 400 });
+  }
 
-  const alumno = await prisma.usuario.update({
-    where: { id_usuario: alumnoId },
-    data: {
-      id_grupo: grupoId || null,
-      // id_generacion: faseId || null,
-    },
-  });
+  // Call internal server-side action (which will fetch current user, ciclo, etc.)
+  const result = await assignPointsInternal(body);
 
-  return NextResponse.json(alumno);
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: 400 });
+  }
+
+  return NextResponse.json({ count: result.count });
 }
