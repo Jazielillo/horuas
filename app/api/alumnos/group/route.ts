@@ -1,4 +1,4 @@
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getStudentPoints } from "../../utils/getPoints";
 export async function GET(req: Request) {
@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     },
   });
 
-  const idsAlumnosExcluir = alumnosConActividad.map((a) => a.id_alumno);
+  const idsAlumnosExcluir = alumnosConActividad.map((a: { id_alumno: number }) => a.id_alumno);
 
   // Luego, buscamos alumnos del grupo que NO estén en esa lista
   const alumnos = await prisma.usuario.findMany({
@@ -38,7 +38,7 @@ export async function GET(req: Request) {
   });
 
   const alumnosConPuntos = await Promise.all(
-    alumnos.map(async (alumno) => {
+    alumnos.map(async (alumno: { id_usuario: number }) => {
       const puntos = await getStudentPoints(alumno.id_usuario);
       return { ...alumno, puntos };
     })

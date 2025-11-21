@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AlumnoSidebar } from "./components/alumno-sidebar";
 import { cookies } from "next/headers";
-import { decrypt } from "../lib/session";
+import { decrypt } from "../../lib/session";
 
 interface AlumnoLayoutProps {
   children: ReactNode;

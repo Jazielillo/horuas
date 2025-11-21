@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown, Check } from "lucide-react";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
 interface SmartComboBoxProps<T> {

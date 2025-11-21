@@ -1,4 +1,4 @@
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getStudentPoints } from "../../utils/getPoints";
 import { getGroup } from "../../utils/getGroup";

@@ -1,10 +1,10 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { decrypt } from "@/app/lib/session";
+import { decrypt } from "@/lib/session";
 import { cache } from "react";
 import { redirect } from "next/navigation";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export type VerifiedSession = {
   isAuth: true;

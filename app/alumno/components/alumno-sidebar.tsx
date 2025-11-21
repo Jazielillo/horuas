@@ -21,7 +21,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { verifySession } from "@/app/lib/dal";
+import { verifySession } from "@/lib/dal";
 import { redirect } from "next/navigation";
 import { useAlumnoStore } from "@/store/use-alumno-store";
 import { useEffect } from "react";

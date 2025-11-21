@@ -28,7 +28,7 @@ export const useActivityStore = create<ActivityStore>()(
     loadActivities: async () => {
       const response = await getAllActivitiesAction();
       // Normalize possible null descripcion to undefined to match Activity type
-      const normalized = response.map((a) => ({
+      const normalized = (response as any[]).map((a) => ({
         ...a,
         descripcion: a.descripcion ?? undefined,
       })) as Activity[];

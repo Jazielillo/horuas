@@ -1,4 +1,4 @@
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export async function getStudentPoints(studentId: number) {
   const result = await prisma.alumnoActividad.aggregate({

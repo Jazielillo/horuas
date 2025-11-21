@@ -1,7 +1,7 @@
 "use server";
-import { prisma } from "@/app/lib/prisma";
-import { FormState, LoginFormSchema } from "@/app/lib/definitions";
-import { createSession, deleteSession } from "@/app/lib/session";
+import { prisma } from "@/lib/prisma";
+import { FormState, LoginFormSchema } from "@/lib/definitions";
+import { createSession, deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export async function login(state: FormState, formData: FormData) {

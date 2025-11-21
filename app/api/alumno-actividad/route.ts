@@ -1,4 +1,4 @@
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       },
       select: { id_alumno: true },
     });
-    const existentesSet = new Set(existentes.map((e) => e.id_alumno));
+    const existentesSet = new Set(existentes.map((e: { id_alumno: number }) => e.id_alumno));
 
     // Preparar los registros a crear (salteando los existentes)
     const toCreate = estudiantes
@@ -87,7 +87,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         created: registros,
-        skipped: existentes.map((e) => e.id_alumno),
+        skipped: existentes.map((e: { id_alumno: number }) => e.id_alumno),
       },
       { status: 201 }
     );

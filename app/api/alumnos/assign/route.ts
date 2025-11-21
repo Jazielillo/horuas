@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { assignPointsFormRefined, assignPointsFullSchema } from "@/schemas/assign-points-schema";
 import { assignPointsAction as assignPointsInternal } from "@/app/actions/assign-points-action";
 

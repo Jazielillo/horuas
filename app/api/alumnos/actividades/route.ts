@@ -1,4 +1,4 @@
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -26,14 +26,21 @@ export async function GET(req: Request) {
   });
 
   return NextResponse.json(
-    actividades.map((item) => ({
-      nombre: item.actividad.nombre,
-      descripcion: item.actividad.descripcion,
-      fecha: item.fecha_registro,
-      puntos: item.puntos_otorgados,
-      id_actividad: item.id_actividad,
-      departamento: "Deportes",
-    }))
+    actividades.map(
+      (item: {
+        actividad: { nombre: string; descripcion: string | null };
+        fecha_registro: Date;
+        puntos_otorgados: number;
+        id_actividad: number;
+      }) => ({
+        nombre: item.actividad.nombre,
+        descripcion: item.actividad.descripcion,
+        fecha: item.fecha_registro,
+        puntos: item.puntos_otorgados,
+        id_actividad: item.id_actividad,
+        departamento: "Deportes",
+      })
+    )
   );
   // Transformamos el resultado para dejarlo como tú lo quieres
   return;
