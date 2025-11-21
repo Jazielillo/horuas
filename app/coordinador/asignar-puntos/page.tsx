@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/table";
 import AssignPointsForm from "@/app/components/forms/assign-points-form";
 import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+import { set } from "zod";
+import { Spinner } from "@/components/ui/spinner";
 
 const CoordinatorAssign = () => {
   const {
@@ -31,7 +33,11 @@ const CoordinatorAssign = () => {
     selectedStudent,
     studentHasActivity,
     selectedStudents,
+    loading,
 
+    setYear,
+    setGroup,
+    setStudent,
     setStudents,
     assignPointsToStudents,
   } = usePointsAssignmentStore();
@@ -41,8 +47,15 @@ const CoordinatorAssign = () => {
   const [check, setCheck] = useState(false);
 
   useEffect(() => {
+    setYear("");
+    setGroup(null);
+    setStudent(null);
+    setStudents(null);
+  }, []);
+
+  useEffect(() => {
     // Reset selections when group or student changes
-    console.log(selectedGroup)
+    console.log(selectedGroup);
   }, [selectedGroup]);
 
   const handleToggleAll = () => {
@@ -171,6 +184,7 @@ const CoordinatorAssign = () => {
                         <Checkbox
                           checked={assignToAll}
                           onCheckedChange={handleToggleAll}
+                          disabled={loading}
                         />
                       </TableHead>
                       <TableHead>Nombre</TableHead>
@@ -182,7 +196,21 @@ const CoordinatorAssign = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {selectedStudent ? (
+                    {/* --- 1. ESTADO DE CARGA --- */}
+                    {loading ? (
+                      <TableRow>
+                        <TableCell colSpan={5} className="h-24 text-center">
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            {/* Asumiendo que tu componente Spinner acepta className */}
+                            <Spinner className="h-8 w-8 animate-spin text-primary" />
+                            <span className="text-sm text-muted-foreground">
+                              Cargando alumnos...
+                            </span>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ) : selectedStudent ? (
+                      // --- 2. MODO ESTUDIANTE ÚNICO ---
                       <TableRow
                         key={selectedStudent.id_usuario}
                         className={check ? "bg-accent/50" : ""}
@@ -210,7 +238,7 @@ const CoordinatorAssign = () => {
                         </TableCell>
                       </TableRow>
                     ) : studentsOfGroup?.length === 0 ? (
-                      // --- Modo lista vacía ---
+                      // --- 3. MODO LISTA VACÍA ---
                       <TableRow>
                         <TableCell
                           colSpan={5}
@@ -220,7 +248,7 @@ const CoordinatorAssign = () => {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      // --- Modo lista completa ---
+                      // --- 4. MODO LISTA COMPLETA ---
                       studentsOfGroup?.map((student) => {
                         const isSelected = selectedStudents?.some(
                           (s) => s.id_usuario === student.id_usuario

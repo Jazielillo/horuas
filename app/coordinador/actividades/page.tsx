@@ -22,6 +22,7 @@ import ActivityForm from "@/app/components/forms/activity-form";
 import { AllActivities } from "../components/all-activities";
 import { getAllActivitiesAction } from "@/app/actions/activity-actions";
 import { useActivityStore } from "@/store/use-activity-store";
+import { Spinner } from "@/components/ui/spinner";
 
 interface Activity {
   id_actividad: number;
@@ -32,7 +33,8 @@ interface Activity {
 }
 
 const CoordinatorActivities = () => {
-  const { activityList, setActivitySelected, loadActivities } = useActivityStore();
+  const { activityList, setActivitySelected, loadActivities } =
+    useActivityStore();
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<any>(null);
@@ -71,8 +73,6 @@ const CoordinatorActivities = () => {
     });
   };
 
-  if (loading) return <div>Cargando...</div>;
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -109,23 +109,29 @@ const CoordinatorActivities = () => {
       </div>
 
       {/* Activities List */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Lista de Actividades</CardTitle>
-          {/* <CardDescription>
+      {loading ? (
+        <div className="flex justify-center items-center flex-col gap-4 mt-60">
+          <Spinner className="size-20 text-primary" />
+        </div>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Lista de Actividades</CardTitle>
+            {/* <CardDescription>
             {activities.length} actividades registradas
           </CardDescription> */}
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <AllActivities
-              activities={activityList}
-              handleEditActivity={handleEditActivity}
-              handleDeleteActivity={handleDeleteActivity}
-            />
-          </div>
-        </CardContent>
-      </Card>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <AllActivities
+                activities={activityList}
+                handleEditActivity={handleEditActivity}
+                handleDeleteActivity={handleDeleteActivity}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

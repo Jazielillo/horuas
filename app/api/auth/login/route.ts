@@ -1,6 +1,6 @@
 // app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import jwt from "jsonwebtoken";
 import { getStudentPoints } from "../../utils/getPoints";
 import { getGroup } from "../../utils/getGroup";

@@ -1,7 +1,7 @@
 "use server";
 
 import { assignPointsFullSchema, AssignPointsForm } from "@/schemas/assign-points-schema";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import { cookies } from "next/headers";
 
 /**

@@ -48,16 +48,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Spinner } from "@/components/ui/spinner";
 
 const CoordinatorReports = () => {
   const {
     selectedYear,
     selectedGroup,
     selectedStudent,
+    loading,
     selectedActivity,
     groups,
     studentsOfGroup,
     activitiesOfStudent,
+    loadingActivities,
     setYear,
     setGroup,
     setStudent,
@@ -69,10 +72,14 @@ const CoordinatorReports = () => {
     loadGroupsByYear,
     loadStudentsByGroups,
   } = usePointsAssignmentStore();
+
+  useEffect(() => {
+    setYear("");
+    setGroup(null);
+    setStudent(null);
+  }, []);
+
   const { toast } = useToast();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterGroup, setFilterGroup] = useState("all");
-  const [filterDepartment, setFilterDepartment] = useState("all");
   const fetchLastStudents = async () => {
     const res = await fetch("/api/alumnos/ten");
     return await res.json();
@@ -93,67 +100,6 @@ const CoordinatorReports = () => {
     }
   }, [selectedGroup]);
 
-  // Mock data
-  const students = [
-    {
-      id: 1,
-      name: "Ana Martínez López",
-      accountNumber: "318123456",
-      group: "3A",
-      sports: 72,
-      culture: 58,
-      total: 130,
-      status: "on-track",
-    },
-    {
-      id: 2,
-      name: "Carlos López García",
-      accountNumber: "318123457",
-      group: "3A",
-      sports: 65,
-      culture: 48,
-      total: 113,
-      status: "on-track",
-    },
-    {
-      id: 3,
-      name: "Diana Torres Ruiz",
-      accountNumber: "318123458",
-      group: "3B",
-      sports: 58,
-      culture: 62,
-      total: 120,
-      status: "on-track",
-    },
-    {
-      id: 4,
-      name: "Eduardo Ruiz Silva",
-      accountNumber: "318123459",
-      group: "3B",
-      sports: 45,
-      culture: 35,
-      total: 80,
-      status: "behind",
-    },
-    {
-      id: 5,
-      name: "Fernanda Silva Cruz",
-      accountNumber: "318123460",
-      group: "3C",
-      sports: 88,
-      culture: 75,
-      total: 163,
-      status: "ahead",
-    },
-  ];
-
-  const filteredStudents = students.filter((student) => {
-    const matchesSearch =
-      student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.accountNumber.includes(searchTerm);
-    const matchesGroup = filterGroup === "all" || student.group === filterGroup;
-    return matchesSearch && matchesGroup;
-  });
   async function onSubmit(values: any) {}
   const handleDownloadExcel = () => {
     toast({
@@ -170,31 +116,6 @@ const CoordinatorReports = () => {
       title: "Descargando reporte",
       description: "El archivo PDF se está generando...",
     });
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "ahead":
-        return (
-          <Badge className="bg-success/20 text-success hover:bg-success/30">
-            Adelantado
-          </Badge>
-        );
-      case "on-track":
-        return (
-          <Badge className="bg-info/20 text-info hover:bg-info/30">
-            En tiempo
-          </Badge>
-        );
-      case "behind":
-        return (
-          <Badge className="bg-warning/20 text-warning hover:bg-warning/30">
-            Atrasado
-          </Badge>
-        );
-      default:
-        return null;
-    }
   };
 
   return (
@@ -366,59 +287,6 @@ const CoordinatorReports = () => {
           )}
         </CardContent>
       </Card>
-
-      {/* Results Table */}
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>Resultados de la Búsqueda</CardTitle>
-          <CardDescription>
-            {filteredStudents.length} alumno(s) encontrado(s)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="rounded-lg border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Alumno</TableHead>
-                  <TableHead>No. Cuenta</TableHead>
-                  <TableHead>Grupo</TableHead>
-                  <TableHead className="text-center">Puntos totales</TableHead>
-                  <TableHead className="text-right"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredStudents.map((student) => (
-                  <TableRow key={student.id}>
-                    <TableCell className="font-medium">
-                      {student.name}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {student.accountNumber}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">{student.group}</Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <span className="text-lg font-bold text-primary">
-                        {student.total}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        size="sm"
-                        className="bg-primary cursor-pointer text-primary-foreground hover:bg-primary/90"
-                      >
-                        Ver información
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card> */}
       {(selectedGroup || selectedStudent) && (
         <Card>
           <CardHeader>
@@ -452,137 +320,145 @@ const CoordinatorReports = () => {
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nombre</TableHead>
-                    <TableHead>No. Cuenta</TableHead>
-                    <TableHead>Grupo</TableHead>
-                    <TableHead className="text-center">
-                      Puntos Actuales
-                    </TableHead>
-                    <TableHead className="text-center">Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {selectedStudent ? (
-                    <TableRow key={selectedStudent.id_usuario}>
-                      <TableCell className="font-medium">
-                        {selectedStudent.nombre}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {selectedStudent.num_cuenta}
-                      </TableCell>
-                      <TableCell>{selectedStudent.grupo ?? "N/A"}</TableCell>
-                      <TableCell className="text-center">
-                        {selectedStudent.puntos ?? 0}
-                      </TableCell>
-                      <TableCell className="font-semibold text-center">
-                        <Button className="bg-primary text-center cursor-pointer">
-                          Historial
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ) : studentsOfGroup?.length === 0 ? (
-                    // --- Modo lista vacía ---
+              {loading ? (
+                <div className="p-8 flex justify-center">
+                  <Spinner />
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
                     <TableRow>
-                      <TableCell
-                        colSpan={5}
-                        className="text-center py-8 text-muted-foreground"
-                      >
-                        No se encontraron alumnos
-                      </TableCell>
+                      <TableHead>Nombre</TableHead>
+                      <TableHead>No. Cuenta</TableHead>
+                      <TableHead>Grupo</TableHead>
+                      <TableHead className="text-center">
+                        Puntos Actuales
+                      </TableHead>
+                      <TableHead className="text-center">Acciones</TableHead>
                     </TableRow>
-                  ) : (
-                    // --- Modo lista completa ---
-                    studentsOfGroup?.map((student) => {
-                      return (
-                        <TableRow key={student.id_usuario}>
-                          <TableCell className="font-medium">
-                            {student.nombre}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {student.num_cuenta}
-                          </TableCell>
-                          <TableCell>{student.grupo ?? "N/A"}</TableCell>
-                          <TableCell className="text-center">
-                            {student.puntos ?? 0}
-                          </TableCell>
-                          <TableCell className="font-semibold text-center">
-                            {/* <Button className="bg-primary text-center cursor-pointer">
-                              Historial
-                            </Button> */}
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  className="cursor-pointer"
-                                  onClick={() =>
-                                    loadActivitiesOfStudent(student.id_usuario)
-                                  }
-                                >
-                                  Historial
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
-                                  <DialogTitle className="text-center">
-                                    Actividades realizadas
-                                  </DialogTitle>
-                                </DialogHeader>
-                                {
-                                  <div className="space-y-4 max-h-[400px] overflow-y-auto">
-                                    {activitiesOfStudent &&
-                                    activitiesOfStudent.length > 0 ? (
-                                      activitiesOfStudent.map((activity) => (
-                                        <div
-                                          key={activity.id_actividad}
-                                          className="p-4 border rounded-lg bg-muted/5 shadow-sm space-y-2 cursor-pointer hover:bg-muted/10 transition-colors"
-                                        >
-                                          <div className="flex items-start justify-between gap-4">
-                                            <div className="flex-1 min-w-0">
-                                              <h3 className="font-semibold text-lg truncate">
-                                                {activity.nombre}
-                                              </h3>
-                                              <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
-                                                {activity.descripcion}
-                                              </p>
-                                            </div>
+                  </TableHeader>
+                  <TableBody>
+                    {selectedStudent ? (
+                      <TableRow key={selectedStudent.id_usuario}>
+                        <TableCell className="font-medium">
+                          {selectedStudent.nombre}
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {selectedStudent.num_cuenta}
+                        </TableCell>
+                        <TableCell>{selectedStudent.grupo ?? "N/A"}</TableCell>
+                        <TableCell className="text-center">
+                          {selectedStudent.puntos ?? 0}
+                        </TableCell>
+                        <TableCell className="font-semibold text-center">
+                          <Button className="bg-primary text-center cursor-pointer">
+                            Historial
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ) : studentsOfGroup?.length === 0 ? (
+                      // --- Modo lista vacía ---
+                      <TableRow>
+                        <TableCell
+                          colSpan={5}
+                          className="text-center py-8 text-muted-foreground"
+                        >
+                          No se encontraron alumnos
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      // --- Modo lista completa ---
+                      studentsOfGroup?.map((student) => {
+                        return (
+                          <TableRow key={student.id_usuario}>
+                            <TableCell className="font-medium">
+                              {student.nombre}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">
+                              {student.num_cuenta}
+                            </TableCell>
+                            <TableCell>{student.grupo ?? "N/A"}</TableCell>
+                            <TableCell className="text-center">
+                              {student.puntos ?? 0}
+                            </TableCell>
+                            <TableCell className="font-semibold text-center">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                      loadActivitiesOfStudent(
+                                        student.id_usuario
+                                      )
+                                    }
+                                  >
+                                    Historial
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[425px]">
+                                  <DialogHeader>
+                                    <DialogTitle className="text-center">
+                                      Actividades realizadas
+                                    </DialogTitle>
+                                  </DialogHeader>
+                                  {loadingActivities ? (
+                                    <div className="p-8 flex justify-center">
+                                      <Spinner />
+                                    </div>
+                                  ) : (
+                                    <div className="space-y-4 max-h-[400px] overflow-y-auto">
+                                      {activitiesOfStudent &&
+                                      activitiesOfStudent.length > 0 ? (
+                                        activitiesOfStudent.map((activity) => (
+                                          <div
+                                            key={activity.id_actividad}
+                                            className="p-4 border rounded-lg bg-muted/5 shadow-sm space-y-2 cursor-pointer hover:bg-muted/10 transition-colors"
+                                          >
+                                            <div className="flex items-start justify-between gap-4">
+                                              <div className="flex-1 min-w-0">
+                                                <h3 className="font-semibold text-lg truncate">
+                                                  {activity.nombre}
+                                                </h3>
+                                                <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
+                                                  {activity.descripcion}
+                                                </p>
+                                              </div>
 
-                                            <div className="flex flex-col items-end gap-2">
-                                              <div className="text-xs text-muted-foreground">
-                                                Fecha
+                                              <div className="flex flex-col items-end gap-2">
+                                                <div className="text-xs text-muted-foreground">
+                                                  Fecha
+                                                </div>
+                                                <div className="font-medium">
+                                                  {new Date(
+                                                    activity.fecha || ""
+                                                  ).toLocaleDateString()}
+                                                </div>
+                                                <Badge className="bg-primary/10 text-primary">
+                                                  {activity.puntos} pts
+                                                </Badge>
                                               </div>
-                                              <div className="font-medium">
-                                                {new Date(
-                                                  activity.fecha || ""
-                                                ).toLocaleDateString()}
-                                              </div>
-                                              <Badge className="bg-primary/10 text-primary">
-                                                {activity.puntos} pts
-                                              </Badge>
                                             </div>
                                           </div>
-                                        </div>
-                                        
-                                      ))
-                                    ) : (
-                                      <p className="text-center text-muted-foreground">
-                                        No se encontraron actividades para este
-                                        alumno.
-                                      </p>
-                                    )}
-                                  </div>
-                                }
-                              </DialogContent>
-                            </Dialog>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  )}
-                </TableBody>
-              </Table>
+                                        ))
+                                      ) : (
+                                        <p className="text-center text-muted-foreground">
+                                          No se encontraron actividades para
+                                          este alumno.
+                                        </p>
+                                      )}
+                                    </div>
+                                  )}
+                                </DialogContent>
+                              </Dialog>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
+                    )}
+                  </TableBody>
+                </Table>
+              )}
             </div>
           </CardContent>
         </Card>

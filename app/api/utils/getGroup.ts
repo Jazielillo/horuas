@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 
 export const getGroup = async (student_id: number) => {
     // Ejemplo si tu modelo se llama "student" y tiene la relación "group"

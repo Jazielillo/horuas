@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown, Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/app/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
 interface SmartComboBoxProps<T> {
@@ -105,7 +105,7 @@ export function SmartComboBox<T>({
         <Button
           variant="outline"
           role="combobox"
-          className={"w-[260px] justify-between cursor-pointer" + (disabled ? " cursor-not-allowed" : "")}
+          className={"w-full justify-between cursor-pointer" + (disabled ? " cursor-not-allowed" : "")}
         >
           {selectedLabel}
           <ChevronsUpDown className="opacity-50" />

@@ -1,7 +1,4 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { GraduationCap } from "lucide-react";
+"use server";
 import {
   Card,
   CardContent,
@@ -9,111 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import Image from "next/image";
-import { useAlumnoStore } from "@/store/use-alumno-store";
-// import { cookies } from "next/headers";
-// export default function LoginPage() {
-//   const router = useRouter();
+import { LoginForm } from "./components/login-form";
 
-//   const [num_cuenta, setNum_cuenta] = useState("");
-//   const [nip, setNip] = useState("");
-//   const [error, setError] = useState("");
-
-//   async function handleLogin(e: React.FormEvent) {
-//     e.preventDefault();
-
-//     const res = await fetch("/api/auth/login", {
-//       method: "POST",
-//       body: JSON.stringify({ num_cuenta, nip }),
-//       headers: { "Content-Type": "application/json" },
-//     });
-
-//     const data = await res.json();
-
-//     if (!res.ok) {
-//       setError(data.error);
-//       return;
-//     }
-
-//     // Redireccionamos según rol
-//     if (data.role === "COORDINADOR") router.push("/coordinador");
-//     if (data.role === "ADMIN") router.push("/administrador");
-//     if (data.role === "ALUMNO") router.push("/alumno");
-//   }
-
-//   return (
-//     <div className="h-screen flex justify-center items-center">
-//       <form onSubmit={handleLogin} className="p-6 border rounded w-96">
-//         <h1 className="text-2xl font-bold mb-4">Iniciar sesión</h1>
-
-//         <input
-//           type="text"
-//           placeholder="Número de cuenta"
-//           className="w-full border p-2 rounded mb-3"
-//           value={num_cuenta}
-//           onChange={(e) => setNum_cuenta(e.target.value)}
-//         />
-
-//         <input
-//           type="password"
-//           placeholder="Contraseña"
-//           className="w-full border p-2 rounded mb-3"
-//           value={nip}
-//           onChange={(e) => setNip(e.target.value)}
-//         />
-
-//         {error && <p className="text-red-500 mb-3">{error}</p>}
-
-//         <button className="w-full bg-blue-600 text-white py-2 rounded">
-//           Entrar
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-export default function LoginPage() {
-  const router = useRouter();
-  const { setSelectedAlumno } = useAlumnoStore();
-
-  async function handleLogin(e: React.FormEvent) {
-    e.preventDefault();
-
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ num_cuenta, nip }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      setError(data.error);
-      return;
-    }
-    setError("");
-
-    // Redireccionamos según rol
-    if (data.role === "COORDINADOR") router.push("/coordinador");
-    if (data.role === "ADMIN") router.push("/administrador");
-    if (data.role === "ALUMNO") {
-      setSelectedAlumno({
-        id_usuario: data.meta.id_usuario,
-        nombre: data.meta.nombre,
-        num_cuenta: data.meta.num_cuenta,
-        puntos: data.meta.puntos,
-        grupo: data.meta.grupo,
-      });
-      router.push("/alumno");
-    }
-  }
-  const [num_cuenta, setNum_cuenta] = useState("");
-  const [nip, setNip] = useState("");
-  const [error, setError] = useState("");
-
+export default async function LoginPage() {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-linear-to-bl from-primary via-primary/90 to-info ">
@@ -131,37 +28,7 @@ export default function LoginPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-4" onSubmit={handleLogin}>
-                    <div className="space-y-2">
-                      <Label htmlFor="accountNumber">Número de Cuenta</Label>
-                      <Input
-                        id="accountNumber"
-                        placeholder="318123456"
-                        value={num_cuenta}
-                        onChange={(e) => setNum_cuenta(e.target.value)}
-                        required
-                        className="h-11"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="pin">NIP</Label>
-                      <Input
-                        id="pin"
-                        type="password"
-                        placeholder="••••"
-                        value={nip}
-                        onChange={(e) => setNip(e.target.value)}
-                        required
-                        className="h-11"
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      className="w-full h-11 text-base font-medium cursor-pointer"
-                    >
-                      Acceder al Sistema
-                    </Button>
-                  </form>
+                  <LoginForm />
                 </CardContent>
               </div>
 

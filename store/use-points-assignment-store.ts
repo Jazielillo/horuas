@@ -10,6 +10,8 @@ interface AssignmentState {
   selectedActivity: Activity | null;
   selectedStudents: Alumno[] | null;
   studentHasActivity: boolean | null;
+  loading: boolean;
+  loadingActivities: boolean;
 
   // Data
   groups: Group[];
@@ -25,6 +27,7 @@ interface AssignmentState {
   setStudents: (students: Alumno | null) => void;
   setGroups: (groups: Group[]) => void;
   setActivitiesOfStudent: (activities: Activity[]) => void;
+  setLoading: (loading: boolean) => void;
 
   loadActivitiesOfStudent: (id_alumno: number) => Promise<void>;
   loadGroupsByYear: (year: string) => Promise<void>;
@@ -63,28 +66,29 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
         selectedStudent: null,
       }),
 
-    setGroup: (group) =>
-      set({
-        selectedGroup: group,
-        selectedStudent: null,
-      }),
+    setGroup: (group) => {
+      set({ selectedGroup: group, selectedStudent: null });
+    },
 
     setActivitiesOfStudent: (activities) =>
       set({ activitiesOfStudent: activities }),
 
     loadActivitiesOfStudent: async (id_alumno) => {
+      set({ loadingActivities: true });
       const res = await fetch(`/api/alumnos/actividades?alumno=${id_alumno}`);
       const data = await res.json();
-      set({ activitiesOfStudent: data });
+      set({ activitiesOfStudent: data, loadingActivities: false });
     },
 
     setStudent: (student) => {
       set({ selectedStudent: student, selectedStudents: [] });
       if (student && get().selectedActivity) {
+        set({ loading: true });
         get().checkStudentActivity(
           student.id_usuario,
           get().selectedActivity!.id_actividad
         );
+        set({ loading: false });
       } else {
         set({ studentHasActivity: null });
       }
@@ -115,10 +119,12 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
     setActivity: (activity) => {
       set({ selectedActivity: activity });
       if (get().selectedStudent) {
+        set({ loading: true });
         get().checkStudentActivity(
           get().selectedStudent!.id_usuario,
           activity ? activity.id_actividad : -1
         );
+        set({ loading: false });
       }
     },
 
@@ -131,25 +137,28 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
     },
 
     loadStudentsByGroup: async (group) => {
+        set({ loading: true });
       const res = await fetch(
         `/api/alumnos/group?group=${group}&actividad=${
           get().selectedActivity?.id_actividad
         }`
       );
       const data = await res.json();
-      set({ studentsOfGroup: data });
+      set({ studentsOfGroup: data, loading: false });
     },
 
     loadStudentsByGroups: async (group) => {
+      set({ loading: true });
       const res = await fetch(`/api/alumnos/groups?group=${group}`);
       const data = await res.json();
-      set({ studentsOfGroup: data });
+      set({ studentsOfGroup: data, loading: false });
     },
 
     loadStudentById: async (id) => {
+      set({ loading: true });
       const res = await fetch(`/api/students/${id}`);
       const data = await res.json();
-      set({ singleStudent: data });
+      set({ singleStudent: data, loading: false });
     },
 
     assignPointsToStudents: async (

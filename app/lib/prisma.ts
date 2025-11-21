@@ -1,5 +1,5 @@
 // lib/prisma.ts
-import { PrismaClient } from '../generated/client'; // Ruta relativa corregida
+import { PrismaClient } from '../../generated/client'; // Ruta relativa corregida
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 

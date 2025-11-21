@@ -1,15 +1,39 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
+import { getStudentPoints } from "../utils/getPoints";
+import { getGroup } from "../utils/getGroup";
 
-export async function GET() {
-  const alumnos = await prisma.usuario.findMany({
-    include: {
-      grupo: true,
-      generacion: true,
+export async function GET(_: any, { params }: any) {
+  const id_usuario = Number(params.id);
+  console.log("ID Usuario:", id_usuario);
+
+  const alumno = await prisma.usuario.findUnique({
+    where: {
+      id_usuario: id_usuario,
     },
   });
 
-  return NextResponse.json(alumnos);
+  if (!alumno) {
+    return NextResponse.json(
+      { error: "Alumno no encontrado" },
+      { status: 404 }
+    );
+  }
+
+  if (alumno.rol !== "ALUMNO") {
+    return NextResponse.json({
+      alumno,
+    });
+  }
+
+  const puntos = await getStudentPoints(alumno.id_usuario);
+  const grupo = await getGroup(alumno.id_usuario);
+
+  return NextResponse.json({
+    ...alumno,
+    puntos,
+    grupo,
+  });
 }
 
 export async function POST(req: Request) {

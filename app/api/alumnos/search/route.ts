@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import { getGroup } from "../../utils/getGroup";
 
 export async function GET(req: Request) {
