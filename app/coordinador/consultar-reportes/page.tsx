@@ -107,6 +107,20 @@ const CoordinatorReports = () => {
       description: "El archivo Excel se está generando...",
     });
   };
+
+  const [studentSearch, setStudentSearch] = useState("");
+
+  // 2. Variable que contiene SIEMPRE la lista filtrada
+  const filteredStudents = studentsOfGroup.filter((student) => {
+    // Convertimos a minúsculas para que la búsqueda no sea sensible a mayúsculas
+    const searchLower = studentSearch.toLowerCase();
+    const nombreLower = student.nombre.toLowerCase();
+    const cuentaStr = student.num_cuenta; // Ya es string según tu tipo
+
+    // Retornamos true si el nombre O el número de cuenta coinciden
+    return nombreLower.includes(searchLower) || cuentaStr.includes(searchLower);
+  });
+
   const searchStudents = async (q: string) => {
     const res = await fetch(`/api/alumnos/search?q=${encodeURIComponent(q)}`);
     return await res.json();
@@ -310,8 +324,10 @@ const CoordinatorReports = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Buscar por nombre o número de cuenta..."
-                    // value={studentSearch}
-                    // onChange={(e) => setStudentSearch(e.target.value)}
+                    // Conectamos el valor al estado
+                    value={studentSearch}
+                    // Actualizamos el estado al escribir
+                    onChange={(e) => setStudentSearch(e.target.value)}
                     className="pl-10"
                   />
                 </div>
@@ -339,6 +355,7 @@ const CoordinatorReports = () => {
                   </TableHeader>
                   <TableBody>
                     {selectedStudent ? (
+                      // CASO 1: Hay un estudiante seleccionado manualmente
                       <TableRow key={selectedStudent.id_usuario}>
                         <TableCell className="font-medium">
                           {selectedStudent.nombre}
@@ -357,104 +374,110 @@ const CoordinatorReports = () => {
                         </TableCell>
                       </TableRow>
                     ) : studentsOfGroup?.length === 0 ? (
-                      // --- Modo lista vacía ---
+                      // CASO 2: El grupo no tiene alumnos cargados (Base de datos vacía)
                       <TableRow>
                         <TableCell
                           colSpan={5}
                           className="text-center py-8 text-muted-foreground"
                         >
-                          No se encontraron alumnos
+                          No se encontraron alumnos en este grupo.
+                        </TableCell>
+                      </TableRow>
+                    ) : filteredStudents.length === 0 ? (
+                      // CASO 3: Hay alumnos, pero la BÚSQUEDA no dio resultados
+                      <TableRow>
+                        <TableCell
+                          colSpan={5}
+                          className="h-24 text-center text-muted-foreground"
+                        >
+                          No se encontraron alumnos con ese nombre o cuenta.
                         </TableCell>
                       </TableRow>
                     ) : (
-                      // --- Modo lista completa ---
-                      studentsOfGroup?.map((student) => {
-                        return (
-                          <TableRow key={student.id_usuario}>
-                            <TableCell className="font-medium">
-                              {student.nombre}
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">
-                              {student.num_cuenta}
-                            </TableCell>
-                            <TableCell>{student.grupo ?? "N/A"}</TableCell>
-                            <TableCell className="text-center">
-                              {student.puntos ?? 0}
-                            </TableCell>
-                            <TableCell className="font-semibold text-center">
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button
-                                    variant="outline"
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                      loadActivitiesOfStudent(
-                                        student.id_usuario
-                                      )
-                                    }
-                                  >
-                                    Historial
-                                  </Button>
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-[425px]">
-                                  <DialogHeader>
-                                    <DialogTitle className="text-center">
-                                      Actividades realizadas
-                                    </DialogTitle>
-                                  </DialogHeader>
-                                  {loadingActivities ? (
-                                    <div className="p-8 flex justify-center">
-                                      <Spinner />
-                                    </div>
-                                  ) : (
-                                    <div className="space-y-4 max-h-[400px] overflow-y-auto">
-                                      {activitiesOfStudent &&
-                                      activitiesOfStudent.length > 0 ? (
-                                        activitiesOfStudent.map((activity) => (
-                                          <div
-                                            key={activity.id_actividad}
-                                            className="p-4 border rounded-lg bg-muted/5 shadow-sm space-y-2 cursor-pointer hover:bg-muted/10 transition-colors"
-                                          >
-                                            <div className="flex items-start justify-between gap-4">
-                                              <div className="flex-1 min-w-0">
-                                                <h3 className="font-semibold text-lg truncate">
-                                                  {activity.nombre}
-                                                </h3>
-                                                <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
-                                                  {activity.descripcion}
-                                                </p>
+                      // CASO 4: Renderizado normal de la lista filtrada
+                      filteredStudents.map((student) => (
+                        <TableRow key={student.id_usuario}>
+                          <TableCell className="font-medium">
+                            {student.nombre}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground">
+                            {student.num_cuenta}
+                          </TableCell>
+                          <TableCell>{student.grupo ?? "N/A"}</TableCell>
+                          <TableCell className="text-center">
+                            {student.puntos ?? 0}
+                          </TableCell>
+                          <TableCell className="font-semibold text-center">
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  className="cursor-pointer"
+                                  onClick={() =>
+                                    loadActivitiesOfStudent(student.id_usuario)
+                                  }
+                                >
+                                  Historial
+                                </Button>
+                              </DialogTrigger>
+                              {/* ... Tu DialogContent original va aquí ... */}
+                              <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                  <DialogTitle className="text-center">
+                                    Actividades realizadas
+                                  </DialogTitle>
+                                </DialogHeader>
+                                {loadingActivities ? (
+                                  <div className="p-8 flex justify-center">
+                                    <Spinner />
+                                  </div>
+                                ) : (
+                                  <div className="space-y-4 max-h-[400px] overflow-y-auto">
+                                    {activitiesOfStudent &&
+                                    activitiesOfStudent.length > 0 ? (
+                                      activitiesOfStudent.map((activity) => (
+                                        <div
+                                          key={activity.id_actividad}
+                                          className="p-4 border rounded-lg bg-muted/5 shadow-sm space-y-2 cursor-pointer hover:bg-muted/10 transition-colors"
+                                        >
+                                          <div className="flex items-start justify-between gap-4">
+                                            <div className="flex-1 min-w-0">
+                                              <h3 className="font-semibold text-lg truncate">
+                                                {activity.nombre}
+                                              </h3>
+                                              <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
+                                                {activity.descripcion}
+                                              </p>
+                                            </div>
+                                            <div className="flex flex-col items-end gap-2">
+                                              <div className="text-xs text-muted-foreground">
+                                                Fecha
                                               </div>
-
-                                              <div className="flex flex-col items-end gap-2">
-                                                <div className="text-xs text-muted-foreground">
-                                                  Fecha
-                                                </div>
-                                                <div className="font-medium">
-                                                  {new Date(
-                                                    activity.fecha || ""
-                                                  ).toLocaleDateString()}
-                                                </div>
-                                                <Badge className="bg-primary/10 text-primary">
-                                                  {activity.puntos} pts
-                                                </Badge>
+                                              <div className="font-medium">
+                                                {new Date(
+                                                  activity.fecha || ""
+                                                ).toLocaleDateString()}
                                               </div>
+                                              <Badge className="bg-primary/10 text-primary">
+                                                {activity.puntos} pts
+                                              </Badge>
                                             </div>
                                           </div>
-                                        ))
-                                      ) : (
-                                        <p className="text-center text-muted-foreground">
-                                          No se encontraron actividades para
-                                          este alumno.
-                                        </p>
-                                      )}
-                                    </div>
-                                  )}
-                                </DialogContent>
-                              </Dialog>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })
+                                        </div>
+                                      ))
+                                    ) : (
+                                      <p className="text-center text-muted-foreground">
+                                        No se encontraron actividades para este
+                                        alumno.
+                                      </p>
+                                    )}
+                                  </div>
+                                )}
+                              </DialogContent>
+                            </Dialog>
+                          </TableCell>
+                        </TableRow>
+                      ))
                     )}
                   </TableBody>
                 </Table>

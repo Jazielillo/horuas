@@ -112,7 +112,7 @@ export function SmartComboBox<T>({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[260px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
           {/* INPUT CONTROLADO */}
           <CommandInput
