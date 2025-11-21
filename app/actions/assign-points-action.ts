@@ -63,7 +63,7 @@ export async function assignPointsAction(form: AssignPointsForm) {
       },
       select: { id_usuario: true },
     });
-    alumnosIds = students.map((s) => s.id_usuario);
+    alumnosIds = students.map((s: { id_usuario: number }) => s.id_usuario);
   }
 
   if (alumnosIds.length === 0) {
