@@ -93,9 +93,7 @@ export function AlumnoSidebar({ id_usuario }: { id_usuario?: number }) {
         </SidebarGroup>
 
         <div className="mt-auto p-4 border-t border-sidebar-border">
-          <div className="mt-auto p-4 border-t border-sidebar-border">
-            {!isCollapsed ? <LogOutButton /> : <></>}
-          </div>
+          {!isCollapsed ? <LogOutButton /> : <></>}
         </div>
       </SidebarContent>
     </Sidebar>

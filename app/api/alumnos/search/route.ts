@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getGroup } from "../../utils/getGroup";
+import { getStudentPoints } from "../../utils/getPoints";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -26,8 +27,15 @@ export async function GET(req: Request) {
     },
   });
 
+  const alumnosConPuntos = await Promise.all(
+      alumnos.map(async (alumno: { id_usuario: number }) => {
+        const puntos = await getStudentPoints(alumno.id_usuario);
+        return { ...alumno, puntos };
+      })
+    );
+
   const alumnosConGrupo = await Promise.all(
-    alumnos.map(async (alumno: { id_usuario: number }) => {
+    alumnosConPuntos.map(async (alumno: { id_usuario: number }) => {
       const grupo = await getGroup(alumno.id_usuario);
       return { ...alumno, grupo };
     })

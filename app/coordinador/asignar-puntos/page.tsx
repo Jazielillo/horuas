@@ -71,8 +71,12 @@ const CoordinatorAssign = () => {
   const handleAssignPoints = async () => {
     let aux = selectedStudents?.length;
     await assignPointsToStudents(selectedActivity!.puntos, new Date(), 47, 1);
-    toast("Event has been created", {
-      description: "Sunday, December 03, 2023 at 9:00 AM",
+    toast.success("Puntos asignados correctamente", {
+      description: (
+      <span className="text-primary">
+        {"Se asignaron puntos a " + ((aux ?? 0) + (check ? 1 : 0)) + " alumno(s)"}
+      </span>
+      ),
     });
     //   if (!selectedGroup || !selectedActivity) {
     //     toast({

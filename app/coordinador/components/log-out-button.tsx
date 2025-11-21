@@ -10,7 +10,7 @@ export function LogOutButton() {
       <Button
         variant="ghost"
         type="submit"
-        className="w-full justify-start text-sidebar-foreground bg-sky-500 hover:bg-sidebar-accent cursor-pointer"
+        className="w-full justify-start text-sidebar-foreground bg-sidebar-primary hover:bg-sidebar-primary/60 cursor-pointer"
       >
         <LogOut className="w-4 h-4" />
         <span>Cerrar Sesión</span>
