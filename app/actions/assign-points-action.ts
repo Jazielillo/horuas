@@ -2,7 +2,6 @@
 
 import { assignPointsFullSchema, AssignPointsForm } from "@/schemas/assign-points-schema";
 import { prisma } from "@/app/lib/prisma";
-import { cookies } from "next/headers";
 
 /**
  * Helper que obtiene info del usuario desde cookies/session.

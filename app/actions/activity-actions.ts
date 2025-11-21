@@ -1,6 +1,5 @@
 "use server";
 
-import { getUserRole } from "@/app/lib/check-role";
 import { prisma } from "@/app/lib/prisma";
 import {
   activityFormSchema,
