@@ -1,7 +1,13 @@
 "use client";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { Check, UserPlus, Search, ChevronsUpDown } from "lucide-react";
+import {
+  Check,
+  UserPlus,
+  Search,
+  ChevronsUpDown,
+  ArrowLeft,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -34,6 +40,7 @@ const CoordinatorAssign = () => {
     studentHasActivity,
     selectedStudents,
     loading,
+    loadingStudents,
 
     setYear,
     setGroup,
@@ -69,50 +76,55 @@ const CoordinatorAssign = () => {
   };
 
   const handleAssignPoints = async () => {
-    let aux = selectedStudents?.length;
-    await assignPointsToStudents(selectedActivity!.puntos, new Date(), 47, 1);
-    toast.success("Puntos asignados correctamente", {
-      description: (
-      <span className="text-primary">
-        {"Se asignaron puntos a " + ((aux ?? 0) + (check ? 1 : 0)) + " alumno(s)"}
-      </span>
-      ),
-    });
-    //   if (!selectedGroup || !selectedActivity) {
-    //     toast({
-    //       title: "Error",
-    //       description: "Selecciona un grupo y una actividad",
-    //       variant: "destructive",
-    //     });
-    //     return;
-    //   }
-    //   if (selectedStudents.length === 0) {
-    //     toast({
-    //       title: "Error",
-    //       description: "Selecciona al menos un alumno",
-    //       variant: "destructive",
-    //     });
-    //     return;
-    //   }
-    //   toast({
-    //     title: "Puntos asignados exitosamente",
-    //     description: `Se asignaron puntos a ${selectedStudents.length} alumno(s)`,
-    //   });
-    //   // Reset
-    //   setSelectedStudents([]);
-    //   setAssignToAll(false);
-    // };
-    // Determinar qué estudiantes mostrar
+    if (selectedStudent === null) {
+      let aux = selectedStudents?.length;
+      await assignPointsToStudents(selectedActivity!.puntos, new Date(), 47, 1);
+      toast.success("Puntos asignados correctamente", {
+        description: (
+          <span className="text-primary">
+            {"Se asignaron puntos a " +
+              ((aux ?? 0) + (check ? 1 : 0)) +
+              " alumno(s)"}
+          </span>
+        ),
+      });
+    } else {
+      await assignPointsToStudents(selectedActivity!.puntos, new Date(), 47, 1);
+      toast.success("Puntos asignados correctamente", {
+        description: (
+          <span className="text-primary">
+            {"Se asignaron puntos a 1 alumno"}
+          </span>
+        ),
+      });
+      setStudent(null);
+      setCheck(false);
+    }
+  };
+
+  const handleCancel = () => {
+    // navigate("/coordinator/clubs");
+    window.history.back();
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Asignar Puntos</h1>
-        <p className="text-muted-foreground">
-          Asignar puntos de actividades a alumnos
-        </p>
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleCancel}
+          className="bg-primary/90 hover:bg-primary/80 cursor-pointer"
+        >
+          <ArrowLeft className="w-5 h-5 text-white" />
+        </Button>
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Asignar Puntos</h1>
+          <p className="text-muted-foreground">
+            Asignar puntos de actividades a alumnos
+          </p>
+        </div>
       </div>
 
       {/* Selection Form */}
@@ -156,11 +168,16 @@ const CoordinatorAssign = () => {
                     <Button
                       size="lg"
                       onClick={handleAssignPoints}
-                      disabled={selectedStudents?.length === 0 && !check}
+                      disabled={loadingStudents}
                     >
-                      <Check className="w-4 h-4 mr-2" />
-                      Asignar Puntos ({" "}
-                      {(selectedStudents?.length ?? 0) + (check ? 1 : 0)} )
+                      {loadingStudents ? (
+                        <Spinner className="h-5 w-5 animate-spin text-white" />
+                      ) : (
+                        <>
+                          <Check className="w-5 h-5 mr-2" />
+                          Asignar Puntos ( {selectedStudents?.length ?? 0} )
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -223,7 +240,10 @@ const CoordinatorAssign = () => {
                           <Checkbox
                             className="cursor-pointer"
                             checked={check}
-                            onCheckedChange={() => setCheck(!check)}
+                            onCheckedChange={() => {
+                              setCheck(!check);
+                              setStudents(selectedStudent);
+                            }}
                           />
                         </TableCell>
                         <TableCell className="font-medium">

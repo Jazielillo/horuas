@@ -11,6 +11,7 @@ interface AssignmentState {
   selectedStudents: Alumno[] | null;
   studentHasActivity: boolean | null;
   loading: boolean;
+  loadingStudents: boolean;
   loadingActivities: boolean;
 
   // Data
@@ -52,7 +53,7 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
     selectedGroup: null,
     selectedStudent: null,
     selectedActivity: null,
-    selectedStudents: [],
+    selectedStudents: null,
     studentHasActivity: null, // ⬅️ agregado
 
     groups: [],
@@ -167,6 +168,7 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
       id_coordinador: number,
       id_ciclo: number
     ) => {
+      set({ loadingStudents: true });
       const { selectedActivity, selectedStudents } = get();
       if (
         !selectedActivity ||
@@ -203,6 +205,7 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
           selectedStudents: [],
         }));
       }
+      set({ loadingStudents: false });
     },
 
     // API checks

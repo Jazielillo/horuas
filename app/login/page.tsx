@@ -13,7 +13,7 @@ import { LoginForm } from "./components/login-form";
 export default async function LoginPage() {
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-bl from-primary via-primary/90 to-info ">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-bl from-primary via-primary/90 to-info max-sm:px-8">
         <div className="w-full max-w-4xl">
           <Card className="shadow-2xl border rounded-3xl overflow-hidden p-0 ">
             <div className="grid md:grid-cols-2">

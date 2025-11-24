@@ -21,12 +21,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { LogOutButton } from "./log-out-button";
+import { title } from "process";
 const navigationItems = [
   { title: "Actividades", url: "/coordinador/actividades", icon: Calendar },
   {
-    title: "Asignar Puntos",
-    url: "/coordinador/asignar-puntos",
-    icon: UserPlus,
+    title: "Clubes",
+    url: "/coordinador/clubes",
+    icon: LayoutDashboard,
   },
   {
     title: "Consultas y Reportes",
@@ -39,8 +40,6 @@ const navigationItems = [
 export function CoordinatorSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
-
-  
 
   return (
     <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">

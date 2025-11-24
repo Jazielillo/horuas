@@ -4,6 +4,8 @@ import { useActionState, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { LogIn } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 export const LoginForm = () => {
   const [state, action, pending] = useActionState(login, undefined);
@@ -35,8 +37,16 @@ export const LoginForm = () => {
       <Button
         type="submit"
         className="w-full h-11 text-base font-medium cursor-pointer"
+        disabled={pending}
       >
-        Acceder al Sistema
+        {pending ? (
+          <Spinner />
+        ) : (
+          <>
+            <LogIn className="w-5 h-5" />
+            Acceder al Sistema
+          </>
+        )}
       </Button>
     </form>
   );

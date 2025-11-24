@@ -226,6 +226,41 @@ exports.Prisma.RegistroCambiosScalarFieldEnum = {
   fecha: 'fecha'
 };
 
+exports.Prisma.ClubScalarFieldEnum = {
+  id_club: 'id_club',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  fecha_creacion: 'fecha_creacion'
+};
+
+exports.Prisma.ClubReglaScalarFieldEnum = {
+  id_regla: 'id_regla',
+  id_club: 'id_club',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  puntos: 'puntos',
+  tipo: 'tipo',
+  fecha_creacion: 'fecha_creacion'
+};
+
+exports.Prisma.ClubMiembroScalarFieldEnum = {
+  id_miembro: 'id_miembro',
+  id_club: 'id_club',
+  id_alumno: 'id_alumno',
+  fecha_ingreso: 'fecha_ingreso',
+  estado: 'estado'
+};
+
+exports.Prisma.ClubPuntosRegistroScalarFieldEnum = {
+  id_registro: 'id_registro',
+  id_club: 'id_club',
+  id_regla: 'id_regla',
+  id_alumno: 'id_alumno',
+  puntos_otorgados: 'puntos_otorgados',
+  fecha_registro: 'fecha_registro',
+  id_coordinador: 'id_coordinador'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -274,7 +309,11 @@ exports.Prisma.ModelName = {
   Actividad: 'Actividad',
   AlumnoActividad: 'AlumnoActividad',
   PlanDepartamento: 'PlanDepartamento',
-  RegistroCambios: 'RegistroCambios'
+  RegistroCambios: 'RegistroCambios',
+  Club: 'Club',
+  ClubRegla: 'ClubRegla',
+  ClubMiembro: 'ClubMiembro',
+  ClubPuntosRegistro: 'ClubPuntosRegistro'
 };
 
 /**

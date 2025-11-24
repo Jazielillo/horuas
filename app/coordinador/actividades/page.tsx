@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Plus } from "lucide-react";
+import { ArrowDownToDotIcon, Plus, TicketPlus } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -23,6 +23,7 @@ import { AllActivities } from "../components/all-activities";
 import { getAllActivitiesAction } from "@/app/actions/activity-actions";
 import { useActivityStore } from "@/store/use-activity-store";
 import { Spinner } from "@/components/ui/spinner";
+import Link from "next/link";
 
 interface Activity {
   id_actividad: number;
@@ -83,29 +84,43 @@ const CoordinatorActivities = () => {
             Crear y administrar actividades extracurriculares
           </p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button
-              size="lg"
-              onClick={() => setEditingActivity(null)}
-              className="cursor-pointer"
-            >
-              <Plus className="w-4 h-4 mr-2 cursor-pointer" />
-              Nueva Actividad
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>
-                {editingActivity ? "Editar Actividad" : "Crear Nueva Actividad"}
-              </DialogTitle>
-              <DialogDescription>
-                Complete los datos de la actividad extracurricular
-              </DialogDescription>
-            </DialogHeader>
-            <ActivityForm onSuccess={handleCreateActivity} />
-          </DialogContent>
-        </Dialog>
+        <div className="flex gap-2">
+          <Button
+            asChild
+            size="lg"
+            className="bg-green-600 hover:bg-green-700 text-white"
+          >
+            <Link href="/coordinador/actividades/asignar-puntos">
+              <TicketPlus className="w-4 h-4 mr-2" />
+              Asignar puntos
+            </Link>
+          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                size="lg"
+                onClick={() => setEditingActivity(null)}
+                className="cursor-pointer"
+              >
+                <Plus className="w-4 h-4 mr-2 cursor-pointer" />
+                Nueva Actividad
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>
+                  {editingActivity
+                    ? "Editar Actividad"
+                    : "Crear Nueva Actividad"}
+                </DialogTitle>
+                <DialogDescription>
+                  Complete los datos de la actividad extracurricular
+                </DialogDescription>
+              </DialogHeader>
+              <ActivityForm onSuccess={handleCreateActivity} />
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Activities List */}

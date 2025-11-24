@@ -68,6 +68,26 @@ export type PlanDepartamento = $Result.DefaultSelection<Prisma.$PlanDepartamento
  * 
  */
 export type RegistroCambios = $Result.DefaultSelection<Prisma.$RegistroCambiosPayload>
+/**
+ * Model Club
+ * 
+ */
+export type Club = $Result.DefaultSelection<Prisma.$ClubPayload>
+/**
+ * Model ClubRegla
+ * 
+ */
+export type ClubRegla = $Result.DefaultSelection<Prisma.$ClubReglaPayload>
+/**
+ * Model ClubMiembro
+ * 
+ */
+export type ClubMiembro = $Result.DefaultSelection<Prisma.$ClubMiembroPayload>
+/**
+ * Model ClubPuntosRegistro
+ * 
+ */
+export type ClubPuntosRegistro = $Result.DefaultSelection<Prisma.$ClubPuntosRegistroPayload>
 
 /**
  * Enums
@@ -352,6 +372,46 @@ export class PrismaClient<
     * ```
     */
   get registroCambios(): Prisma.RegistroCambiosDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.club`: Exposes CRUD operations for the **Club** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Clubs
+    * const clubs = await prisma.club.findMany()
+    * ```
+    */
+  get club(): Prisma.ClubDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clubRegla`: Exposes CRUD operations for the **ClubRegla** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClubReglas
+    * const clubReglas = await prisma.clubRegla.findMany()
+    * ```
+    */
+  get clubRegla(): Prisma.ClubReglaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clubMiembro`: Exposes CRUD operations for the **ClubMiembro** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClubMiembros
+    * const clubMiembros = await prisma.clubMiembro.findMany()
+    * ```
+    */
+  get clubMiembro(): Prisma.ClubMiembroDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clubPuntosRegistro`: Exposes CRUD operations for the **ClubPuntosRegistro** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClubPuntosRegistros
+    * const clubPuntosRegistros = await prisma.clubPuntosRegistro.findMany()
+    * ```
+    */
+  get clubPuntosRegistro(): Prisma.ClubPuntosRegistroDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -803,7 +863,11 @@ export namespace Prisma {
     Actividad: 'Actividad',
     AlumnoActividad: 'AlumnoActividad',
     PlanDepartamento: 'PlanDepartamento',
-    RegistroCambios: 'RegistroCambios'
+    RegistroCambios: 'RegistroCambios',
+    Club: 'Club',
+    ClubRegla: 'ClubRegla',
+    ClubMiembro: 'ClubMiembro',
+    ClubPuntosRegistro: 'ClubPuntosRegistro'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -822,7 +886,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "escuela" | "planDeEstudio" | "ciclo" | "generacion" | "departamento" | "usuario" | "grupo" | "actividad" | "alumnoActividad" | "planDepartamento" | "registroCambios"
+      modelProps: "escuela" | "planDeEstudio" | "ciclo" | "generacion" | "departamento" | "usuario" | "grupo" | "actividad" | "alumnoActividad" | "planDepartamento" | "registroCambios" | "club" | "clubRegla" | "clubMiembro" | "clubPuntosRegistro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1640,6 +1704,302 @@ export namespace Prisma {
           }
         }
       }
+      Club: {
+        payload: Prisma.$ClubPayload<ExtArgs>
+        fields: Prisma.ClubFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClubFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClubFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>
+          }
+          findFirst: {
+            args: Prisma.ClubFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClubFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>
+          }
+          findMany: {
+            args: Prisma.ClubFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>[]
+          }
+          create: {
+            args: Prisma.ClubCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>
+          }
+          createMany: {
+            args: Prisma.ClubCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClubCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>[]
+          }
+          delete: {
+            args: Prisma.ClubDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>
+          }
+          update: {
+            args: Prisma.ClubUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClubDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClubUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClubUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClubUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPayload>
+          }
+          aggregate: {
+            args: Prisma.ClubAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClub>
+          }
+          groupBy: {
+            args: Prisma.ClubGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClubGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClubCountArgs<ExtArgs>
+            result: $Utils.Optional<ClubCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClubRegla: {
+        payload: Prisma.$ClubReglaPayload<ExtArgs>
+        fields: Prisma.ClubReglaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClubReglaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClubReglaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>
+          }
+          findFirst: {
+            args: Prisma.ClubReglaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClubReglaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>
+          }
+          findMany: {
+            args: Prisma.ClubReglaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>[]
+          }
+          create: {
+            args: Prisma.ClubReglaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>
+          }
+          createMany: {
+            args: Prisma.ClubReglaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClubReglaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>[]
+          }
+          delete: {
+            args: Prisma.ClubReglaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>
+          }
+          update: {
+            args: Prisma.ClubReglaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClubReglaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClubReglaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClubReglaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClubReglaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubReglaPayload>
+          }
+          aggregate: {
+            args: Prisma.ClubReglaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClubRegla>
+          }
+          groupBy: {
+            args: Prisma.ClubReglaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClubReglaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClubReglaCountArgs<ExtArgs>
+            result: $Utils.Optional<ClubReglaCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClubMiembro: {
+        payload: Prisma.$ClubMiembroPayload<ExtArgs>
+        fields: Prisma.ClubMiembroFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClubMiembroFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClubMiembroFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>
+          }
+          findFirst: {
+            args: Prisma.ClubMiembroFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClubMiembroFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>
+          }
+          findMany: {
+            args: Prisma.ClubMiembroFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>[]
+          }
+          create: {
+            args: Prisma.ClubMiembroCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>
+          }
+          createMany: {
+            args: Prisma.ClubMiembroCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClubMiembroCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>[]
+          }
+          delete: {
+            args: Prisma.ClubMiembroDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>
+          }
+          update: {
+            args: Prisma.ClubMiembroUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClubMiembroDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClubMiembroUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClubMiembroUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClubMiembroUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubMiembroPayload>
+          }
+          aggregate: {
+            args: Prisma.ClubMiembroAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClubMiembro>
+          }
+          groupBy: {
+            args: Prisma.ClubMiembroGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClubMiembroGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClubMiembroCountArgs<ExtArgs>
+            result: $Utils.Optional<ClubMiembroCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClubPuntosRegistro: {
+        payload: Prisma.$ClubPuntosRegistroPayload<ExtArgs>
+        fields: Prisma.ClubPuntosRegistroFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClubPuntosRegistroFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClubPuntosRegistroFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>
+          }
+          findFirst: {
+            args: Prisma.ClubPuntosRegistroFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClubPuntosRegistroFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>
+          }
+          findMany: {
+            args: Prisma.ClubPuntosRegistroFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>[]
+          }
+          create: {
+            args: Prisma.ClubPuntosRegistroCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>
+          }
+          createMany: {
+            args: Prisma.ClubPuntosRegistroCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClubPuntosRegistroCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>[]
+          }
+          delete: {
+            args: Prisma.ClubPuntosRegistroDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>
+          }
+          update: {
+            args: Prisma.ClubPuntosRegistroUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClubPuntosRegistroDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClubPuntosRegistroUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClubPuntosRegistroUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClubPuntosRegistroUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClubPuntosRegistroPayload>
+          }
+          aggregate: {
+            args: Prisma.ClubPuntosRegistroAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClubPuntosRegistro>
+          }
+          groupBy: {
+            args: Prisma.ClubPuntosRegistroGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClubPuntosRegistroGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClubPuntosRegistroCountArgs<ExtArgs>
+            result: $Utils.Optional<ClubPuntosRegistroCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1747,6 +2107,10 @@ export namespace Prisma {
     alumnoActividad?: AlumnoActividadOmit
     planDepartamento?: PlanDepartamentoOmit
     registroCambios?: RegistroCambiosOmit
+    club?: ClubOmit
+    clubRegla?: ClubReglaOmit
+    clubMiembro?: ClubMiembroOmit
+    clubPuntosRegistro?: ClubPuntosRegistroOmit
   }
 
   /* Types for Logging */
@@ -2085,6 +2449,9 @@ export namespace Prisma {
     registros_act: number
     registros_puntos: number
     logs: number
+    clubes_miembro: number
+    clubes_puntos: number
+    clubes_puntos_coord: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2092,6 +2459,9 @@ export namespace Prisma {
     registros_act?: boolean | UsuarioCountOutputTypeCountRegistros_actArgs
     registros_puntos?: boolean | UsuarioCountOutputTypeCountRegistros_puntosArgs
     logs?: boolean | UsuarioCountOutputTypeCountLogsArgs
+    clubes_miembro?: boolean | UsuarioCountOutputTypeCountClubes_miembroArgs
+    clubes_puntos?: boolean | UsuarioCountOutputTypeCountClubes_puntosArgs
+    clubes_puntos_coord?: boolean | UsuarioCountOutputTypeCountClubes_puntos_coordArgs
   }
 
   // Custom InputTypes
@@ -2131,6 +2501,27 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RegistroCambiosWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountClubes_miembroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubMiembroWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountClubes_puntosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubPuntosRegistroWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountClubes_puntos_coordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubPuntosRegistroWhereInput
   }
 
 
@@ -2193,6 +2584,86 @@ export namespace Prisma {
    */
   export type ActividadCountOutputTypeCountAlumnoActsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AlumnoActividadWhereInput
+  }
+
+
+  /**
+   * Count Type ClubCountOutputType
+   */
+
+  export type ClubCountOutputType = {
+    reglas: number
+    miembros: number
+    registros: number
+  }
+
+  export type ClubCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reglas?: boolean | ClubCountOutputTypeCountReglasArgs
+    miembros?: boolean | ClubCountOutputTypeCountMiembrosArgs
+    registros?: boolean | ClubCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ClubCountOutputType without action
+   */
+  export type ClubCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubCountOutputType
+     */
+    select?: ClubCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ClubCountOutputType without action
+   */
+  export type ClubCountOutputTypeCountReglasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubReglaWhereInput
+  }
+
+  /**
+   * ClubCountOutputType without action
+   */
+  export type ClubCountOutputTypeCountMiembrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubMiembroWhereInput
+  }
+
+  /**
+   * ClubCountOutputType without action
+   */
+  export type ClubCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubPuntosRegistroWhereInput
+  }
+
+
+  /**
+   * Count Type ClubReglaCountOutputType
+   */
+
+  export type ClubReglaCountOutputType = {
+    registros: number
+  }
+
+  export type ClubReglaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | ClubReglaCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ClubReglaCountOutputType without action
+   */
+  export type ClubReglaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubReglaCountOutputType
+     */
+    select?: ClubReglaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ClubReglaCountOutputType without action
+   */
+  export type ClubReglaCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubPuntosRegistroWhereInput
   }
 
 
@@ -8419,6 +8890,9 @@ export namespace Prisma {
     registros_puntos?: boolean | Usuario$registros_puntosArgs<ExtArgs>
     logs?: boolean | Usuario$logsArgs<ExtArgs>
     generacion?: boolean | Usuario$generacionArgs<ExtArgs>
+    clubes_miembro?: boolean | Usuario$clubes_miembroArgs<ExtArgs>
+    clubes_puntos?: boolean | Usuario$clubes_puntosArgs<ExtArgs>
+    clubes_puntos_coord?: boolean | Usuario$clubes_puntos_coordArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -8476,6 +8950,9 @@ export namespace Prisma {
     registros_puntos?: boolean | Usuario$registros_puntosArgs<ExtArgs>
     logs?: boolean | Usuario$logsArgs<ExtArgs>
     generacion?: boolean | Usuario$generacionArgs<ExtArgs>
+    clubes_miembro?: boolean | Usuario$clubes_miembroArgs<ExtArgs>
+    clubes_puntos?: boolean | Usuario$clubes_puntosArgs<ExtArgs>
+    clubes_puntos_coord?: boolean | Usuario$clubes_puntos_coordArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8499,6 +8976,9 @@ export namespace Prisma {
       registros_puntos: Prisma.$AlumnoActividadPayload<ExtArgs>[]
       logs: Prisma.$RegistroCambiosPayload<ExtArgs>[]
       generacion: Prisma.$GeneracionPayload<ExtArgs> | null
+      clubes_miembro: Prisma.$ClubMiembroPayload<ExtArgs>[]
+      clubes_puntos: Prisma.$ClubPuntosRegistroPayload<ExtArgs>[]
+      clubes_puntos_coord: Prisma.$ClubPuntosRegistroPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id_usuario: number
@@ -8912,6 +9392,9 @@ export namespace Prisma {
     registros_puntos<T extends Usuario$registros_puntosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$registros_puntosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlumnoActividadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     logs<T extends Usuario$logsArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegistroCambiosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     generacion<T extends Usuario$generacionArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$generacionArgs<ExtArgs>>): Prisma__GeneracionClient<$Result.GetResult<Prisma.$GeneracionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    clubes_miembro<T extends Usuario$clubes_miembroArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$clubes_miembroArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    clubes_puntos<T extends Usuario$clubes_puntosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$clubes_puntosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    clubes_puntos_coord<T extends Usuario$clubes_puntos_coordArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$clubes_puntos_coordArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9478,6 +9961,78 @@ export namespace Prisma {
      */
     include?: GeneracionInclude<ExtArgs> | null
     where?: GeneracionWhereInput
+  }
+
+  /**
+   * Usuario.clubes_miembro
+   */
+  export type Usuario$clubes_miembroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    where?: ClubMiembroWhereInput
+    orderBy?: ClubMiembroOrderByWithRelationInput | ClubMiembroOrderByWithRelationInput[]
+    cursor?: ClubMiembroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubMiembroScalarFieldEnum | ClubMiembroScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.clubes_puntos
+   */
+  export type Usuario$clubes_puntosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    where?: ClubPuntosRegistroWhereInput
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.clubes_puntos_coord
+   */
+  export type Usuario$clubes_puntos_coordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    where?: ClubPuntosRegistroWhereInput
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
   }
 
   /**
@@ -15294,6 +15849,4579 @@ export namespace Prisma {
 
 
   /**
+   * Model Club
+   */
+
+  export type AggregateClub = {
+    _count: ClubCountAggregateOutputType | null
+    _avg: ClubAvgAggregateOutputType | null
+    _sum: ClubSumAggregateOutputType | null
+    _min: ClubMinAggregateOutputType | null
+    _max: ClubMaxAggregateOutputType | null
+  }
+
+  export type ClubAvgAggregateOutputType = {
+    id_club: number | null
+  }
+
+  export type ClubSumAggregateOutputType = {
+    id_club: number | null
+  }
+
+  export type ClubMinAggregateOutputType = {
+    id_club: number | null
+    nombre: string | null
+    descripcion: string | null
+    fecha_creacion: Date | null
+  }
+
+  export type ClubMaxAggregateOutputType = {
+    id_club: number | null
+    nombre: string | null
+    descripcion: string | null
+    fecha_creacion: Date | null
+  }
+
+  export type ClubCountAggregateOutputType = {
+    id_club: number
+    nombre: number
+    descripcion: number
+    fecha_creacion: number
+    _all: number
+  }
+
+
+  export type ClubAvgAggregateInputType = {
+    id_club?: true
+  }
+
+  export type ClubSumAggregateInputType = {
+    id_club?: true
+  }
+
+  export type ClubMinAggregateInputType = {
+    id_club?: true
+    nombre?: true
+    descripcion?: true
+    fecha_creacion?: true
+  }
+
+  export type ClubMaxAggregateInputType = {
+    id_club?: true
+    nombre?: true
+    descripcion?: true
+    fecha_creacion?: true
+  }
+
+  export type ClubCountAggregateInputType = {
+    id_club?: true
+    nombre?: true
+    descripcion?: true
+    fecha_creacion?: true
+    _all?: true
+  }
+
+  export type ClubAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Club to aggregate.
+     */
+    where?: ClubWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clubs to fetch.
+     */
+    orderBy?: ClubOrderByWithRelationInput | ClubOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClubWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clubs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clubs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Clubs
+    **/
+    _count?: true | ClubCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClubAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClubSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClubMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClubMaxAggregateInputType
+  }
+
+  export type GetClubAggregateType<T extends ClubAggregateArgs> = {
+        [P in keyof T & keyof AggregateClub]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClub[P]>
+      : GetScalarType<T[P], AggregateClub[P]>
+  }
+
+
+
+
+  export type ClubGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubWhereInput
+    orderBy?: ClubOrderByWithAggregationInput | ClubOrderByWithAggregationInput[]
+    by: ClubScalarFieldEnum[] | ClubScalarFieldEnum
+    having?: ClubScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClubCountAggregateInputType | true
+    _avg?: ClubAvgAggregateInputType
+    _sum?: ClubSumAggregateInputType
+    _min?: ClubMinAggregateInputType
+    _max?: ClubMaxAggregateInputType
+  }
+
+  export type ClubGroupByOutputType = {
+    id_club: number
+    nombre: string
+    descripcion: string | null
+    fecha_creacion: Date
+    _count: ClubCountAggregateOutputType | null
+    _avg: ClubAvgAggregateOutputType | null
+    _sum: ClubSumAggregateOutputType | null
+    _min: ClubMinAggregateOutputType | null
+    _max: ClubMaxAggregateOutputType | null
+  }
+
+  type GetClubGroupByPayload<T extends ClubGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClubGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClubGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClubGroupByOutputType[P]>
+            : GetScalarType<T[P], ClubGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClubSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    fecha_creacion?: boolean
+    reglas?: boolean | Club$reglasArgs<ExtArgs>
+    miembros?: boolean | Club$miembrosArgs<ExtArgs>
+    registros?: boolean | Club$registrosArgs<ExtArgs>
+    _count?: boolean | ClubCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["club"]>
+
+  export type ClubSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    fecha_creacion?: boolean
+  }, ExtArgs["result"]["club"]>
+
+  export type ClubSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    fecha_creacion?: boolean
+  }, ExtArgs["result"]["club"]>
+
+  export type ClubSelectScalar = {
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    fecha_creacion?: boolean
+  }
+
+  export type ClubOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_club" | "nombre" | "descripcion" | "fecha_creacion", ExtArgs["result"]["club"]>
+  export type ClubInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reglas?: boolean | Club$reglasArgs<ExtArgs>
+    miembros?: boolean | Club$miembrosArgs<ExtArgs>
+    registros?: boolean | Club$registrosArgs<ExtArgs>
+    _count?: boolean | ClubCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ClubIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ClubIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ClubPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Club"
+    objects: {
+      reglas: Prisma.$ClubReglaPayload<ExtArgs>[]
+      miembros: Prisma.$ClubMiembroPayload<ExtArgs>[]
+      registros: Prisma.$ClubPuntosRegistroPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_club: number
+      nombre: string
+      descripcion: string | null
+      fecha_creacion: Date
+    }, ExtArgs["result"]["club"]>
+    composites: {}
+  }
+
+  type ClubGetPayload<S extends boolean | null | undefined | ClubDefaultArgs> = $Result.GetResult<Prisma.$ClubPayload, S>
+
+  type ClubCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClubFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClubCountAggregateInputType | true
+    }
+
+  export interface ClubDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Club'], meta: { name: 'Club' } }
+    /**
+     * Find zero or one Club that matches the filter.
+     * @param {ClubFindUniqueArgs} args - Arguments to find a Club
+     * @example
+     * // Get one Club
+     * const club = await prisma.club.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClubFindUniqueArgs>(args: SelectSubset<T, ClubFindUniqueArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Club that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClubFindUniqueOrThrowArgs} args - Arguments to find a Club
+     * @example
+     * // Get one Club
+     * const club = await prisma.club.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClubFindUniqueOrThrowArgs>(args: SelectSubset<T, ClubFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Club that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubFindFirstArgs} args - Arguments to find a Club
+     * @example
+     * // Get one Club
+     * const club = await prisma.club.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClubFindFirstArgs>(args?: SelectSubset<T, ClubFindFirstArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Club that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubFindFirstOrThrowArgs} args - Arguments to find a Club
+     * @example
+     * // Get one Club
+     * const club = await prisma.club.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClubFindFirstOrThrowArgs>(args?: SelectSubset<T, ClubFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Clubs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Clubs
+     * const clubs = await prisma.club.findMany()
+     * 
+     * // Get first 10 Clubs
+     * const clubs = await prisma.club.findMany({ take: 10 })
+     * 
+     * // Only select the `id_club`
+     * const clubWithId_clubOnly = await prisma.club.findMany({ select: { id_club: true } })
+     * 
+     */
+    findMany<T extends ClubFindManyArgs>(args?: SelectSubset<T, ClubFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Club.
+     * @param {ClubCreateArgs} args - Arguments to create a Club.
+     * @example
+     * // Create one Club
+     * const Club = await prisma.club.create({
+     *   data: {
+     *     // ... data to create a Club
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClubCreateArgs>(args: SelectSubset<T, ClubCreateArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Clubs.
+     * @param {ClubCreateManyArgs} args - Arguments to create many Clubs.
+     * @example
+     * // Create many Clubs
+     * const club = await prisma.club.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClubCreateManyArgs>(args?: SelectSubset<T, ClubCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Clubs and returns the data saved in the database.
+     * @param {ClubCreateManyAndReturnArgs} args - Arguments to create many Clubs.
+     * @example
+     * // Create many Clubs
+     * const club = await prisma.club.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Clubs and only return the `id_club`
+     * const clubWithId_clubOnly = await prisma.club.createManyAndReturn({
+     *   select: { id_club: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClubCreateManyAndReturnArgs>(args?: SelectSubset<T, ClubCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Club.
+     * @param {ClubDeleteArgs} args - Arguments to delete one Club.
+     * @example
+     * // Delete one Club
+     * const Club = await prisma.club.delete({
+     *   where: {
+     *     // ... filter to delete one Club
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClubDeleteArgs>(args: SelectSubset<T, ClubDeleteArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Club.
+     * @param {ClubUpdateArgs} args - Arguments to update one Club.
+     * @example
+     * // Update one Club
+     * const club = await prisma.club.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClubUpdateArgs>(args: SelectSubset<T, ClubUpdateArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Clubs.
+     * @param {ClubDeleteManyArgs} args - Arguments to filter Clubs to delete.
+     * @example
+     * // Delete a few Clubs
+     * const { count } = await prisma.club.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClubDeleteManyArgs>(args?: SelectSubset<T, ClubDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clubs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Clubs
+     * const club = await prisma.club.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClubUpdateManyArgs>(args: SelectSubset<T, ClubUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clubs and returns the data updated in the database.
+     * @param {ClubUpdateManyAndReturnArgs} args - Arguments to update many Clubs.
+     * @example
+     * // Update many Clubs
+     * const club = await prisma.club.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Clubs and only return the `id_club`
+     * const clubWithId_clubOnly = await prisma.club.updateManyAndReturn({
+     *   select: { id_club: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClubUpdateManyAndReturnArgs>(args: SelectSubset<T, ClubUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Club.
+     * @param {ClubUpsertArgs} args - Arguments to update or create a Club.
+     * @example
+     * // Update or create a Club
+     * const club = await prisma.club.upsert({
+     *   create: {
+     *     // ... data to create a Club
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Club we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClubUpsertArgs>(args: SelectSubset<T, ClubUpsertArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Clubs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubCountArgs} args - Arguments to filter Clubs to count.
+     * @example
+     * // Count the number of Clubs
+     * const count = await prisma.club.count({
+     *   where: {
+     *     // ... the filter for the Clubs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClubCountArgs>(
+      args?: Subset<T, ClubCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClubCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Club.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClubAggregateArgs>(args: Subset<T, ClubAggregateArgs>): Prisma.PrismaPromise<GetClubAggregateType<T>>
+
+    /**
+     * Group by Club.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClubGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClubGroupByArgs['orderBy'] }
+        : { orderBy?: ClubGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClubGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClubGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Club model
+   */
+  readonly fields: ClubFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Club.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClubClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    reglas<T extends Club$reglasArgs<ExtArgs> = {}>(args?: Subset<T, Club$reglasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    miembros<T extends Club$miembrosArgs<ExtArgs> = {}>(args?: Subset<T, Club$miembrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    registros<T extends Club$registrosArgs<ExtArgs> = {}>(args?: Subset<T, Club$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Club model
+   */
+  interface ClubFieldRefs {
+    readonly id_club: FieldRef<"Club", 'Int'>
+    readonly nombre: FieldRef<"Club", 'String'>
+    readonly descripcion: FieldRef<"Club", 'String'>
+    readonly fecha_creacion: FieldRef<"Club", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Club findUnique
+   */
+  export type ClubFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * Filter, which Club to fetch.
+     */
+    where: ClubWhereUniqueInput
+  }
+
+  /**
+   * Club findUniqueOrThrow
+   */
+  export type ClubFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * Filter, which Club to fetch.
+     */
+    where: ClubWhereUniqueInput
+  }
+
+  /**
+   * Club findFirst
+   */
+  export type ClubFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * Filter, which Club to fetch.
+     */
+    where?: ClubWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clubs to fetch.
+     */
+    orderBy?: ClubOrderByWithRelationInput | ClubOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clubs.
+     */
+    cursor?: ClubWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clubs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clubs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clubs.
+     */
+    distinct?: ClubScalarFieldEnum | ClubScalarFieldEnum[]
+  }
+
+  /**
+   * Club findFirstOrThrow
+   */
+  export type ClubFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * Filter, which Club to fetch.
+     */
+    where?: ClubWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clubs to fetch.
+     */
+    orderBy?: ClubOrderByWithRelationInput | ClubOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clubs.
+     */
+    cursor?: ClubWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clubs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clubs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clubs.
+     */
+    distinct?: ClubScalarFieldEnum | ClubScalarFieldEnum[]
+  }
+
+  /**
+   * Club findMany
+   */
+  export type ClubFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * Filter, which Clubs to fetch.
+     */
+    where?: ClubWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clubs to fetch.
+     */
+    orderBy?: ClubOrderByWithRelationInput | ClubOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Clubs.
+     */
+    cursor?: ClubWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clubs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clubs.
+     */
+    skip?: number
+    distinct?: ClubScalarFieldEnum | ClubScalarFieldEnum[]
+  }
+
+  /**
+   * Club create
+   */
+  export type ClubCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Club.
+     */
+    data: XOR<ClubCreateInput, ClubUncheckedCreateInput>
+  }
+
+  /**
+   * Club createMany
+   */
+  export type ClubCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Clubs.
+     */
+    data: ClubCreateManyInput | ClubCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Club createManyAndReturn
+   */
+  export type ClubCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * The data used to create many Clubs.
+     */
+    data: ClubCreateManyInput | ClubCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Club update
+   */
+  export type ClubUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Club.
+     */
+    data: XOR<ClubUpdateInput, ClubUncheckedUpdateInput>
+    /**
+     * Choose, which Club to update.
+     */
+    where: ClubWhereUniqueInput
+  }
+
+  /**
+   * Club updateMany
+   */
+  export type ClubUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Clubs.
+     */
+    data: XOR<ClubUpdateManyMutationInput, ClubUncheckedUpdateManyInput>
+    /**
+     * Filter which Clubs to update
+     */
+    where?: ClubWhereInput
+    /**
+     * Limit how many Clubs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Club updateManyAndReturn
+   */
+  export type ClubUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * The data used to update Clubs.
+     */
+    data: XOR<ClubUpdateManyMutationInput, ClubUncheckedUpdateManyInput>
+    /**
+     * Filter which Clubs to update
+     */
+    where?: ClubWhereInput
+    /**
+     * Limit how many Clubs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Club upsert
+   */
+  export type ClubUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Club to update in case it exists.
+     */
+    where: ClubWhereUniqueInput
+    /**
+     * In case the Club found by the `where` argument doesn't exist, create a new Club with this data.
+     */
+    create: XOR<ClubCreateInput, ClubUncheckedCreateInput>
+    /**
+     * In case the Club was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClubUpdateInput, ClubUncheckedUpdateInput>
+  }
+
+  /**
+   * Club delete
+   */
+  export type ClubDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+    /**
+     * Filter which Club to delete.
+     */
+    where: ClubWhereUniqueInput
+  }
+
+  /**
+   * Club deleteMany
+   */
+  export type ClubDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Clubs to delete
+     */
+    where?: ClubWhereInput
+    /**
+     * Limit how many Clubs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Club.reglas
+   */
+  export type Club$reglasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    where?: ClubReglaWhereInput
+    orderBy?: ClubReglaOrderByWithRelationInput | ClubReglaOrderByWithRelationInput[]
+    cursor?: ClubReglaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubReglaScalarFieldEnum | ClubReglaScalarFieldEnum[]
+  }
+
+  /**
+   * Club.miembros
+   */
+  export type Club$miembrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    where?: ClubMiembroWhereInput
+    orderBy?: ClubMiembroOrderByWithRelationInput | ClubMiembroOrderByWithRelationInput[]
+    cursor?: ClubMiembroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubMiembroScalarFieldEnum | ClubMiembroScalarFieldEnum[]
+  }
+
+  /**
+   * Club.registros
+   */
+  export type Club$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    where?: ClubPuntosRegistroWhereInput
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Club without action
+   */
+  export type ClubDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Club
+     */
+    select?: ClubSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Club
+     */
+    omit?: ClubOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClubRegla
+   */
+
+  export type AggregateClubRegla = {
+    _count: ClubReglaCountAggregateOutputType | null
+    _avg: ClubReglaAvgAggregateOutputType | null
+    _sum: ClubReglaSumAggregateOutputType | null
+    _min: ClubReglaMinAggregateOutputType | null
+    _max: ClubReglaMaxAggregateOutputType | null
+  }
+
+  export type ClubReglaAvgAggregateOutputType = {
+    id_regla: number | null
+    id_club: number | null
+    puntos: number | null
+  }
+
+  export type ClubReglaSumAggregateOutputType = {
+    id_regla: number | null
+    id_club: number | null
+    puntos: number | null
+  }
+
+  export type ClubReglaMinAggregateOutputType = {
+    id_regla: number | null
+    id_club: number | null
+    nombre: string | null
+    descripcion: string | null
+    puntos: number | null
+    tipo: string | null
+    fecha_creacion: Date | null
+  }
+
+  export type ClubReglaMaxAggregateOutputType = {
+    id_regla: number | null
+    id_club: number | null
+    nombre: string | null
+    descripcion: string | null
+    puntos: number | null
+    tipo: string | null
+    fecha_creacion: Date | null
+  }
+
+  export type ClubReglaCountAggregateOutputType = {
+    id_regla: number
+    id_club: number
+    nombre: number
+    descripcion: number
+    puntos: number
+    tipo: number
+    fecha_creacion: number
+    _all: number
+  }
+
+
+  export type ClubReglaAvgAggregateInputType = {
+    id_regla?: true
+    id_club?: true
+    puntos?: true
+  }
+
+  export type ClubReglaSumAggregateInputType = {
+    id_regla?: true
+    id_club?: true
+    puntos?: true
+  }
+
+  export type ClubReglaMinAggregateInputType = {
+    id_regla?: true
+    id_club?: true
+    nombre?: true
+    descripcion?: true
+    puntos?: true
+    tipo?: true
+    fecha_creacion?: true
+  }
+
+  export type ClubReglaMaxAggregateInputType = {
+    id_regla?: true
+    id_club?: true
+    nombre?: true
+    descripcion?: true
+    puntos?: true
+    tipo?: true
+    fecha_creacion?: true
+  }
+
+  export type ClubReglaCountAggregateInputType = {
+    id_regla?: true
+    id_club?: true
+    nombre?: true
+    descripcion?: true
+    puntos?: true
+    tipo?: true
+    fecha_creacion?: true
+    _all?: true
+  }
+
+  export type ClubReglaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClubRegla to aggregate.
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubReglas to fetch.
+     */
+    orderBy?: ClubReglaOrderByWithRelationInput | ClubReglaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClubReglaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubReglas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubReglas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClubReglas
+    **/
+    _count?: true | ClubReglaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClubReglaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClubReglaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClubReglaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClubReglaMaxAggregateInputType
+  }
+
+  export type GetClubReglaAggregateType<T extends ClubReglaAggregateArgs> = {
+        [P in keyof T & keyof AggregateClubRegla]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClubRegla[P]>
+      : GetScalarType<T[P], AggregateClubRegla[P]>
+  }
+
+
+
+
+  export type ClubReglaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubReglaWhereInput
+    orderBy?: ClubReglaOrderByWithAggregationInput | ClubReglaOrderByWithAggregationInput[]
+    by: ClubReglaScalarFieldEnum[] | ClubReglaScalarFieldEnum
+    having?: ClubReglaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClubReglaCountAggregateInputType | true
+    _avg?: ClubReglaAvgAggregateInputType
+    _sum?: ClubReglaSumAggregateInputType
+    _min?: ClubReglaMinAggregateInputType
+    _max?: ClubReglaMaxAggregateInputType
+  }
+
+  export type ClubReglaGroupByOutputType = {
+    id_regla: number
+    id_club: number
+    nombre: string
+    descripcion: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion: Date
+    _count: ClubReglaCountAggregateOutputType | null
+    _avg: ClubReglaAvgAggregateOutputType | null
+    _sum: ClubReglaSumAggregateOutputType | null
+    _min: ClubReglaMinAggregateOutputType | null
+    _max: ClubReglaMaxAggregateOutputType | null
+  }
+
+  type GetClubReglaGroupByPayload<T extends ClubReglaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClubReglaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClubReglaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClubReglaGroupByOutputType[P]>
+            : GetScalarType<T[P], ClubReglaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClubReglaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_regla?: boolean
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    puntos?: boolean
+    tipo?: boolean
+    fecha_creacion?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    registros?: boolean | ClubRegla$registrosArgs<ExtArgs>
+    _count?: boolean | ClubReglaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubRegla"]>
+
+  export type ClubReglaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_regla?: boolean
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    puntos?: boolean
+    tipo?: boolean
+    fecha_creacion?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubRegla"]>
+
+  export type ClubReglaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_regla?: boolean
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    puntos?: boolean
+    tipo?: boolean
+    fecha_creacion?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubRegla"]>
+
+  export type ClubReglaSelectScalar = {
+    id_regla?: boolean
+    id_club?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    puntos?: boolean
+    tipo?: boolean
+    fecha_creacion?: boolean
+  }
+
+  export type ClubReglaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_regla" | "id_club" | "nombre" | "descripcion" | "puntos" | "tipo" | "fecha_creacion", ExtArgs["result"]["clubRegla"]>
+  export type ClubReglaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    registros?: boolean | ClubRegla$registrosArgs<ExtArgs>
+    _count?: boolean | ClubReglaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ClubReglaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+  }
+  export type ClubReglaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+  }
+
+  export type $ClubReglaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClubRegla"
+    objects: {
+      club: Prisma.$ClubPayload<ExtArgs>
+      registros: Prisma.$ClubPuntosRegistroPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_regla: number
+      id_club: number
+      nombre: string
+      descripcion: string | null
+      puntos: number
+      tipo: string
+      fecha_creacion: Date
+    }, ExtArgs["result"]["clubRegla"]>
+    composites: {}
+  }
+
+  type ClubReglaGetPayload<S extends boolean | null | undefined | ClubReglaDefaultArgs> = $Result.GetResult<Prisma.$ClubReglaPayload, S>
+
+  type ClubReglaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClubReglaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClubReglaCountAggregateInputType | true
+    }
+
+  export interface ClubReglaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClubRegla'], meta: { name: 'ClubRegla' } }
+    /**
+     * Find zero or one ClubRegla that matches the filter.
+     * @param {ClubReglaFindUniqueArgs} args - Arguments to find a ClubRegla
+     * @example
+     * // Get one ClubRegla
+     * const clubRegla = await prisma.clubRegla.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClubReglaFindUniqueArgs>(args: SelectSubset<T, ClubReglaFindUniqueArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClubRegla that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClubReglaFindUniqueOrThrowArgs} args - Arguments to find a ClubRegla
+     * @example
+     * // Get one ClubRegla
+     * const clubRegla = await prisma.clubRegla.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClubReglaFindUniqueOrThrowArgs>(args: SelectSubset<T, ClubReglaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClubRegla that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaFindFirstArgs} args - Arguments to find a ClubRegla
+     * @example
+     * // Get one ClubRegla
+     * const clubRegla = await prisma.clubRegla.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClubReglaFindFirstArgs>(args?: SelectSubset<T, ClubReglaFindFirstArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClubRegla that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaFindFirstOrThrowArgs} args - Arguments to find a ClubRegla
+     * @example
+     * // Get one ClubRegla
+     * const clubRegla = await prisma.clubRegla.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClubReglaFindFirstOrThrowArgs>(args?: SelectSubset<T, ClubReglaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClubReglas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClubReglas
+     * const clubReglas = await prisma.clubRegla.findMany()
+     * 
+     * // Get first 10 ClubReglas
+     * const clubReglas = await prisma.clubRegla.findMany({ take: 10 })
+     * 
+     * // Only select the `id_regla`
+     * const clubReglaWithId_reglaOnly = await prisma.clubRegla.findMany({ select: { id_regla: true } })
+     * 
+     */
+    findMany<T extends ClubReglaFindManyArgs>(args?: SelectSubset<T, ClubReglaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClubRegla.
+     * @param {ClubReglaCreateArgs} args - Arguments to create a ClubRegla.
+     * @example
+     * // Create one ClubRegla
+     * const ClubRegla = await prisma.clubRegla.create({
+     *   data: {
+     *     // ... data to create a ClubRegla
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClubReglaCreateArgs>(args: SelectSubset<T, ClubReglaCreateArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClubReglas.
+     * @param {ClubReglaCreateManyArgs} args - Arguments to create many ClubReglas.
+     * @example
+     * // Create many ClubReglas
+     * const clubRegla = await prisma.clubRegla.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClubReglaCreateManyArgs>(args?: SelectSubset<T, ClubReglaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClubReglas and returns the data saved in the database.
+     * @param {ClubReglaCreateManyAndReturnArgs} args - Arguments to create many ClubReglas.
+     * @example
+     * // Create many ClubReglas
+     * const clubRegla = await prisma.clubRegla.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClubReglas and only return the `id_regla`
+     * const clubReglaWithId_reglaOnly = await prisma.clubRegla.createManyAndReturn({
+     *   select: { id_regla: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClubReglaCreateManyAndReturnArgs>(args?: SelectSubset<T, ClubReglaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClubRegla.
+     * @param {ClubReglaDeleteArgs} args - Arguments to delete one ClubRegla.
+     * @example
+     * // Delete one ClubRegla
+     * const ClubRegla = await prisma.clubRegla.delete({
+     *   where: {
+     *     // ... filter to delete one ClubRegla
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClubReglaDeleteArgs>(args: SelectSubset<T, ClubReglaDeleteArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClubRegla.
+     * @param {ClubReglaUpdateArgs} args - Arguments to update one ClubRegla.
+     * @example
+     * // Update one ClubRegla
+     * const clubRegla = await prisma.clubRegla.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClubReglaUpdateArgs>(args: SelectSubset<T, ClubReglaUpdateArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClubReglas.
+     * @param {ClubReglaDeleteManyArgs} args - Arguments to filter ClubReglas to delete.
+     * @example
+     * // Delete a few ClubReglas
+     * const { count } = await prisma.clubRegla.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClubReglaDeleteManyArgs>(args?: SelectSubset<T, ClubReglaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClubReglas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClubReglas
+     * const clubRegla = await prisma.clubRegla.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClubReglaUpdateManyArgs>(args: SelectSubset<T, ClubReglaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClubReglas and returns the data updated in the database.
+     * @param {ClubReglaUpdateManyAndReturnArgs} args - Arguments to update many ClubReglas.
+     * @example
+     * // Update many ClubReglas
+     * const clubRegla = await prisma.clubRegla.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClubReglas and only return the `id_regla`
+     * const clubReglaWithId_reglaOnly = await prisma.clubRegla.updateManyAndReturn({
+     *   select: { id_regla: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClubReglaUpdateManyAndReturnArgs>(args: SelectSubset<T, ClubReglaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClubRegla.
+     * @param {ClubReglaUpsertArgs} args - Arguments to update or create a ClubRegla.
+     * @example
+     * // Update or create a ClubRegla
+     * const clubRegla = await prisma.clubRegla.upsert({
+     *   create: {
+     *     // ... data to create a ClubRegla
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClubRegla we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClubReglaUpsertArgs>(args: SelectSubset<T, ClubReglaUpsertArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClubReglas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaCountArgs} args - Arguments to filter ClubReglas to count.
+     * @example
+     * // Count the number of ClubReglas
+     * const count = await prisma.clubRegla.count({
+     *   where: {
+     *     // ... the filter for the ClubReglas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClubReglaCountArgs>(
+      args?: Subset<T, ClubReglaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClubReglaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClubRegla.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClubReglaAggregateArgs>(args: Subset<T, ClubReglaAggregateArgs>): Prisma.PrismaPromise<GetClubReglaAggregateType<T>>
+
+    /**
+     * Group by ClubRegla.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubReglaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClubReglaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClubReglaGroupByArgs['orderBy'] }
+        : { orderBy?: ClubReglaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClubReglaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClubReglaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClubRegla model
+   */
+  readonly fields: ClubReglaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClubRegla.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClubReglaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    club<T extends ClubDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClubDefaultArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    registros<T extends ClubRegla$registrosArgs<ExtArgs> = {}>(args?: Subset<T, ClubRegla$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClubRegla model
+   */
+  interface ClubReglaFieldRefs {
+    readonly id_regla: FieldRef<"ClubRegla", 'Int'>
+    readonly id_club: FieldRef<"ClubRegla", 'Int'>
+    readonly nombre: FieldRef<"ClubRegla", 'String'>
+    readonly descripcion: FieldRef<"ClubRegla", 'String'>
+    readonly puntos: FieldRef<"ClubRegla", 'Int'>
+    readonly tipo: FieldRef<"ClubRegla", 'String'>
+    readonly fecha_creacion: FieldRef<"ClubRegla", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClubRegla findUnique
+   */
+  export type ClubReglaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubRegla to fetch.
+     */
+    where: ClubReglaWhereUniqueInput
+  }
+
+  /**
+   * ClubRegla findUniqueOrThrow
+   */
+  export type ClubReglaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubRegla to fetch.
+     */
+    where: ClubReglaWhereUniqueInput
+  }
+
+  /**
+   * ClubRegla findFirst
+   */
+  export type ClubReglaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubRegla to fetch.
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubReglas to fetch.
+     */
+    orderBy?: ClubReglaOrderByWithRelationInput | ClubReglaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClubReglas.
+     */
+    cursor?: ClubReglaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubReglas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubReglas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClubReglas.
+     */
+    distinct?: ClubReglaScalarFieldEnum | ClubReglaScalarFieldEnum[]
+  }
+
+  /**
+   * ClubRegla findFirstOrThrow
+   */
+  export type ClubReglaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubRegla to fetch.
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubReglas to fetch.
+     */
+    orderBy?: ClubReglaOrderByWithRelationInput | ClubReglaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClubReglas.
+     */
+    cursor?: ClubReglaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubReglas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubReglas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClubReglas.
+     */
+    distinct?: ClubReglaScalarFieldEnum | ClubReglaScalarFieldEnum[]
+  }
+
+  /**
+   * ClubRegla findMany
+   */
+  export type ClubReglaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubReglas to fetch.
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubReglas to fetch.
+     */
+    orderBy?: ClubReglaOrderByWithRelationInput | ClubReglaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClubReglas.
+     */
+    cursor?: ClubReglaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubReglas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubReglas.
+     */
+    skip?: number
+    distinct?: ClubReglaScalarFieldEnum | ClubReglaScalarFieldEnum[]
+  }
+
+  /**
+   * ClubRegla create
+   */
+  export type ClubReglaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClubRegla.
+     */
+    data: XOR<ClubReglaCreateInput, ClubReglaUncheckedCreateInput>
+  }
+
+  /**
+   * ClubRegla createMany
+   */
+  export type ClubReglaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClubReglas.
+     */
+    data: ClubReglaCreateManyInput | ClubReglaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClubRegla createManyAndReturn
+   */
+  export type ClubReglaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClubReglas.
+     */
+    data: ClubReglaCreateManyInput | ClubReglaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClubRegla update
+   */
+  export type ClubReglaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClubRegla.
+     */
+    data: XOR<ClubReglaUpdateInput, ClubReglaUncheckedUpdateInput>
+    /**
+     * Choose, which ClubRegla to update.
+     */
+    where: ClubReglaWhereUniqueInput
+  }
+
+  /**
+   * ClubRegla updateMany
+   */
+  export type ClubReglaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClubReglas.
+     */
+    data: XOR<ClubReglaUpdateManyMutationInput, ClubReglaUncheckedUpdateManyInput>
+    /**
+     * Filter which ClubReglas to update
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * Limit how many ClubReglas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClubRegla updateManyAndReturn
+   */
+  export type ClubReglaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * The data used to update ClubReglas.
+     */
+    data: XOR<ClubReglaUpdateManyMutationInput, ClubReglaUncheckedUpdateManyInput>
+    /**
+     * Filter which ClubReglas to update
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * Limit how many ClubReglas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClubRegla upsert
+   */
+  export type ClubReglaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClubRegla to update in case it exists.
+     */
+    where: ClubReglaWhereUniqueInput
+    /**
+     * In case the ClubRegla found by the `where` argument doesn't exist, create a new ClubRegla with this data.
+     */
+    create: XOR<ClubReglaCreateInput, ClubReglaUncheckedCreateInput>
+    /**
+     * In case the ClubRegla was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClubReglaUpdateInput, ClubReglaUncheckedUpdateInput>
+  }
+
+  /**
+   * ClubRegla delete
+   */
+  export type ClubReglaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+    /**
+     * Filter which ClubRegla to delete.
+     */
+    where: ClubReglaWhereUniqueInput
+  }
+
+  /**
+   * ClubRegla deleteMany
+   */
+  export type ClubReglaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClubReglas to delete
+     */
+    where?: ClubReglaWhereInput
+    /**
+     * Limit how many ClubReglas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClubRegla.registros
+   */
+  export type ClubRegla$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    where?: ClubPuntosRegistroWhereInput
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubRegla without action
+   */
+  export type ClubReglaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubRegla
+     */
+    select?: ClubReglaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubRegla
+     */
+    omit?: ClubReglaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubReglaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClubMiembro
+   */
+
+  export type AggregateClubMiembro = {
+    _count: ClubMiembroCountAggregateOutputType | null
+    _avg: ClubMiembroAvgAggregateOutputType | null
+    _sum: ClubMiembroSumAggregateOutputType | null
+    _min: ClubMiembroMinAggregateOutputType | null
+    _max: ClubMiembroMaxAggregateOutputType | null
+  }
+
+  export type ClubMiembroAvgAggregateOutputType = {
+    id_miembro: number | null
+    id_club: number | null
+    id_alumno: number | null
+  }
+
+  export type ClubMiembroSumAggregateOutputType = {
+    id_miembro: number | null
+    id_club: number | null
+    id_alumno: number | null
+  }
+
+  export type ClubMiembroMinAggregateOutputType = {
+    id_miembro: number | null
+    id_club: number | null
+    id_alumno: number | null
+    fecha_ingreso: Date | null
+    estado: string | null
+  }
+
+  export type ClubMiembroMaxAggregateOutputType = {
+    id_miembro: number | null
+    id_club: number | null
+    id_alumno: number | null
+    fecha_ingreso: Date | null
+    estado: string | null
+  }
+
+  export type ClubMiembroCountAggregateOutputType = {
+    id_miembro: number
+    id_club: number
+    id_alumno: number
+    fecha_ingreso: number
+    estado: number
+    _all: number
+  }
+
+
+  export type ClubMiembroAvgAggregateInputType = {
+    id_miembro?: true
+    id_club?: true
+    id_alumno?: true
+  }
+
+  export type ClubMiembroSumAggregateInputType = {
+    id_miembro?: true
+    id_club?: true
+    id_alumno?: true
+  }
+
+  export type ClubMiembroMinAggregateInputType = {
+    id_miembro?: true
+    id_club?: true
+    id_alumno?: true
+    fecha_ingreso?: true
+    estado?: true
+  }
+
+  export type ClubMiembroMaxAggregateInputType = {
+    id_miembro?: true
+    id_club?: true
+    id_alumno?: true
+    fecha_ingreso?: true
+    estado?: true
+  }
+
+  export type ClubMiembroCountAggregateInputType = {
+    id_miembro?: true
+    id_club?: true
+    id_alumno?: true
+    fecha_ingreso?: true
+    estado?: true
+    _all?: true
+  }
+
+  export type ClubMiembroAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClubMiembro to aggregate.
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubMiembros to fetch.
+     */
+    orderBy?: ClubMiembroOrderByWithRelationInput | ClubMiembroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClubMiembroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubMiembros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubMiembros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClubMiembros
+    **/
+    _count?: true | ClubMiembroCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClubMiembroAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClubMiembroSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClubMiembroMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClubMiembroMaxAggregateInputType
+  }
+
+  export type GetClubMiembroAggregateType<T extends ClubMiembroAggregateArgs> = {
+        [P in keyof T & keyof AggregateClubMiembro]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClubMiembro[P]>
+      : GetScalarType<T[P], AggregateClubMiembro[P]>
+  }
+
+
+
+
+  export type ClubMiembroGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubMiembroWhereInput
+    orderBy?: ClubMiembroOrderByWithAggregationInput | ClubMiembroOrderByWithAggregationInput[]
+    by: ClubMiembroScalarFieldEnum[] | ClubMiembroScalarFieldEnum
+    having?: ClubMiembroScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClubMiembroCountAggregateInputType | true
+    _avg?: ClubMiembroAvgAggregateInputType
+    _sum?: ClubMiembroSumAggregateInputType
+    _min?: ClubMiembroMinAggregateInputType
+    _max?: ClubMiembroMaxAggregateInputType
+  }
+
+  export type ClubMiembroGroupByOutputType = {
+    id_miembro: number
+    id_club: number
+    id_alumno: number
+    fecha_ingreso: Date
+    estado: string
+    _count: ClubMiembroCountAggregateOutputType | null
+    _avg: ClubMiembroAvgAggregateOutputType | null
+    _sum: ClubMiembroSumAggregateOutputType | null
+    _min: ClubMiembroMinAggregateOutputType | null
+    _max: ClubMiembroMaxAggregateOutputType | null
+  }
+
+  type GetClubMiembroGroupByPayload<T extends ClubMiembroGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClubMiembroGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClubMiembroGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClubMiembroGroupByOutputType[P]>
+            : GetScalarType<T[P], ClubMiembroGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClubMiembroSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_miembro?: boolean
+    id_club?: boolean
+    id_alumno?: boolean
+    fecha_ingreso?: boolean
+    estado?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubMiembro"]>
+
+  export type ClubMiembroSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_miembro?: boolean
+    id_club?: boolean
+    id_alumno?: boolean
+    fecha_ingreso?: boolean
+    estado?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubMiembro"]>
+
+  export type ClubMiembroSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_miembro?: boolean
+    id_club?: boolean
+    id_alumno?: boolean
+    fecha_ingreso?: boolean
+    estado?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubMiembro"]>
+
+  export type ClubMiembroSelectScalar = {
+    id_miembro?: boolean
+    id_club?: boolean
+    id_alumno?: boolean
+    fecha_ingreso?: boolean
+    estado?: boolean
+  }
+
+  export type ClubMiembroOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_miembro" | "id_club" | "id_alumno" | "fecha_ingreso" | "estado", ExtArgs["result"]["clubMiembro"]>
+  export type ClubMiembroInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ClubMiembroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ClubMiembroIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $ClubMiembroPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClubMiembro"
+    objects: {
+      club: Prisma.$ClubPayload<ExtArgs>
+      alumno: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_miembro: number
+      id_club: number
+      id_alumno: number
+      fecha_ingreso: Date
+      estado: string
+    }, ExtArgs["result"]["clubMiembro"]>
+    composites: {}
+  }
+
+  type ClubMiembroGetPayload<S extends boolean | null | undefined | ClubMiembroDefaultArgs> = $Result.GetResult<Prisma.$ClubMiembroPayload, S>
+
+  type ClubMiembroCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClubMiembroFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClubMiembroCountAggregateInputType | true
+    }
+
+  export interface ClubMiembroDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClubMiembro'], meta: { name: 'ClubMiembro' } }
+    /**
+     * Find zero or one ClubMiembro that matches the filter.
+     * @param {ClubMiembroFindUniqueArgs} args - Arguments to find a ClubMiembro
+     * @example
+     * // Get one ClubMiembro
+     * const clubMiembro = await prisma.clubMiembro.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClubMiembroFindUniqueArgs>(args: SelectSubset<T, ClubMiembroFindUniqueArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClubMiembro that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClubMiembroFindUniqueOrThrowArgs} args - Arguments to find a ClubMiembro
+     * @example
+     * // Get one ClubMiembro
+     * const clubMiembro = await prisma.clubMiembro.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClubMiembroFindUniqueOrThrowArgs>(args: SelectSubset<T, ClubMiembroFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClubMiembro that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroFindFirstArgs} args - Arguments to find a ClubMiembro
+     * @example
+     * // Get one ClubMiembro
+     * const clubMiembro = await prisma.clubMiembro.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClubMiembroFindFirstArgs>(args?: SelectSubset<T, ClubMiembroFindFirstArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClubMiembro that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroFindFirstOrThrowArgs} args - Arguments to find a ClubMiembro
+     * @example
+     * // Get one ClubMiembro
+     * const clubMiembro = await prisma.clubMiembro.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClubMiembroFindFirstOrThrowArgs>(args?: SelectSubset<T, ClubMiembroFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClubMiembros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClubMiembros
+     * const clubMiembros = await prisma.clubMiembro.findMany()
+     * 
+     * // Get first 10 ClubMiembros
+     * const clubMiembros = await prisma.clubMiembro.findMany({ take: 10 })
+     * 
+     * // Only select the `id_miembro`
+     * const clubMiembroWithId_miembroOnly = await prisma.clubMiembro.findMany({ select: { id_miembro: true } })
+     * 
+     */
+    findMany<T extends ClubMiembroFindManyArgs>(args?: SelectSubset<T, ClubMiembroFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClubMiembro.
+     * @param {ClubMiembroCreateArgs} args - Arguments to create a ClubMiembro.
+     * @example
+     * // Create one ClubMiembro
+     * const ClubMiembro = await prisma.clubMiembro.create({
+     *   data: {
+     *     // ... data to create a ClubMiembro
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClubMiembroCreateArgs>(args: SelectSubset<T, ClubMiembroCreateArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClubMiembros.
+     * @param {ClubMiembroCreateManyArgs} args - Arguments to create many ClubMiembros.
+     * @example
+     * // Create many ClubMiembros
+     * const clubMiembro = await prisma.clubMiembro.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClubMiembroCreateManyArgs>(args?: SelectSubset<T, ClubMiembroCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClubMiembros and returns the data saved in the database.
+     * @param {ClubMiembroCreateManyAndReturnArgs} args - Arguments to create many ClubMiembros.
+     * @example
+     * // Create many ClubMiembros
+     * const clubMiembro = await prisma.clubMiembro.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClubMiembros and only return the `id_miembro`
+     * const clubMiembroWithId_miembroOnly = await prisma.clubMiembro.createManyAndReturn({
+     *   select: { id_miembro: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClubMiembroCreateManyAndReturnArgs>(args?: SelectSubset<T, ClubMiembroCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClubMiembro.
+     * @param {ClubMiembroDeleteArgs} args - Arguments to delete one ClubMiembro.
+     * @example
+     * // Delete one ClubMiembro
+     * const ClubMiembro = await prisma.clubMiembro.delete({
+     *   where: {
+     *     // ... filter to delete one ClubMiembro
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClubMiembroDeleteArgs>(args: SelectSubset<T, ClubMiembroDeleteArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClubMiembro.
+     * @param {ClubMiembroUpdateArgs} args - Arguments to update one ClubMiembro.
+     * @example
+     * // Update one ClubMiembro
+     * const clubMiembro = await prisma.clubMiembro.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClubMiembroUpdateArgs>(args: SelectSubset<T, ClubMiembroUpdateArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClubMiembros.
+     * @param {ClubMiembroDeleteManyArgs} args - Arguments to filter ClubMiembros to delete.
+     * @example
+     * // Delete a few ClubMiembros
+     * const { count } = await prisma.clubMiembro.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClubMiembroDeleteManyArgs>(args?: SelectSubset<T, ClubMiembroDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClubMiembros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClubMiembros
+     * const clubMiembro = await prisma.clubMiembro.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClubMiembroUpdateManyArgs>(args: SelectSubset<T, ClubMiembroUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClubMiembros and returns the data updated in the database.
+     * @param {ClubMiembroUpdateManyAndReturnArgs} args - Arguments to update many ClubMiembros.
+     * @example
+     * // Update many ClubMiembros
+     * const clubMiembro = await prisma.clubMiembro.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClubMiembros and only return the `id_miembro`
+     * const clubMiembroWithId_miembroOnly = await prisma.clubMiembro.updateManyAndReturn({
+     *   select: { id_miembro: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClubMiembroUpdateManyAndReturnArgs>(args: SelectSubset<T, ClubMiembroUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClubMiembro.
+     * @param {ClubMiembroUpsertArgs} args - Arguments to update or create a ClubMiembro.
+     * @example
+     * // Update or create a ClubMiembro
+     * const clubMiembro = await prisma.clubMiembro.upsert({
+     *   create: {
+     *     // ... data to create a ClubMiembro
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClubMiembro we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClubMiembroUpsertArgs>(args: SelectSubset<T, ClubMiembroUpsertArgs<ExtArgs>>): Prisma__ClubMiembroClient<$Result.GetResult<Prisma.$ClubMiembroPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClubMiembros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroCountArgs} args - Arguments to filter ClubMiembros to count.
+     * @example
+     * // Count the number of ClubMiembros
+     * const count = await prisma.clubMiembro.count({
+     *   where: {
+     *     // ... the filter for the ClubMiembros we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClubMiembroCountArgs>(
+      args?: Subset<T, ClubMiembroCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClubMiembroCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClubMiembro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClubMiembroAggregateArgs>(args: Subset<T, ClubMiembroAggregateArgs>): Prisma.PrismaPromise<GetClubMiembroAggregateType<T>>
+
+    /**
+     * Group by ClubMiembro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubMiembroGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClubMiembroGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClubMiembroGroupByArgs['orderBy'] }
+        : { orderBy?: ClubMiembroGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClubMiembroGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClubMiembroGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClubMiembro model
+   */
+  readonly fields: ClubMiembroFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClubMiembro.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClubMiembroClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    club<T extends ClubDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClubDefaultArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    alumno<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClubMiembro model
+   */
+  interface ClubMiembroFieldRefs {
+    readonly id_miembro: FieldRef<"ClubMiembro", 'Int'>
+    readonly id_club: FieldRef<"ClubMiembro", 'Int'>
+    readonly id_alumno: FieldRef<"ClubMiembro", 'Int'>
+    readonly fecha_ingreso: FieldRef<"ClubMiembro", 'DateTime'>
+    readonly estado: FieldRef<"ClubMiembro", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClubMiembro findUnique
+   */
+  export type ClubMiembroFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubMiembro to fetch.
+     */
+    where: ClubMiembroWhereUniqueInput
+  }
+
+  /**
+   * ClubMiembro findUniqueOrThrow
+   */
+  export type ClubMiembroFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubMiembro to fetch.
+     */
+    where: ClubMiembroWhereUniqueInput
+  }
+
+  /**
+   * ClubMiembro findFirst
+   */
+  export type ClubMiembroFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubMiembro to fetch.
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubMiembros to fetch.
+     */
+    orderBy?: ClubMiembroOrderByWithRelationInput | ClubMiembroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClubMiembros.
+     */
+    cursor?: ClubMiembroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubMiembros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubMiembros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClubMiembros.
+     */
+    distinct?: ClubMiembroScalarFieldEnum | ClubMiembroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubMiembro findFirstOrThrow
+   */
+  export type ClubMiembroFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubMiembro to fetch.
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubMiembros to fetch.
+     */
+    orderBy?: ClubMiembroOrderByWithRelationInput | ClubMiembroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClubMiembros.
+     */
+    cursor?: ClubMiembroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubMiembros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubMiembros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClubMiembros.
+     */
+    distinct?: ClubMiembroScalarFieldEnum | ClubMiembroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubMiembro findMany
+   */
+  export type ClubMiembroFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubMiembros to fetch.
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubMiembros to fetch.
+     */
+    orderBy?: ClubMiembroOrderByWithRelationInput | ClubMiembroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClubMiembros.
+     */
+    cursor?: ClubMiembroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubMiembros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubMiembros.
+     */
+    skip?: number
+    distinct?: ClubMiembroScalarFieldEnum | ClubMiembroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubMiembro create
+   */
+  export type ClubMiembroCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClubMiembro.
+     */
+    data: XOR<ClubMiembroCreateInput, ClubMiembroUncheckedCreateInput>
+  }
+
+  /**
+   * ClubMiembro createMany
+   */
+  export type ClubMiembroCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClubMiembros.
+     */
+    data: ClubMiembroCreateManyInput | ClubMiembroCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClubMiembro createManyAndReturn
+   */
+  export type ClubMiembroCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClubMiembros.
+     */
+    data: ClubMiembroCreateManyInput | ClubMiembroCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClubMiembro update
+   */
+  export type ClubMiembroUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClubMiembro.
+     */
+    data: XOR<ClubMiembroUpdateInput, ClubMiembroUncheckedUpdateInput>
+    /**
+     * Choose, which ClubMiembro to update.
+     */
+    where: ClubMiembroWhereUniqueInput
+  }
+
+  /**
+   * ClubMiembro updateMany
+   */
+  export type ClubMiembroUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClubMiembros.
+     */
+    data: XOR<ClubMiembroUpdateManyMutationInput, ClubMiembroUncheckedUpdateManyInput>
+    /**
+     * Filter which ClubMiembros to update
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * Limit how many ClubMiembros to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClubMiembro updateManyAndReturn
+   */
+  export type ClubMiembroUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * The data used to update ClubMiembros.
+     */
+    data: XOR<ClubMiembroUpdateManyMutationInput, ClubMiembroUncheckedUpdateManyInput>
+    /**
+     * Filter which ClubMiembros to update
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * Limit how many ClubMiembros to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClubMiembro upsert
+   */
+  export type ClubMiembroUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClubMiembro to update in case it exists.
+     */
+    where: ClubMiembroWhereUniqueInput
+    /**
+     * In case the ClubMiembro found by the `where` argument doesn't exist, create a new ClubMiembro with this data.
+     */
+    create: XOR<ClubMiembroCreateInput, ClubMiembroUncheckedCreateInput>
+    /**
+     * In case the ClubMiembro was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClubMiembroUpdateInput, ClubMiembroUncheckedUpdateInput>
+  }
+
+  /**
+   * ClubMiembro delete
+   */
+  export type ClubMiembroDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+    /**
+     * Filter which ClubMiembro to delete.
+     */
+    where: ClubMiembroWhereUniqueInput
+  }
+
+  /**
+   * ClubMiembro deleteMany
+   */
+  export type ClubMiembroDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClubMiembros to delete
+     */
+    where?: ClubMiembroWhereInput
+    /**
+     * Limit how many ClubMiembros to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClubMiembro without action
+   */
+  export type ClubMiembroDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubMiembro
+     */
+    select?: ClubMiembroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubMiembro
+     */
+    omit?: ClubMiembroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubMiembroInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClubPuntosRegistro
+   */
+
+  export type AggregateClubPuntosRegistro = {
+    _count: ClubPuntosRegistroCountAggregateOutputType | null
+    _avg: ClubPuntosRegistroAvgAggregateOutputType | null
+    _sum: ClubPuntosRegistroSumAggregateOutputType | null
+    _min: ClubPuntosRegistroMinAggregateOutputType | null
+    _max: ClubPuntosRegistroMaxAggregateOutputType | null
+  }
+
+  export type ClubPuntosRegistroAvgAggregateOutputType = {
+    id_registro: number | null
+    id_club: number | null
+    id_regla: number | null
+    id_alumno: number | null
+    puntos_otorgados: number | null
+    id_coordinador: number | null
+  }
+
+  export type ClubPuntosRegistroSumAggregateOutputType = {
+    id_registro: number | null
+    id_club: number | null
+    id_regla: number | null
+    id_alumno: number | null
+    puntos_otorgados: number | null
+    id_coordinador: number | null
+  }
+
+  export type ClubPuntosRegistroMinAggregateOutputType = {
+    id_registro: number | null
+    id_club: number | null
+    id_regla: number | null
+    id_alumno: number | null
+    puntos_otorgados: number | null
+    fecha_registro: Date | null
+    id_coordinador: number | null
+  }
+
+  export type ClubPuntosRegistroMaxAggregateOutputType = {
+    id_registro: number | null
+    id_club: number | null
+    id_regla: number | null
+    id_alumno: number | null
+    puntos_otorgados: number | null
+    fecha_registro: Date | null
+    id_coordinador: number | null
+  }
+
+  export type ClubPuntosRegistroCountAggregateOutputType = {
+    id_registro: number
+    id_club: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro: number
+    id_coordinador: number
+    _all: number
+  }
+
+
+  export type ClubPuntosRegistroAvgAggregateInputType = {
+    id_registro?: true
+    id_club?: true
+    id_regla?: true
+    id_alumno?: true
+    puntos_otorgados?: true
+    id_coordinador?: true
+  }
+
+  export type ClubPuntosRegistroSumAggregateInputType = {
+    id_registro?: true
+    id_club?: true
+    id_regla?: true
+    id_alumno?: true
+    puntos_otorgados?: true
+    id_coordinador?: true
+  }
+
+  export type ClubPuntosRegistroMinAggregateInputType = {
+    id_registro?: true
+    id_club?: true
+    id_regla?: true
+    id_alumno?: true
+    puntos_otorgados?: true
+    fecha_registro?: true
+    id_coordinador?: true
+  }
+
+  export type ClubPuntosRegistroMaxAggregateInputType = {
+    id_registro?: true
+    id_club?: true
+    id_regla?: true
+    id_alumno?: true
+    puntos_otorgados?: true
+    fecha_registro?: true
+    id_coordinador?: true
+  }
+
+  export type ClubPuntosRegistroCountAggregateInputType = {
+    id_registro?: true
+    id_club?: true
+    id_regla?: true
+    id_alumno?: true
+    puntos_otorgados?: true
+    fecha_registro?: true
+    id_coordinador?: true
+    _all?: true
+  }
+
+  export type ClubPuntosRegistroAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClubPuntosRegistro to aggregate.
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubPuntosRegistros to fetch.
+     */
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubPuntosRegistros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubPuntosRegistros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClubPuntosRegistros
+    **/
+    _count?: true | ClubPuntosRegistroCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClubPuntosRegistroAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClubPuntosRegistroSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClubPuntosRegistroMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClubPuntosRegistroMaxAggregateInputType
+  }
+
+  export type GetClubPuntosRegistroAggregateType<T extends ClubPuntosRegistroAggregateArgs> = {
+        [P in keyof T & keyof AggregateClubPuntosRegistro]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClubPuntosRegistro[P]>
+      : GetScalarType<T[P], AggregateClubPuntosRegistro[P]>
+  }
+
+
+
+
+  export type ClubPuntosRegistroGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClubPuntosRegistroWhereInput
+    orderBy?: ClubPuntosRegistroOrderByWithAggregationInput | ClubPuntosRegistroOrderByWithAggregationInput[]
+    by: ClubPuntosRegistroScalarFieldEnum[] | ClubPuntosRegistroScalarFieldEnum
+    having?: ClubPuntosRegistroScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClubPuntosRegistroCountAggregateInputType | true
+    _avg?: ClubPuntosRegistroAvgAggregateInputType
+    _sum?: ClubPuntosRegistroSumAggregateInputType
+    _min?: ClubPuntosRegistroMinAggregateInputType
+    _max?: ClubPuntosRegistroMaxAggregateInputType
+  }
+
+  export type ClubPuntosRegistroGroupByOutputType = {
+    id_registro: number
+    id_club: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro: Date
+    id_coordinador: number
+    _count: ClubPuntosRegistroCountAggregateOutputType | null
+    _avg: ClubPuntosRegistroAvgAggregateOutputType | null
+    _sum: ClubPuntosRegistroSumAggregateOutputType | null
+    _min: ClubPuntosRegistroMinAggregateOutputType | null
+    _max: ClubPuntosRegistroMaxAggregateOutputType | null
+  }
+
+  type GetClubPuntosRegistroGroupByPayload<T extends ClubPuntosRegistroGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClubPuntosRegistroGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClubPuntosRegistroGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClubPuntosRegistroGroupByOutputType[P]>
+            : GetScalarType<T[P], ClubPuntosRegistroGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClubPuntosRegistroSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_registro?: boolean
+    id_club?: boolean
+    id_regla?: boolean
+    id_alumno?: boolean
+    puntos_otorgados?: boolean
+    fecha_registro?: boolean
+    id_coordinador?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    regla?: boolean | ClubReglaDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+    coordinador?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubPuntosRegistro"]>
+
+  export type ClubPuntosRegistroSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_registro?: boolean
+    id_club?: boolean
+    id_regla?: boolean
+    id_alumno?: boolean
+    puntos_otorgados?: boolean
+    fecha_registro?: boolean
+    id_coordinador?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    regla?: boolean | ClubReglaDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+    coordinador?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubPuntosRegistro"]>
+
+  export type ClubPuntosRegistroSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_registro?: boolean
+    id_club?: boolean
+    id_regla?: boolean
+    id_alumno?: boolean
+    puntos_otorgados?: boolean
+    fecha_registro?: boolean
+    id_coordinador?: boolean
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    regla?: boolean | ClubReglaDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+    coordinador?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clubPuntosRegistro"]>
+
+  export type ClubPuntosRegistroSelectScalar = {
+    id_registro?: boolean
+    id_club?: boolean
+    id_regla?: boolean
+    id_alumno?: boolean
+    puntos_otorgados?: boolean
+    fecha_registro?: boolean
+    id_coordinador?: boolean
+  }
+
+  export type ClubPuntosRegistroOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_registro" | "id_club" | "id_regla" | "id_alumno" | "puntos_otorgados" | "fecha_registro" | "id_coordinador", ExtArgs["result"]["clubPuntosRegistro"]>
+  export type ClubPuntosRegistroInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    regla?: boolean | ClubReglaDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+    coordinador?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ClubPuntosRegistroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    regla?: boolean | ClubReglaDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+    coordinador?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ClubPuntosRegistroIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    club?: boolean | ClubDefaultArgs<ExtArgs>
+    regla?: boolean | ClubReglaDefaultArgs<ExtArgs>
+    alumno?: boolean | UsuarioDefaultArgs<ExtArgs>
+    coordinador?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $ClubPuntosRegistroPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClubPuntosRegistro"
+    objects: {
+      club: Prisma.$ClubPayload<ExtArgs>
+      regla: Prisma.$ClubReglaPayload<ExtArgs>
+      alumno: Prisma.$UsuarioPayload<ExtArgs>
+      coordinador: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_registro: number
+      id_club: number
+      id_regla: number
+      id_alumno: number
+      puntos_otorgados: number
+      fecha_registro: Date
+      id_coordinador: number
+    }, ExtArgs["result"]["clubPuntosRegistro"]>
+    composites: {}
+  }
+
+  type ClubPuntosRegistroGetPayload<S extends boolean | null | undefined | ClubPuntosRegistroDefaultArgs> = $Result.GetResult<Prisma.$ClubPuntosRegistroPayload, S>
+
+  type ClubPuntosRegistroCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClubPuntosRegistroFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClubPuntosRegistroCountAggregateInputType | true
+    }
+
+  export interface ClubPuntosRegistroDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClubPuntosRegistro'], meta: { name: 'ClubPuntosRegistro' } }
+    /**
+     * Find zero or one ClubPuntosRegistro that matches the filter.
+     * @param {ClubPuntosRegistroFindUniqueArgs} args - Arguments to find a ClubPuntosRegistro
+     * @example
+     * // Get one ClubPuntosRegistro
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClubPuntosRegistroFindUniqueArgs>(args: SelectSubset<T, ClubPuntosRegistroFindUniqueArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClubPuntosRegistro that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClubPuntosRegistroFindUniqueOrThrowArgs} args - Arguments to find a ClubPuntosRegistro
+     * @example
+     * // Get one ClubPuntosRegistro
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClubPuntosRegistroFindUniqueOrThrowArgs>(args: SelectSubset<T, ClubPuntosRegistroFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClubPuntosRegistro that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroFindFirstArgs} args - Arguments to find a ClubPuntosRegistro
+     * @example
+     * // Get one ClubPuntosRegistro
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClubPuntosRegistroFindFirstArgs>(args?: SelectSubset<T, ClubPuntosRegistroFindFirstArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClubPuntosRegistro that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroFindFirstOrThrowArgs} args - Arguments to find a ClubPuntosRegistro
+     * @example
+     * // Get one ClubPuntosRegistro
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClubPuntosRegistroFindFirstOrThrowArgs>(args?: SelectSubset<T, ClubPuntosRegistroFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClubPuntosRegistros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClubPuntosRegistros
+     * const clubPuntosRegistros = await prisma.clubPuntosRegistro.findMany()
+     * 
+     * // Get first 10 ClubPuntosRegistros
+     * const clubPuntosRegistros = await prisma.clubPuntosRegistro.findMany({ take: 10 })
+     * 
+     * // Only select the `id_registro`
+     * const clubPuntosRegistroWithId_registroOnly = await prisma.clubPuntosRegistro.findMany({ select: { id_registro: true } })
+     * 
+     */
+    findMany<T extends ClubPuntosRegistroFindManyArgs>(args?: SelectSubset<T, ClubPuntosRegistroFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClubPuntosRegistro.
+     * @param {ClubPuntosRegistroCreateArgs} args - Arguments to create a ClubPuntosRegistro.
+     * @example
+     * // Create one ClubPuntosRegistro
+     * const ClubPuntosRegistro = await prisma.clubPuntosRegistro.create({
+     *   data: {
+     *     // ... data to create a ClubPuntosRegistro
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClubPuntosRegistroCreateArgs>(args: SelectSubset<T, ClubPuntosRegistroCreateArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClubPuntosRegistros.
+     * @param {ClubPuntosRegistroCreateManyArgs} args - Arguments to create many ClubPuntosRegistros.
+     * @example
+     * // Create many ClubPuntosRegistros
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClubPuntosRegistroCreateManyArgs>(args?: SelectSubset<T, ClubPuntosRegistroCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClubPuntosRegistros and returns the data saved in the database.
+     * @param {ClubPuntosRegistroCreateManyAndReturnArgs} args - Arguments to create many ClubPuntosRegistros.
+     * @example
+     * // Create many ClubPuntosRegistros
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClubPuntosRegistros and only return the `id_registro`
+     * const clubPuntosRegistroWithId_registroOnly = await prisma.clubPuntosRegistro.createManyAndReturn({
+     *   select: { id_registro: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClubPuntosRegistroCreateManyAndReturnArgs>(args?: SelectSubset<T, ClubPuntosRegistroCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClubPuntosRegistro.
+     * @param {ClubPuntosRegistroDeleteArgs} args - Arguments to delete one ClubPuntosRegistro.
+     * @example
+     * // Delete one ClubPuntosRegistro
+     * const ClubPuntosRegistro = await prisma.clubPuntosRegistro.delete({
+     *   where: {
+     *     // ... filter to delete one ClubPuntosRegistro
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClubPuntosRegistroDeleteArgs>(args: SelectSubset<T, ClubPuntosRegistroDeleteArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClubPuntosRegistro.
+     * @param {ClubPuntosRegistroUpdateArgs} args - Arguments to update one ClubPuntosRegistro.
+     * @example
+     * // Update one ClubPuntosRegistro
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClubPuntosRegistroUpdateArgs>(args: SelectSubset<T, ClubPuntosRegistroUpdateArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClubPuntosRegistros.
+     * @param {ClubPuntosRegistroDeleteManyArgs} args - Arguments to filter ClubPuntosRegistros to delete.
+     * @example
+     * // Delete a few ClubPuntosRegistros
+     * const { count } = await prisma.clubPuntosRegistro.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClubPuntosRegistroDeleteManyArgs>(args?: SelectSubset<T, ClubPuntosRegistroDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClubPuntosRegistros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClubPuntosRegistros
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClubPuntosRegistroUpdateManyArgs>(args: SelectSubset<T, ClubPuntosRegistroUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClubPuntosRegistros and returns the data updated in the database.
+     * @param {ClubPuntosRegistroUpdateManyAndReturnArgs} args - Arguments to update many ClubPuntosRegistros.
+     * @example
+     * // Update many ClubPuntosRegistros
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClubPuntosRegistros and only return the `id_registro`
+     * const clubPuntosRegistroWithId_registroOnly = await prisma.clubPuntosRegistro.updateManyAndReturn({
+     *   select: { id_registro: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClubPuntosRegistroUpdateManyAndReturnArgs>(args: SelectSubset<T, ClubPuntosRegistroUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClubPuntosRegistro.
+     * @param {ClubPuntosRegistroUpsertArgs} args - Arguments to update or create a ClubPuntosRegistro.
+     * @example
+     * // Update or create a ClubPuntosRegistro
+     * const clubPuntosRegistro = await prisma.clubPuntosRegistro.upsert({
+     *   create: {
+     *     // ... data to create a ClubPuntosRegistro
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClubPuntosRegistro we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClubPuntosRegistroUpsertArgs>(args: SelectSubset<T, ClubPuntosRegistroUpsertArgs<ExtArgs>>): Prisma__ClubPuntosRegistroClient<$Result.GetResult<Prisma.$ClubPuntosRegistroPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClubPuntosRegistros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroCountArgs} args - Arguments to filter ClubPuntosRegistros to count.
+     * @example
+     * // Count the number of ClubPuntosRegistros
+     * const count = await prisma.clubPuntosRegistro.count({
+     *   where: {
+     *     // ... the filter for the ClubPuntosRegistros we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClubPuntosRegistroCountArgs>(
+      args?: Subset<T, ClubPuntosRegistroCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClubPuntosRegistroCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClubPuntosRegistro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClubPuntosRegistroAggregateArgs>(args: Subset<T, ClubPuntosRegistroAggregateArgs>): Prisma.PrismaPromise<GetClubPuntosRegistroAggregateType<T>>
+
+    /**
+     * Group by ClubPuntosRegistro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClubPuntosRegistroGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClubPuntosRegistroGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClubPuntosRegistroGroupByArgs['orderBy'] }
+        : { orderBy?: ClubPuntosRegistroGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClubPuntosRegistroGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClubPuntosRegistroGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClubPuntosRegistro model
+   */
+  readonly fields: ClubPuntosRegistroFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClubPuntosRegistro.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClubPuntosRegistroClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    club<T extends ClubDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClubDefaultArgs<ExtArgs>>): Prisma__ClubClient<$Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    regla<T extends ClubReglaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClubReglaDefaultArgs<ExtArgs>>): Prisma__ClubReglaClient<$Result.GetResult<Prisma.$ClubReglaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    alumno<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    coordinador<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClubPuntosRegistro model
+   */
+  interface ClubPuntosRegistroFieldRefs {
+    readonly id_registro: FieldRef<"ClubPuntosRegistro", 'Int'>
+    readonly id_club: FieldRef<"ClubPuntosRegistro", 'Int'>
+    readonly id_regla: FieldRef<"ClubPuntosRegistro", 'Int'>
+    readonly id_alumno: FieldRef<"ClubPuntosRegistro", 'Int'>
+    readonly puntos_otorgados: FieldRef<"ClubPuntosRegistro", 'Int'>
+    readonly fecha_registro: FieldRef<"ClubPuntosRegistro", 'DateTime'>
+    readonly id_coordinador: FieldRef<"ClubPuntosRegistro", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClubPuntosRegistro findUnique
+   */
+  export type ClubPuntosRegistroFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubPuntosRegistro to fetch.
+     */
+    where: ClubPuntosRegistroWhereUniqueInput
+  }
+
+  /**
+   * ClubPuntosRegistro findUniqueOrThrow
+   */
+  export type ClubPuntosRegistroFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubPuntosRegistro to fetch.
+     */
+    where: ClubPuntosRegistroWhereUniqueInput
+  }
+
+  /**
+   * ClubPuntosRegistro findFirst
+   */
+  export type ClubPuntosRegistroFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubPuntosRegistro to fetch.
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubPuntosRegistros to fetch.
+     */
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClubPuntosRegistros.
+     */
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubPuntosRegistros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubPuntosRegistros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClubPuntosRegistros.
+     */
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubPuntosRegistro findFirstOrThrow
+   */
+  export type ClubPuntosRegistroFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubPuntosRegistro to fetch.
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubPuntosRegistros to fetch.
+     */
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClubPuntosRegistros.
+     */
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubPuntosRegistros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubPuntosRegistros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClubPuntosRegistros.
+     */
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubPuntosRegistro findMany
+   */
+  export type ClubPuntosRegistroFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which ClubPuntosRegistros to fetch.
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClubPuntosRegistros to fetch.
+     */
+    orderBy?: ClubPuntosRegistroOrderByWithRelationInput | ClubPuntosRegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClubPuntosRegistros.
+     */
+    cursor?: ClubPuntosRegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClubPuntosRegistros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClubPuntosRegistros.
+     */
+    skip?: number
+    distinct?: ClubPuntosRegistroScalarFieldEnum | ClubPuntosRegistroScalarFieldEnum[]
+  }
+
+  /**
+   * ClubPuntosRegistro create
+   */
+  export type ClubPuntosRegistroCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClubPuntosRegistro.
+     */
+    data: XOR<ClubPuntosRegistroCreateInput, ClubPuntosRegistroUncheckedCreateInput>
+  }
+
+  /**
+   * ClubPuntosRegistro createMany
+   */
+  export type ClubPuntosRegistroCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClubPuntosRegistros.
+     */
+    data: ClubPuntosRegistroCreateManyInput | ClubPuntosRegistroCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClubPuntosRegistro createManyAndReturn
+   */
+  export type ClubPuntosRegistroCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClubPuntosRegistros.
+     */
+    data: ClubPuntosRegistroCreateManyInput | ClubPuntosRegistroCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClubPuntosRegistro update
+   */
+  export type ClubPuntosRegistroUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClubPuntosRegistro.
+     */
+    data: XOR<ClubPuntosRegistroUpdateInput, ClubPuntosRegistroUncheckedUpdateInput>
+    /**
+     * Choose, which ClubPuntosRegistro to update.
+     */
+    where: ClubPuntosRegistroWhereUniqueInput
+  }
+
+  /**
+   * ClubPuntosRegistro updateMany
+   */
+  export type ClubPuntosRegistroUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClubPuntosRegistros.
+     */
+    data: XOR<ClubPuntosRegistroUpdateManyMutationInput, ClubPuntosRegistroUncheckedUpdateManyInput>
+    /**
+     * Filter which ClubPuntosRegistros to update
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * Limit how many ClubPuntosRegistros to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClubPuntosRegistro updateManyAndReturn
+   */
+  export type ClubPuntosRegistroUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * The data used to update ClubPuntosRegistros.
+     */
+    data: XOR<ClubPuntosRegistroUpdateManyMutationInput, ClubPuntosRegistroUncheckedUpdateManyInput>
+    /**
+     * Filter which ClubPuntosRegistros to update
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * Limit how many ClubPuntosRegistros to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClubPuntosRegistro upsert
+   */
+  export type ClubPuntosRegistroUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClubPuntosRegistro to update in case it exists.
+     */
+    where: ClubPuntosRegistroWhereUniqueInput
+    /**
+     * In case the ClubPuntosRegistro found by the `where` argument doesn't exist, create a new ClubPuntosRegistro with this data.
+     */
+    create: XOR<ClubPuntosRegistroCreateInput, ClubPuntosRegistroUncheckedCreateInput>
+    /**
+     * In case the ClubPuntosRegistro was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClubPuntosRegistroUpdateInput, ClubPuntosRegistroUncheckedUpdateInput>
+  }
+
+  /**
+   * ClubPuntosRegistro delete
+   */
+  export type ClubPuntosRegistroDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+    /**
+     * Filter which ClubPuntosRegistro to delete.
+     */
+    where: ClubPuntosRegistroWhereUniqueInput
+  }
+
+  /**
+   * ClubPuntosRegistro deleteMany
+   */
+  export type ClubPuntosRegistroDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClubPuntosRegistros to delete
+     */
+    where?: ClubPuntosRegistroWhereInput
+    /**
+     * Limit how many ClubPuntosRegistros to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClubPuntosRegistro without action
+   */
+  export type ClubPuntosRegistroDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClubPuntosRegistro
+     */
+    select?: ClubPuntosRegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClubPuntosRegistro
+     */
+    omit?: ClubPuntosRegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClubPuntosRegistroInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -15443,6 +20571,53 @@ export namespace Prisma {
   };
 
   export type RegistroCambiosScalarFieldEnum = (typeof RegistroCambiosScalarFieldEnum)[keyof typeof RegistroCambiosScalarFieldEnum]
+
+
+  export const ClubScalarFieldEnum: {
+    id_club: 'id_club',
+    nombre: 'nombre',
+    descripcion: 'descripcion',
+    fecha_creacion: 'fecha_creacion'
+  };
+
+  export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
+
+
+  export const ClubReglaScalarFieldEnum: {
+    id_regla: 'id_regla',
+    id_club: 'id_club',
+    nombre: 'nombre',
+    descripcion: 'descripcion',
+    puntos: 'puntos',
+    tipo: 'tipo',
+    fecha_creacion: 'fecha_creacion'
+  };
+
+  export type ClubReglaScalarFieldEnum = (typeof ClubReglaScalarFieldEnum)[keyof typeof ClubReglaScalarFieldEnum]
+
+
+  export const ClubMiembroScalarFieldEnum: {
+    id_miembro: 'id_miembro',
+    id_club: 'id_club',
+    id_alumno: 'id_alumno',
+    fecha_ingreso: 'fecha_ingreso',
+    estado: 'estado'
+  };
+
+  export type ClubMiembroScalarFieldEnum = (typeof ClubMiembroScalarFieldEnum)[keyof typeof ClubMiembroScalarFieldEnum]
+
+
+  export const ClubPuntosRegistroScalarFieldEnum: {
+    id_registro: 'id_registro',
+    id_club: 'id_club',
+    id_regla: 'id_regla',
+    id_alumno: 'id_alumno',
+    puntos_otorgados: 'puntos_otorgados',
+    fecha_registro: 'fecha_registro',
+    id_coordinador: 'id_coordinador'
+  };
+
+  export type ClubPuntosRegistroScalarFieldEnum = (typeof ClubPuntosRegistroScalarFieldEnum)[keyof typeof ClubPuntosRegistroScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15960,6 +21135,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadListRelationFilter
     logs?: RegistroCambiosListRelationFilter
     generacion?: XOR<GeneracionNullableScalarRelationFilter, GeneracionWhereInput> | null
+    clubes_miembro?: ClubMiembroListRelationFilter
+    clubes_puntos?: ClubPuntosRegistroListRelationFilter
+    clubes_puntos_coord?: ClubPuntosRegistroListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -15980,6 +21158,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadOrderByRelationAggregateInput
     logs?: RegistroCambiosOrderByRelationAggregateInput
     generacion?: GeneracionOrderByWithRelationInput
+    clubes_miembro?: ClubMiembroOrderByRelationAggregateInput
+    clubes_puntos?: ClubPuntosRegistroOrderByRelationAggregateInput
+    clubes_puntos_coord?: ClubPuntosRegistroOrderByRelationAggregateInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -16003,6 +21184,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadListRelationFilter
     logs?: RegistroCambiosListRelationFilter
     generacion?: XOR<GeneracionNullableScalarRelationFilter, GeneracionWhereInput> | null
+    clubes_miembro?: ClubMiembroListRelationFilter
+    clubes_puntos?: ClubPuntosRegistroListRelationFilter
+    clubes_puntos_coord?: ClubPuntosRegistroListRelationFilter
   }, "id_usuario" | "num_cuenta">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -16407,6 +21591,271 @@ export namespace Prisma {
     fecha?: DateTimeWithAggregatesFilter<"RegistroCambios"> | Date | string
   }
 
+  export type ClubWhereInput = {
+    AND?: ClubWhereInput | ClubWhereInput[]
+    OR?: ClubWhereInput[]
+    NOT?: ClubWhereInput | ClubWhereInput[]
+    id_club?: IntFilter<"Club"> | number
+    nombre?: StringFilter<"Club"> | string
+    descripcion?: StringNullableFilter<"Club"> | string | null
+    fecha_creacion?: DateTimeFilter<"Club"> | Date | string
+    reglas?: ClubReglaListRelationFilter
+    miembros?: ClubMiembroListRelationFilter
+    registros?: ClubPuntosRegistroListRelationFilter
+  }
+
+  export type ClubOrderByWithRelationInput = {
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    fecha_creacion?: SortOrder
+    reglas?: ClubReglaOrderByRelationAggregateInput
+    miembros?: ClubMiembroOrderByRelationAggregateInput
+    registros?: ClubPuntosRegistroOrderByRelationAggregateInput
+  }
+
+  export type ClubWhereUniqueInput = Prisma.AtLeast<{
+    id_club?: number
+    AND?: ClubWhereInput | ClubWhereInput[]
+    OR?: ClubWhereInput[]
+    NOT?: ClubWhereInput | ClubWhereInput[]
+    nombre?: StringFilter<"Club"> | string
+    descripcion?: StringNullableFilter<"Club"> | string | null
+    fecha_creacion?: DateTimeFilter<"Club"> | Date | string
+    reglas?: ClubReglaListRelationFilter
+    miembros?: ClubMiembroListRelationFilter
+    registros?: ClubPuntosRegistroListRelationFilter
+  }, "id_club">
+
+  export type ClubOrderByWithAggregationInput = {
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    fecha_creacion?: SortOrder
+    _count?: ClubCountOrderByAggregateInput
+    _avg?: ClubAvgOrderByAggregateInput
+    _max?: ClubMaxOrderByAggregateInput
+    _min?: ClubMinOrderByAggregateInput
+    _sum?: ClubSumOrderByAggregateInput
+  }
+
+  export type ClubScalarWhereWithAggregatesInput = {
+    AND?: ClubScalarWhereWithAggregatesInput | ClubScalarWhereWithAggregatesInput[]
+    OR?: ClubScalarWhereWithAggregatesInput[]
+    NOT?: ClubScalarWhereWithAggregatesInput | ClubScalarWhereWithAggregatesInput[]
+    id_club?: IntWithAggregatesFilter<"Club"> | number
+    nombre?: StringWithAggregatesFilter<"Club"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"Club"> | string | null
+    fecha_creacion?: DateTimeWithAggregatesFilter<"Club"> | Date | string
+  }
+
+  export type ClubReglaWhereInput = {
+    AND?: ClubReglaWhereInput | ClubReglaWhereInput[]
+    OR?: ClubReglaWhereInput[]
+    NOT?: ClubReglaWhereInput | ClubReglaWhereInput[]
+    id_regla?: IntFilter<"ClubRegla"> | number
+    id_club?: IntFilter<"ClubRegla"> | number
+    nombre?: StringFilter<"ClubRegla"> | string
+    descripcion?: StringNullableFilter<"ClubRegla"> | string | null
+    puntos?: IntFilter<"ClubRegla"> | number
+    tipo?: StringFilter<"ClubRegla"> | string
+    fecha_creacion?: DateTimeFilter<"ClubRegla"> | Date | string
+    club?: XOR<ClubScalarRelationFilter, ClubWhereInput>
+    registros?: ClubPuntosRegistroListRelationFilter
+  }
+
+  export type ClubReglaOrderByWithRelationInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    puntos?: SortOrder
+    tipo?: SortOrder
+    fecha_creacion?: SortOrder
+    club?: ClubOrderByWithRelationInput
+    registros?: ClubPuntosRegistroOrderByRelationAggregateInput
+  }
+
+  export type ClubReglaWhereUniqueInput = Prisma.AtLeast<{
+    id_regla?: number
+    AND?: ClubReglaWhereInput | ClubReglaWhereInput[]
+    OR?: ClubReglaWhereInput[]
+    NOT?: ClubReglaWhereInput | ClubReglaWhereInput[]
+    id_club?: IntFilter<"ClubRegla"> | number
+    nombre?: StringFilter<"ClubRegla"> | string
+    descripcion?: StringNullableFilter<"ClubRegla"> | string | null
+    puntos?: IntFilter<"ClubRegla"> | number
+    tipo?: StringFilter<"ClubRegla"> | string
+    fecha_creacion?: DateTimeFilter<"ClubRegla"> | Date | string
+    club?: XOR<ClubScalarRelationFilter, ClubWhereInput>
+    registros?: ClubPuntosRegistroListRelationFilter
+  }, "id_regla">
+
+  export type ClubReglaOrderByWithAggregationInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    puntos?: SortOrder
+    tipo?: SortOrder
+    fecha_creacion?: SortOrder
+    _count?: ClubReglaCountOrderByAggregateInput
+    _avg?: ClubReglaAvgOrderByAggregateInput
+    _max?: ClubReglaMaxOrderByAggregateInput
+    _min?: ClubReglaMinOrderByAggregateInput
+    _sum?: ClubReglaSumOrderByAggregateInput
+  }
+
+  export type ClubReglaScalarWhereWithAggregatesInput = {
+    AND?: ClubReglaScalarWhereWithAggregatesInput | ClubReglaScalarWhereWithAggregatesInput[]
+    OR?: ClubReglaScalarWhereWithAggregatesInput[]
+    NOT?: ClubReglaScalarWhereWithAggregatesInput | ClubReglaScalarWhereWithAggregatesInput[]
+    id_regla?: IntWithAggregatesFilter<"ClubRegla"> | number
+    id_club?: IntWithAggregatesFilter<"ClubRegla"> | number
+    nombre?: StringWithAggregatesFilter<"ClubRegla"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"ClubRegla"> | string | null
+    puntos?: IntWithAggregatesFilter<"ClubRegla"> | number
+    tipo?: StringWithAggregatesFilter<"ClubRegla"> | string
+    fecha_creacion?: DateTimeWithAggregatesFilter<"ClubRegla"> | Date | string
+  }
+
+  export type ClubMiembroWhereInput = {
+    AND?: ClubMiembroWhereInput | ClubMiembroWhereInput[]
+    OR?: ClubMiembroWhereInput[]
+    NOT?: ClubMiembroWhereInput | ClubMiembroWhereInput[]
+    id_miembro?: IntFilter<"ClubMiembro"> | number
+    id_club?: IntFilter<"ClubMiembro"> | number
+    id_alumno?: IntFilter<"ClubMiembro"> | number
+    fecha_ingreso?: DateTimeFilter<"ClubMiembro"> | Date | string
+    estado?: StringFilter<"ClubMiembro"> | string
+    club?: XOR<ClubScalarRelationFilter, ClubWhereInput>
+    alumno?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type ClubMiembroOrderByWithRelationInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+    fecha_ingreso?: SortOrder
+    estado?: SortOrder
+    club?: ClubOrderByWithRelationInput
+    alumno?: UsuarioOrderByWithRelationInput
+  }
+
+  export type ClubMiembroWhereUniqueInput = Prisma.AtLeast<{
+    id_miembro?: number
+    id_club_id_alumno?: ClubMiembroId_clubId_alumnoCompoundUniqueInput
+    AND?: ClubMiembroWhereInput | ClubMiembroWhereInput[]
+    OR?: ClubMiembroWhereInput[]
+    NOT?: ClubMiembroWhereInput | ClubMiembroWhereInput[]
+    id_club?: IntFilter<"ClubMiembro"> | number
+    id_alumno?: IntFilter<"ClubMiembro"> | number
+    fecha_ingreso?: DateTimeFilter<"ClubMiembro"> | Date | string
+    estado?: StringFilter<"ClubMiembro"> | string
+    club?: XOR<ClubScalarRelationFilter, ClubWhereInput>
+    alumno?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id_miembro" | "id_club_id_alumno">
+
+  export type ClubMiembroOrderByWithAggregationInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+    fecha_ingreso?: SortOrder
+    estado?: SortOrder
+    _count?: ClubMiembroCountOrderByAggregateInput
+    _avg?: ClubMiembroAvgOrderByAggregateInput
+    _max?: ClubMiembroMaxOrderByAggregateInput
+    _min?: ClubMiembroMinOrderByAggregateInput
+    _sum?: ClubMiembroSumOrderByAggregateInput
+  }
+
+  export type ClubMiembroScalarWhereWithAggregatesInput = {
+    AND?: ClubMiembroScalarWhereWithAggregatesInput | ClubMiembroScalarWhereWithAggregatesInput[]
+    OR?: ClubMiembroScalarWhereWithAggregatesInput[]
+    NOT?: ClubMiembroScalarWhereWithAggregatesInput | ClubMiembroScalarWhereWithAggregatesInput[]
+    id_miembro?: IntWithAggregatesFilter<"ClubMiembro"> | number
+    id_club?: IntWithAggregatesFilter<"ClubMiembro"> | number
+    id_alumno?: IntWithAggregatesFilter<"ClubMiembro"> | number
+    fecha_ingreso?: DateTimeWithAggregatesFilter<"ClubMiembro"> | Date | string
+    estado?: StringWithAggregatesFilter<"ClubMiembro"> | string
+  }
+
+  export type ClubPuntosRegistroWhereInput = {
+    AND?: ClubPuntosRegistroWhereInput | ClubPuntosRegistroWhereInput[]
+    OR?: ClubPuntosRegistroWhereInput[]
+    NOT?: ClubPuntosRegistroWhereInput | ClubPuntosRegistroWhereInput[]
+    id_registro?: IntFilter<"ClubPuntosRegistro"> | number
+    id_club?: IntFilter<"ClubPuntosRegistro"> | number
+    id_regla?: IntFilter<"ClubPuntosRegistro"> | number
+    id_alumno?: IntFilter<"ClubPuntosRegistro"> | number
+    puntos_otorgados?: IntFilter<"ClubPuntosRegistro"> | number
+    fecha_registro?: DateTimeFilter<"ClubPuntosRegistro"> | Date | string
+    id_coordinador?: IntFilter<"ClubPuntosRegistro"> | number
+    club?: XOR<ClubScalarRelationFilter, ClubWhereInput>
+    regla?: XOR<ClubReglaScalarRelationFilter, ClubReglaWhereInput>
+    alumno?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    coordinador?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type ClubPuntosRegistroOrderByWithRelationInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    fecha_registro?: SortOrder
+    id_coordinador?: SortOrder
+    club?: ClubOrderByWithRelationInput
+    regla?: ClubReglaOrderByWithRelationInput
+    alumno?: UsuarioOrderByWithRelationInput
+    coordinador?: UsuarioOrderByWithRelationInput
+  }
+
+  export type ClubPuntosRegistroWhereUniqueInput = Prisma.AtLeast<{
+    id_registro?: number
+    AND?: ClubPuntosRegistroWhereInput | ClubPuntosRegistroWhereInput[]
+    OR?: ClubPuntosRegistroWhereInput[]
+    NOT?: ClubPuntosRegistroWhereInput | ClubPuntosRegistroWhereInput[]
+    id_club?: IntFilter<"ClubPuntosRegistro"> | number
+    id_regla?: IntFilter<"ClubPuntosRegistro"> | number
+    id_alumno?: IntFilter<"ClubPuntosRegistro"> | number
+    puntos_otorgados?: IntFilter<"ClubPuntosRegistro"> | number
+    fecha_registro?: DateTimeFilter<"ClubPuntosRegistro"> | Date | string
+    id_coordinador?: IntFilter<"ClubPuntosRegistro"> | number
+    club?: XOR<ClubScalarRelationFilter, ClubWhereInput>
+    regla?: XOR<ClubReglaScalarRelationFilter, ClubReglaWhereInput>
+    alumno?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    coordinador?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id_registro">
+
+  export type ClubPuntosRegistroOrderByWithAggregationInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    fecha_registro?: SortOrder
+    id_coordinador?: SortOrder
+    _count?: ClubPuntosRegistroCountOrderByAggregateInput
+    _avg?: ClubPuntosRegistroAvgOrderByAggregateInput
+    _max?: ClubPuntosRegistroMaxOrderByAggregateInput
+    _min?: ClubPuntosRegistroMinOrderByAggregateInput
+    _sum?: ClubPuntosRegistroSumOrderByAggregateInput
+  }
+
+  export type ClubPuntosRegistroScalarWhereWithAggregatesInput = {
+    AND?: ClubPuntosRegistroScalarWhereWithAggregatesInput | ClubPuntosRegistroScalarWhereWithAggregatesInput[]
+    OR?: ClubPuntosRegistroScalarWhereWithAggregatesInput[]
+    NOT?: ClubPuntosRegistroScalarWhereWithAggregatesInput | ClubPuntosRegistroScalarWhereWithAggregatesInput[]
+    id_registro?: IntWithAggregatesFilter<"ClubPuntosRegistro"> | number
+    id_club?: IntWithAggregatesFilter<"ClubPuntosRegistro"> | number
+    id_regla?: IntWithAggregatesFilter<"ClubPuntosRegistro"> | number
+    id_alumno?: IntWithAggregatesFilter<"ClubPuntosRegistro"> | number
+    puntos_otorgados?: IntWithAggregatesFilter<"ClubPuntosRegistro"> | number
+    fecha_registro?: DateTimeWithAggregatesFilter<"ClubPuntosRegistro"> | Date | string
+    id_coordinador?: IntWithAggregatesFilter<"ClubPuntosRegistro"> | number
+  }
+
   export type EscuelaCreateInput = {
     nombre: string
     clave?: string | null
@@ -16759,6 +22208,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -16776,6 +22228,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUpdateInput = {
@@ -16792,6 +22247,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -16809,6 +22267,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -17173,6 +22634,248 @@ export namespace Prisma {
     accion?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubCreateInput = {
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    reglas?: ClubReglaCreateNestedManyWithoutClubInput
+    miembros?: ClubMiembroCreateNestedManyWithoutClubInput
+    registros?: ClubPuntosRegistroCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubUncheckedCreateInput = {
+    id_club?: number
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    reglas?: ClubReglaUncheckedCreateNestedManyWithoutClubInput
+    miembros?: ClubMiembroUncheckedCreateNestedManyWithoutClubInput
+    registros?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    reglas?: ClubReglaUpdateManyWithoutClubNestedInput
+    miembros?: ClubMiembroUpdateManyWithoutClubNestedInput
+    registros?: ClubPuntosRegistroUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubUncheckedUpdateInput = {
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    reglas?: ClubReglaUncheckedUpdateManyWithoutClubNestedInput
+    miembros?: ClubMiembroUncheckedUpdateManyWithoutClubNestedInput
+    registros?: ClubPuntosRegistroUncheckedUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubCreateManyInput = {
+    id_club?: number
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+  }
+
+  export type ClubUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubUncheckedUpdateManyInput = {
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubReglaCreateInput = {
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+    club: ClubCreateNestedOneWithoutReglasInput
+    registros?: ClubPuntosRegistroCreateNestedManyWithoutReglaInput
+  }
+
+  export type ClubReglaUncheckedCreateInput = {
+    id_regla?: number
+    id_club: number
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+    registros?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutReglaInput
+  }
+
+  export type ClubReglaUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    club?: ClubUpdateOneRequiredWithoutReglasNestedInput
+    registros?: ClubPuntosRegistroUpdateManyWithoutReglaNestedInput
+  }
+
+  export type ClubReglaUncheckedUpdateInput = {
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: ClubPuntosRegistroUncheckedUpdateManyWithoutReglaNestedInput
+  }
+
+  export type ClubReglaCreateManyInput = {
+    id_regla?: number
+    id_club: number
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+  }
+
+  export type ClubReglaUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubReglaUncheckedUpdateManyInput = {
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubMiembroCreateInput = {
+    fecha_ingreso?: Date | string
+    estado?: string
+    club: ClubCreateNestedOneWithoutMiembrosInput
+    alumno: UsuarioCreateNestedOneWithoutClubes_miembroInput
+  }
+
+  export type ClubMiembroUncheckedCreateInput = {
+    id_miembro?: number
+    id_club: number
+    id_alumno: number
+    fecha_ingreso?: Date | string
+    estado?: string
+  }
+
+  export type ClubMiembroUpdateInput = {
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    club?: ClubUpdateOneRequiredWithoutMiembrosNestedInput
+    alumno?: UsuarioUpdateOneRequiredWithoutClubes_miembroNestedInput
+  }
+
+  export type ClubMiembroUncheckedUpdateInput = {
+    id_miembro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubMiembroCreateManyInput = {
+    id_miembro?: number
+    id_club: number
+    id_alumno: number
+    fecha_ingreso?: Date | string
+    estado?: string
+  }
+
+  export type ClubMiembroUpdateManyMutationInput = {
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubMiembroUncheckedUpdateManyInput = {
+    id_miembro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubPuntosRegistroCreateInput = {
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    club: ClubCreateNestedOneWithoutRegistrosInput
+    regla: ClubReglaCreateNestedOneWithoutRegistrosInput
+    alumno: UsuarioCreateNestedOneWithoutClubes_puntosInput
+    coordinador: UsuarioCreateNestedOneWithoutClubes_puntos_coordInput
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateInput = {
+    id_registro?: number
+    id_club: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroUpdateInput = {
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    club?: ClubUpdateOneRequiredWithoutRegistrosNestedInput
+    regla?: ClubReglaUpdateOneRequiredWithoutRegistrosNestedInput
+    alumno?: UsuarioUpdateOneRequiredWithoutClubes_puntosNestedInput
+    coordinador?: UsuarioUpdateOneRequiredWithoutClubes_puntos_coordNestedInput
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubPuntosRegistroCreateManyInput = {
+    id_registro?: number
+    id_club: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroUpdateManyMutationInput = {
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -17667,7 +23370,27 @@ export namespace Prisma {
     isNot?: GeneracionWhereInput | null
   }
 
+  export type ClubMiembroListRelationFilter = {
+    every?: ClubMiembroWhereInput
+    some?: ClubMiembroWhereInput
+    none?: ClubMiembroWhereInput
+  }
+
+  export type ClubPuntosRegistroListRelationFilter = {
+    every?: ClubPuntosRegistroWhereInput
+    some?: ClubPuntosRegistroWhereInput
+    none?: ClubPuntosRegistroWhereInput
+  }
+
   export type RegistroCambiosOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClubMiembroOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClubPuntosRegistroOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18033,6 +23756,186 @@ export namespace Prisma {
   export type RegistroCambiosSumOrderByAggregateInput = {
     id_registro?: SortOrder
     id_usuario?: SortOrder
+  }
+
+  export type ClubReglaListRelationFilter = {
+    every?: ClubReglaWhereInput
+    some?: ClubReglaWhereInput
+    none?: ClubReglaWhereInput
+  }
+
+  export type ClubReglaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClubCountOrderByAggregateInput = {
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    fecha_creacion?: SortOrder
+  }
+
+  export type ClubAvgOrderByAggregateInput = {
+    id_club?: SortOrder
+  }
+
+  export type ClubMaxOrderByAggregateInput = {
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    fecha_creacion?: SortOrder
+  }
+
+  export type ClubMinOrderByAggregateInput = {
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    fecha_creacion?: SortOrder
+  }
+
+  export type ClubSumOrderByAggregateInput = {
+    id_club?: SortOrder
+  }
+
+  export type ClubScalarRelationFilter = {
+    is?: ClubWhereInput
+    isNot?: ClubWhereInput
+  }
+
+  export type ClubReglaCountOrderByAggregateInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    puntos?: SortOrder
+    tipo?: SortOrder
+    fecha_creacion?: SortOrder
+  }
+
+  export type ClubReglaAvgOrderByAggregateInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    puntos?: SortOrder
+  }
+
+  export type ClubReglaMaxOrderByAggregateInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    puntos?: SortOrder
+    tipo?: SortOrder
+    fecha_creacion?: SortOrder
+  }
+
+  export type ClubReglaMinOrderByAggregateInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    puntos?: SortOrder
+    tipo?: SortOrder
+    fecha_creacion?: SortOrder
+  }
+
+  export type ClubReglaSumOrderByAggregateInput = {
+    id_regla?: SortOrder
+    id_club?: SortOrder
+    puntos?: SortOrder
+  }
+
+  export type ClubMiembroId_clubId_alumnoCompoundUniqueInput = {
+    id_club: number
+    id_alumno: number
+  }
+
+  export type ClubMiembroCountOrderByAggregateInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+    fecha_ingreso?: SortOrder
+    estado?: SortOrder
+  }
+
+  export type ClubMiembroAvgOrderByAggregateInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+  }
+
+  export type ClubMiembroMaxOrderByAggregateInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+    fecha_ingreso?: SortOrder
+    estado?: SortOrder
+  }
+
+  export type ClubMiembroMinOrderByAggregateInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+    fecha_ingreso?: SortOrder
+    estado?: SortOrder
+  }
+
+  export type ClubMiembroSumOrderByAggregateInput = {
+    id_miembro?: SortOrder
+    id_club?: SortOrder
+    id_alumno?: SortOrder
+  }
+
+  export type ClubReglaScalarRelationFilter = {
+    is?: ClubReglaWhereInput
+    isNot?: ClubReglaWhereInput
+  }
+
+  export type ClubPuntosRegistroCountOrderByAggregateInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    fecha_registro?: SortOrder
+    id_coordinador?: SortOrder
+  }
+
+  export type ClubPuntosRegistroAvgOrderByAggregateInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    id_coordinador?: SortOrder
+  }
+
+  export type ClubPuntosRegistroMaxOrderByAggregateInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    fecha_registro?: SortOrder
+    id_coordinador?: SortOrder
+  }
+
+  export type ClubPuntosRegistroMinOrderByAggregateInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    fecha_registro?: SortOrder
+    id_coordinador?: SortOrder
+  }
+
+  export type ClubPuntosRegistroSumOrderByAggregateInput = {
+    id_registro?: SortOrder
+    id_club?: SortOrder
+    id_regla?: SortOrder
+    id_alumno?: SortOrder
+    puntos_otorgados?: SortOrder
+    id_coordinador?: SortOrder
   }
 
   export type PlanDeEstudioCreateNestedManyWithoutEscuelaInput = {
@@ -18855,6 +24758,27 @@ export namespace Prisma {
     connect?: GeneracionWhereUniqueInput
   }
 
+  export type ClubMiembroCreateNestedManyWithoutAlumnoInput = {
+    create?: XOR<ClubMiembroCreateWithoutAlumnoInput, ClubMiembroUncheckedCreateWithoutAlumnoInput> | ClubMiembroCreateWithoutAlumnoInput[] | ClubMiembroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutAlumnoInput | ClubMiembroCreateOrConnectWithoutAlumnoInput[]
+    createMany?: ClubMiembroCreateManyAlumnoInputEnvelope
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutAlumnoInput, ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput> | ClubPuntosRegistroCreateWithoutAlumnoInput[] | ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput | ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput[]
+    createMany?: ClubPuntosRegistroCreateManyAlumnoInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput> | ClubPuntosRegistroCreateWithoutCoordinadorInput[] | ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput | ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput[]
+    createMany?: ClubPuntosRegistroCreateManyCoordinadorInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
   export type ActividadUncheckedCreateNestedManyWithoutCoordinadorInput = {
     create?: XOR<ActividadCreateWithoutCoordinadorInput, ActividadUncheckedCreateWithoutCoordinadorInput> | ActividadCreateWithoutCoordinadorInput[] | ActividadUncheckedCreateWithoutCoordinadorInput[]
     connectOrCreate?: ActividadCreateOrConnectWithoutCoordinadorInput | ActividadCreateOrConnectWithoutCoordinadorInput[]
@@ -18881,6 +24805,27 @@ export namespace Prisma {
     connectOrCreate?: RegistroCambiosCreateOrConnectWithoutUsuarioInput | RegistroCambiosCreateOrConnectWithoutUsuarioInput[]
     createMany?: RegistroCambiosCreateManyUsuarioInputEnvelope
     connect?: RegistroCambiosWhereUniqueInput | RegistroCambiosWhereUniqueInput[]
+  }
+
+  export type ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput = {
+    create?: XOR<ClubMiembroCreateWithoutAlumnoInput, ClubMiembroUncheckedCreateWithoutAlumnoInput> | ClubMiembroCreateWithoutAlumnoInput[] | ClubMiembroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutAlumnoInput | ClubMiembroCreateOrConnectWithoutAlumnoInput[]
+    createMany?: ClubMiembroCreateManyAlumnoInputEnvelope
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutAlumnoInput, ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput> | ClubPuntosRegistroCreateWithoutAlumnoInput[] | ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput | ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput[]
+    createMany?: ClubPuntosRegistroCreateManyAlumnoInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput> | ClubPuntosRegistroCreateWithoutCoordinadorInput[] | ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput | ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput[]
+    createMany?: ClubPuntosRegistroCreateManyCoordinadorInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
   }
 
   export type EnumRolFieldUpdateOperationsInput = {
@@ -18971,6 +24916,48 @@ export namespace Prisma {
     update?: XOR<XOR<GeneracionUpdateToOneWithWhereWithoutAlumnosInput, GeneracionUpdateWithoutAlumnosInput>, GeneracionUncheckedUpdateWithoutAlumnosInput>
   }
 
+  export type ClubMiembroUpdateManyWithoutAlumnoNestedInput = {
+    create?: XOR<ClubMiembroCreateWithoutAlumnoInput, ClubMiembroUncheckedCreateWithoutAlumnoInput> | ClubMiembroCreateWithoutAlumnoInput[] | ClubMiembroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutAlumnoInput | ClubMiembroCreateOrConnectWithoutAlumnoInput[]
+    upsert?: ClubMiembroUpsertWithWhereUniqueWithoutAlumnoInput | ClubMiembroUpsertWithWhereUniqueWithoutAlumnoInput[]
+    createMany?: ClubMiembroCreateManyAlumnoInputEnvelope
+    set?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    disconnect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    delete?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    update?: ClubMiembroUpdateWithWhereUniqueWithoutAlumnoInput | ClubMiembroUpdateWithWhereUniqueWithoutAlumnoInput[]
+    updateMany?: ClubMiembroUpdateManyWithWhereWithoutAlumnoInput | ClubMiembroUpdateManyWithWhereWithoutAlumnoInput[]
+    deleteMany?: ClubMiembroScalarWhereInput | ClubMiembroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutAlumnoInput, ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput> | ClubPuntosRegistroCreateWithoutAlumnoInput[] | ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput | ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutAlumnoInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutAlumnoInput[]
+    createMany?: ClubPuntosRegistroCreateManyAlumnoInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutAlumnoInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutAlumnoInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutAlumnoInput | ClubPuntosRegistroUpdateManyWithWhereWithoutAlumnoInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput> | ClubPuntosRegistroCreateWithoutCoordinadorInput[] | ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput | ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutCoordinadorInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutCoordinadorInput[]
+    createMany?: ClubPuntosRegistroCreateManyCoordinadorInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutCoordinadorInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutCoordinadorInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutCoordinadorInput | ClubPuntosRegistroUpdateManyWithWhereWithoutCoordinadorInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -19033,6 +25020,48 @@ export namespace Prisma {
     update?: RegistroCambiosUpdateWithWhereUniqueWithoutUsuarioInput | RegistroCambiosUpdateWithWhereUniqueWithoutUsuarioInput[]
     updateMany?: RegistroCambiosUpdateManyWithWhereWithoutUsuarioInput | RegistroCambiosUpdateManyWithWhereWithoutUsuarioInput[]
     deleteMany?: RegistroCambiosScalarWhereInput | RegistroCambiosScalarWhereInput[]
+  }
+
+  export type ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput = {
+    create?: XOR<ClubMiembroCreateWithoutAlumnoInput, ClubMiembroUncheckedCreateWithoutAlumnoInput> | ClubMiembroCreateWithoutAlumnoInput[] | ClubMiembroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutAlumnoInput | ClubMiembroCreateOrConnectWithoutAlumnoInput[]
+    upsert?: ClubMiembroUpsertWithWhereUniqueWithoutAlumnoInput | ClubMiembroUpsertWithWhereUniqueWithoutAlumnoInput[]
+    createMany?: ClubMiembroCreateManyAlumnoInputEnvelope
+    set?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    disconnect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    delete?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    update?: ClubMiembroUpdateWithWhereUniqueWithoutAlumnoInput | ClubMiembroUpdateWithWhereUniqueWithoutAlumnoInput[]
+    updateMany?: ClubMiembroUpdateManyWithWhereWithoutAlumnoInput | ClubMiembroUpdateManyWithWhereWithoutAlumnoInput[]
+    deleteMany?: ClubMiembroScalarWhereInput | ClubMiembroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutAlumnoInput, ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput> | ClubPuntosRegistroCreateWithoutAlumnoInput[] | ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput | ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutAlumnoInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutAlumnoInput[]
+    createMany?: ClubPuntosRegistroCreateManyAlumnoInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutAlumnoInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutAlumnoInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutAlumnoInput | ClubPuntosRegistroUpdateManyWithWhereWithoutAlumnoInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput> | ClubPuntosRegistroCreateWithoutCoordinadorInput[] | ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput | ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutCoordinadorInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutCoordinadorInput[]
+    createMany?: ClubPuntosRegistroCreateManyCoordinadorInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutCoordinadorInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutCoordinadorInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutCoordinadorInput | ClubPuntosRegistroUpdateManyWithWhereWithoutCoordinadorInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
   }
 
   export type GeneracionCreateNestedOneWithoutGruposInput = {
@@ -19321,6 +25350,272 @@ export namespace Prisma {
     upsert?: UsuarioUpsertWithoutLogsInput
     connect?: UsuarioWhereUniqueInput
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutLogsInput, UsuarioUpdateWithoutLogsInput>, UsuarioUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type ClubReglaCreateNestedManyWithoutClubInput = {
+    create?: XOR<ClubReglaCreateWithoutClubInput, ClubReglaUncheckedCreateWithoutClubInput> | ClubReglaCreateWithoutClubInput[] | ClubReglaUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubReglaCreateOrConnectWithoutClubInput | ClubReglaCreateOrConnectWithoutClubInput[]
+    createMany?: ClubReglaCreateManyClubInputEnvelope
+    connect?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+  }
+
+  export type ClubMiembroCreateNestedManyWithoutClubInput = {
+    create?: XOR<ClubMiembroCreateWithoutClubInput, ClubMiembroUncheckedCreateWithoutClubInput> | ClubMiembroCreateWithoutClubInput[] | ClubMiembroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutClubInput | ClubMiembroCreateOrConnectWithoutClubInput[]
+    createMany?: ClubMiembroCreateManyClubInputEnvelope
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroCreateNestedManyWithoutClubInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutClubInput, ClubPuntosRegistroUncheckedCreateWithoutClubInput> | ClubPuntosRegistroCreateWithoutClubInput[] | ClubPuntosRegistroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutClubInput | ClubPuntosRegistroCreateOrConnectWithoutClubInput[]
+    createMany?: ClubPuntosRegistroCreateManyClubInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
+  export type ClubReglaUncheckedCreateNestedManyWithoutClubInput = {
+    create?: XOR<ClubReglaCreateWithoutClubInput, ClubReglaUncheckedCreateWithoutClubInput> | ClubReglaCreateWithoutClubInput[] | ClubReglaUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubReglaCreateOrConnectWithoutClubInput | ClubReglaCreateOrConnectWithoutClubInput[]
+    createMany?: ClubReglaCreateManyClubInputEnvelope
+    connect?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+  }
+
+  export type ClubMiembroUncheckedCreateNestedManyWithoutClubInput = {
+    create?: XOR<ClubMiembroCreateWithoutClubInput, ClubMiembroUncheckedCreateWithoutClubInput> | ClubMiembroCreateWithoutClubInput[] | ClubMiembroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutClubInput | ClubMiembroCreateOrConnectWithoutClubInput[]
+    createMany?: ClubMiembroCreateManyClubInputEnvelope
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateNestedManyWithoutClubInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutClubInput, ClubPuntosRegistroUncheckedCreateWithoutClubInput> | ClubPuntosRegistroCreateWithoutClubInput[] | ClubPuntosRegistroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutClubInput | ClubPuntosRegistroCreateOrConnectWithoutClubInput[]
+    createMany?: ClubPuntosRegistroCreateManyClubInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
+  export type ClubReglaUpdateManyWithoutClubNestedInput = {
+    create?: XOR<ClubReglaCreateWithoutClubInput, ClubReglaUncheckedCreateWithoutClubInput> | ClubReglaCreateWithoutClubInput[] | ClubReglaUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubReglaCreateOrConnectWithoutClubInput | ClubReglaCreateOrConnectWithoutClubInput[]
+    upsert?: ClubReglaUpsertWithWhereUniqueWithoutClubInput | ClubReglaUpsertWithWhereUniqueWithoutClubInput[]
+    createMany?: ClubReglaCreateManyClubInputEnvelope
+    set?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    disconnect?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    delete?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    connect?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    update?: ClubReglaUpdateWithWhereUniqueWithoutClubInput | ClubReglaUpdateWithWhereUniqueWithoutClubInput[]
+    updateMany?: ClubReglaUpdateManyWithWhereWithoutClubInput | ClubReglaUpdateManyWithWhereWithoutClubInput[]
+    deleteMany?: ClubReglaScalarWhereInput | ClubReglaScalarWhereInput[]
+  }
+
+  export type ClubMiembroUpdateManyWithoutClubNestedInput = {
+    create?: XOR<ClubMiembroCreateWithoutClubInput, ClubMiembroUncheckedCreateWithoutClubInput> | ClubMiembroCreateWithoutClubInput[] | ClubMiembroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutClubInput | ClubMiembroCreateOrConnectWithoutClubInput[]
+    upsert?: ClubMiembroUpsertWithWhereUniqueWithoutClubInput | ClubMiembroUpsertWithWhereUniqueWithoutClubInput[]
+    createMany?: ClubMiembroCreateManyClubInputEnvelope
+    set?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    disconnect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    delete?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    update?: ClubMiembroUpdateWithWhereUniqueWithoutClubInput | ClubMiembroUpdateWithWhereUniqueWithoutClubInput[]
+    updateMany?: ClubMiembroUpdateManyWithWhereWithoutClubInput | ClubMiembroUpdateManyWithWhereWithoutClubInput[]
+    deleteMany?: ClubMiembroScalarWhereInput | ClubMiembroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithoutClubNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutClubInput, ClubPuntosRegistroUncheckedCreateWithoutClubInput> | ClubPuntosRegistroCreateWithoutClubInput[] | ClubPuntosRegistroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutClubInput | ClubPuntosRegistroCreateOrConnectWithoutClubInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutClubInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutClubInput[]
+    createMany?: ClubPuntosRegistroCreateManyClubInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutClubInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutClubInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutClubInput | ClubPuntosRegistroUpdateManyWithWhereWithoutClubInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
+  export type ClubReglaUncheckedUpdateManyWithoutClubNestedInput = {
+    create?: XOR<ClubReglaCreateWithoutClubInput, ClubReglaUncheckedCreateWithoutClubInput> | ClubReglaCreateWithoutClubInput[] | ClubReglaUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubReglaCreateOrConnectWithoutClubInput | ClubReglaCreateOrConnectWithoutClubInput[]
+    upsert?: ClubReglaUpsertWithWhereUniqueWithoutClubInput | ClubReglaUpsertWithWhereUniqueWithoutClubInput[]
+    createMany?: ClubReglaCreateManyClubInputEnvelope
+    set?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    disconnect?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    delete?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    connect?: ClubReglaWhereUniqueInput | ClubReglaWhereUniqueInput[]
+    update?: ClubReglaUpdateWithWhereUniqueWithoutClubInput | ClubReglaUpdateWithWhereUniqueWithoutClubInput[]
+    updateMany?: ClubReglaUpdateManyWithWhereWithoutClubInput | ClubReglaUpdateManyWithWhereWithoutClubInput[]
+    deleteMany?: ClubReglaScalarWhereInput | ClubReglaScalarWhereInput[]
+  }
+
+  export type ClubMiembroUncheckedUpdateManyWithoutClubNestedInput = {
+    create?: XOR<ClubMiembroCreateWithoutClubInput, ClubMiembroUncheckedCreateWithoutClubInput> | ClubMiembroCreateWithoutClubInput[] | ClubMiembroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubMiembroCreateOrConnectWithoutClubInput | ClubMiembroCreateOrConnectWithoutClubInput[]
+    upsert?: ClubMiembroUpsertWithWhereUniqueWithoutClubInput | ClubMiembroUpsertWithWhereUniqueWithoutClubInput[]
+    createMany?: ClubMiembroCreateManyClubInputEnvelope
+    set?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    disconnect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    delete?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    connect?: ClubMiembroWhereUniqueInput | ClubMiembroWhereUniqueInput[]
+    update?: ClubMiembroUpdateWithWhereUniqueWithoutClubInput | ClubMiembroUpdateWithWhereUniqueWithoutClubInput[]
+    updateMany?: ClubMiembroUpdateManyWithWhereWithoutClubInput | ClubMiembroUpdateManyWithWhereWithoutClubInput[]
+    deleteMany?: ClubMiembroScalarWhereInput | ClubMiembroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutClubNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutClubInput, ClubPuntosRegistroUncheckedCreateWithoutClubInput> | ClubPuntosRegistroCreateWithoutClubInput[] | ClubPuntosRegistroUncheckedCreateWithoutClubInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutClubInput | ClubPuntosRegistroCreateOrConnectWithoutClubInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutClubInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutClubInput[]
+    createMany?: ClubPuntosRegistroCreateManyClubInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutClubInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutClubInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutClubInput | ClubPuntosRegistroUpdateManyWithWhereWithoutClubInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
+  export type ClubCreateNestedOneWithoutReglasInput = {
+    create?: XOR<ClubCreateWithoutReglasInput, ClubUncheckedCreateWithoutReglasInput>
+    connectOrCreate?: ClubCreateOrConnectWithoutReglasInput
+    connect?: ClubWhereUniqueInput
+  }
+
+  export type ClubPuntosRegistroCreateNestedManyWithoutReglaInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutReglaInput, ClubPuntosRegistroUncheckedCreateWithoutReglaInput> | ClubPuntosRegistroCreateWithoutReglaInput[] | ClubPuntosRegistroUncheckedCreateWithoutReglaInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutReglaInput | ClubPuntosRegistroCreateOrConnectWithoutReglaInput[]
+    createMany?: ClubPuntosRegistroCreateManyReglaInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateNestedManyWithoutReglaInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutReglaInput, ClubPuntosRegistroUncheckedCreateWithoutReglaInput> | ClubPuntosRegistroCreateWithoutReglaInput[] | ClubPuntosRegistroUncheckedCreateWithoutReglaInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutReglaInput | ClubPuntosRegistroCreateOrConnectWithoutReglaInput[]
+    createMany?: ClubPuntosRegistroCreateManyReglaInputEnvelope
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+  }
+
+  export type ClubUpdateOneRequiredWithoutReglasNestedInput = {
+    create?: XOR<ClubCreateWithoutReglasInput, ClubUncheckedCreateWithoutReglasInput>
+    connectOrCreate?: ClubCreateOrConnectWithoutReglasInput
+    upsert?: ClubUpsertWithoutReglasInput
+    connect?: ClubWhereUniqueInput
+    update?: XOR<XOR<ClubUpdateToOneWithWhereWithoutReglasInput, ClubUpdateWithoutReglasInput>, ClubUncheckedUpdateWithoutReglasInput>
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithoutReglaNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutReglaInput, ClubPuntosRegistroUncheckedCreateWithoutReglaInput> | ClubPuntosRegistroCreateWithoutReglaInput[] | ClubPuntosRegistroUncheckedCreateWithoutReglaInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutReglaInput | ClubPuntosRegistroCreateOrConnectWithoutReglaInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutReglaInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutReglaInput[]
+    createMany?: ClubPuntosRegistroCreateManyReglaInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutReglaInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutReglaInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutReglaInput | ClubPuntosRegistroUpdateManyWithWhereWithoutReglaInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutReglaNestedInput = {
+    create?: XOR<ClubPuntosRegistroCreateWithoutReglaInput, ClubPuntosRegistroUncheckedCreateWithoutReglaInput> | ClubPuntosRegistroCreateWithoutReglaInput[] | ClubPuntosRegistroUncheckedCreateWithoutReglaInput[]
+    connectOrCreate?: ClubPuntosRegistroCreateOrConnectWithoutReglaInput | ClubPuntosRegistroCreateOrConnectWithoutReglaInput[]
+    upsert?: ClubPuntosRegistroUpsertWithWhereUniqueWithoutReglaInput | ClubPuntosRegistroUpsertWithWhereUniqueWithoutReglaInput[]
+    createMany?: ClubPuntosRegistroCreateManyReglaInputEnvelope
+    set?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    disconnect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    delete?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    connect?: ClubPuntosRegistroWhereUniqueInput | ClubPuntosRegistroWhereUniqueInput[]
+    update?: ClubPuntosRegistroUpdateWithWhereUniqueWithoutReglaInput | ClubPuntosRegistroUpdateWithWhereUniqueWithoutReglaInput[]
+    updateMany?: ClubPuntosRegistroUpdateManyWithWhereWithoutReglaInput | ClubPuntosRegistroUpdateManyWithWhereWithoutReglaInput[]
+    deleteMany?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+  }
+
+  export type ClubCreateNestedOneWithoutMiembrosInput = {
+    create?: XOR<ClubCreateWithoutMiembrosInput, ClubUncheckedCreateWithoutMiembrosInput>
+    connectOrCreate?: ClubCreateOrConnectWithoutMiembrosInput
+    connect?: ClubWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutClubes_miembroInput = {
+    create?: XOR<UsuarioCreateWithoutClubes_miembroInput, UsuarioUncheckedCreateWithoutClubes_miembroInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClubes_miembroInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type ClubUpdateOneRequiredWithoutMiembrosNestedInput = {
+    create?: XOR<ClubCreateWithoutMiembrosInput, ClubUncheckedCreateWithoutMiembrosInput>
+    connectOrCreate?: ClubCreateOrConnectWithoutMiembrosInput
+    upsert?: ClubUpsertWithoutMiembrosInput
+    connect?: ClubWhereUniqueInput
+    update?: XOR<XOR<ClubUpdateToOneWithWhereWithoutMiembrosInput, ClubUpdateWithoutMiembrosInput>, ClubUncheckedUpdateWithoutMiembrosInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutClubes_miembroNestedInput = {
+    create?: XOR<UsuarioCreateWithoutClubes_miembroInput, UsuarioUncheckedCreateWithoutClubes_miembroInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClubes_miembroInput
+    upsert?: UsuarioUpsertWithoutClubes_miembroInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutClubes_miembroInput, UsuarioUpdateWithoutClubes_miembroInput>, UsuarioUncheckedUpdateWithoutClubes_miembroInput>
+  }
+
+  export type ClubCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<ClubCreateWithoutRegistrosInput, ClubUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: ClubCreateOrConnectWithoutRegistrosInput
+    connect?: ClubWhereUniqueInput
+  }
+
+  export type ClubReglaCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<ClubReglaCreateWithoutRegistrosInput, ClubReglaUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: ClubReglaCreateOrConnectWithoutRegistrosInput
+    connect?: ClubReglaWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutClubes_puntosInput = {
+    create?: XOR<UsuarioCreateWithoutClubes_puntosInput, UsuarioUncheckedCreateWithoutClubes_puntosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClubes_puntosInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutClubes_puntos_coordInput = {
+    create?: XOR<UsuarioCreateWithoutClubes_puntos_coordInput, UsuarioUncheckedCreateWithoutClubes_puntos_coordInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClubes_puntos_coordInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type ClubUpdateOneRequiredWithoutRegistrosNestedInput = {
+    create?: XOR<ClubCreateWithoutRegistrosInput, ClubUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: ClubCreateOrConnectWithoutRegistrosInput
+    upsert?: ClubUpsertWithoutRegistrosInput
+    connect?: ClubWhereUniqueInput
+    update?: XOR<XOR<ClubUpdateToOneWithWhereWithoutRegistrosInput, ClubUpdateWithoutRegistrosInput>, ClubUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type ClubReglaUpdateOneRequiredWithoutRegistrosNestedInput = {
+    create?: XOR<ClubReglaCreateWithoutRegistrosInput, ClubReglaUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: ClubReglaCreateOrConnectWithoutRegistrosInput
+    upsert?: ClubReglaUpsertWithoutRegistrosInput
+    connect?: ClubReglaWhereUniqueInput
+    update?: XOR<XOR<ClubReglaUpdateToOneWithWhereWithoutRegistrosInput, ClubReglaUpdateWithoutRegistrosInput>, ClubReglaUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutClubes_puntosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutClubes_puntosInput, UsuarioUncheckedCreateWithoutClubes_puntosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClubes_puntosInput
+    upsert?: UsuarioUpsertWithoutClubes_puntosInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutClubes_puntosInput, UsuarioUpdateWithoutClubes_puntosInput>, UsuarioUncheckedUpdateWithoutClubes_puntosInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutClubes_puntos_coordNestedInput = {
+    create?: XOR<UsuarioCreateWithoutClubes_puntos_coordInput, UsuarioUncheckedCreateWithoutClubes_puntos_coordInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClubes_puntos_coordInput
+    upsert?: UsuarioUpsertWithoutClubes_puntos_coordInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutClubes_puntos_coordInput, UsuarioUpdateWithoutClubes_puntos_coordInput>, UsuarioUncheckedUpdateWithoutClubes_puntos_coordInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -19663,6 +25958,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutEscuelaInput = {
@@ -19679,6 +25977,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutEscuelaInput = {
@@ -20496,6 +26797,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutGeneracionInput = {
@@ -20512,6 +26816,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutGeneracionInput = {
@@ -20954,6 +27261,83 @@ export namespace Prisma {
     create: XOR<GeneracionCreateWithoutAlumnosInput, GeneracionUncheckedCreateWithoutAlumnosInput>
   }
 
+  export type ClubMiembroCreateWithoutAlumnoInput = {
+    fecha_ingreso?: Date | string
+    estado?: string
+    club: ClubCreateNestedOneWithoutMiembrosInput
+  }
+
+  export type ClubMiembroUncheckedCreateWithoutAlumnoInput = {
+    id_miembro?: number
+    id_club: number
+    fecha_ingreso?: Date | string
+    estado?: string
+  }
+
+  export type ClubMiembroCreateOrConnectWithoutAlumnoInput = {
+    where: ClubMiembroWhereUniqueInput
+    create: XOR<ClubMiembroCreateWithoutAlumnoInput, ClubMiembroUncheckedCreateWithoutAlumnoInput>
+  }
+
+  export type ClubMiembroCreateManyAlumnoInputEnvelope = {
+    data: ClubMiembroCreateManyAlumnoInput | ClubMiembroCreateManyAlumnoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClubPuntosRegistroCreateWithoutAlumnoInput = {
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    club: ClubCreateNestedOneWithoutRegistrosInput
+    regla: ClubReglaCreateNestedOneWithoutRegistrosInput
+    coordinador: UsuarioCreateNestedOneWithoutClubes_puntos_coordInput
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput = {
+    id_registro?: number
+    id_club: number
+    id_regla: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroCreateOrConnectWithoutAlumnoInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    create: XOR<ClubPuntosRegistroCreateWithoutAlumnoInput, ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput>
+  }
+
+  export type ClubPuntosRegistroCreateManyAlumnoInputEnvelope = {
+    data: ClubPuntosRegistroCreateManyAlumnoInput | ClubPuntosRegistroCreateManyAlumnoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClubPuntosRegistroCreateWithoutCoordinadorInput = {
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    club: ClubCreateNestedOneWithoutRegistrosInput
+    regla: ClubReglaCreateNestedOneWithoutRegistrosInput
+    alumno: UsuarioCreateNestedOneWithoutClubes_puntosInput
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput = {
+    id_registro?: number
+    id_club: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+  }
+
+  export type ClubPuntosRegistroCreateOrConnectWithoutCoordinadorInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    create: XOR<ClubPuntosRegistroCreateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput>
+  }
+
+  export type ClubPuntosRegistroCreateManyCoordinadorInputEnvelope = {
+    data: ClubPuntosRegistroCreateManyCoordinadorInput | ClubPuntosRegistroCreateManyCoordinadorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type EscuelaUpsertWithoutUsuariosInput = {
     update: XOR<EscuelaUpdateWithoutUsuariosInput, EscuelaUncheckedUpdateWithoutUsuariosInput>
     create: XOR<EscuelaCreateWithoutUsuariosInput, EscuelaUncheckedCreateWithoutUsuariosInput>
@@ -21128,6 +27512,78 @@ export namespace Prisma {
     grupos?: GrupoUncheckedUpdateManyWithoutGeneracionNestedInput
   }
 
+  export type ClubMiembroUpsertWithWhereUniqueWithoutAlumnoInput = {
+    where: ClubMiembroWhereUniqueInput
+    update: XOR<ClubMiembroUpdateWithoutAlumnoInput, ClubMiembroUncheckedUpdateWithoutAlumnoInput>
+    create: XOR<ClubMiembroCreateWithoutAlumnoInput, ClubMiembroUncheckedCreateWithoutAlumnoInput>
+  }
+
+  export type ClubMiembroUpdateWithWhereUniqueWithoutAlumnoInput = {
+    where: ClubMiembroWhereUniqueInput
+    data: XOR<ClubMiembroUpdateWithoutAlumnoInput, ClubMiembroUncheckedUpdateWithoutAlumnoInput>
+  }
+
+  export type ClubMiembroUpdateManyWithWhereWithoutAlumnoInput = {
+    where: ClubMiembroScalarWhereInput
+    data: XOR<ClubMiembroUpdateManyMutationInput, ClubMiembroUncheckedUpdateManyWithoutAlumnoInput>
+  }
+
+  export type ClubMiembroScalarWhereInput = {
+    AND?: ClubMiembroScalarWhereInput | ClubMiembroScalarWhereInput[]
+    OR?: ClubMiembroScalarWhereInput[]
+    NOT?: ClubMiembroScalarWhereInput | ClubMiembroScalarWhereInput[]
+    id_miembro?: IntFilter<"ClubMiembro"> | number
+    id_club?: IntFilter<"ClubMiembro"> | number
+    id_alumno?: IntFilter<"ClubMiembro"> | number
+    fecha_ingreso?: DateTimeFilter<"ClubMiembro"> | Date | string
+    estado?: StringFilter<"ClubMiembro"> | string
+  }
+
+  export type ClubPuntosRegistroUpsertWithWhereUniqueWithoutAlumnoInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    update: XOR<ClubPuntosRegistroUpdateWithoutAlumnoInput, ClubPuntosRegistroUncheckedUpdateWithoutAlumnoInput>
+    create: XOR<ClubPuntosRegistroCreateWithoutAlumnoInput, ClubPuntosRegistroUncheckedCreateWithoutAlumnoInput>
+  }
+
+  export type ClubPuntosRegistroUpdateWithWhereUniqueWithoutAlumnoInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    data: XOR<ClubPuntosRegistroUpdateWithoutAlumnoInput, ClubPuntosRegistroUncheckedUpdateWithoutAlumnoInput>
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithWhereWithoutAlumnoInput = {
+    where: ClubPuntosRegistroScalarWhereInput
+    data: XOR<ClubPuntosRegistroUpdateManyMutationInput, ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoInput>
+  }
+
+  export type ClubPuntosRegistroScalarWhereInput = {
+    AND?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+    OR?: ClubPuntosRegistroScalarWhereInput[]
+    NOT?: ClubPuntosRegistroScalarWhereInput | ClubPuntosRegistroScalarWhereInput[]
+    id_registro?: IntFilter<"ClubPuntosRegistro"> | number
+    id_club?: IntFilter<"ClubPuntosRegistro"> | number
+    id_regla?: IntFilter<"ClubPuntosRegistro"> | number
+    id_alumno?: IntFilter<"ClubPuntosRegistro"> | number
+    puntos_otorgados?: IntFilter<"ClubPuntosRegistro"> | number
+    fecha_registro?: DateTimeFilter<"ClubPuntosRegistro"> | Date | string
+    id_coordinador?: IntFilter<"ClubPuntosRegistro"> | number
+  }
+
+  export type ClubPuntosRegistroUpsertWithWhereUniqueWithoutCoordinadorInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    update: XOR<ClubPuntosRegistroUpdateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedUpdateWithoutCoordinadorInput>
+    create: XOR<ClubPuntosRegistroCreateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedCreateWithoutCoordinadorInput>
+  }
+
+  export type ClubPuntosRegistroUpdateWithWhereUniqueWithoutCoordinadorInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    data: XOR<ClubPuntosRegistroUpdateWithoutCoordinadorInput, ClubPuntosRegistroUncheckedUpdateWithoutCoordinadorInput>
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithWhereWithoutCoordinadorInput = {
+    where: ClubPuntosRegistroScalarWhereInput
+    data: XOR<ClubPuntosRegistroUpdateManyMutationInput, ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorInput>
+  }
+
   export type GeneracionCreateWithoutGruposInput = {
     nombre: string
     ano_inicio: number
@@ -21247,6 +27703,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutGrupoInput = {
@@ -21263,6 +27722,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutGrupoInput = {
@@ -21454,6 +27916,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutActividades_creadasInput = {
@@ -21470,6 +27935,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutActividades_creadasInput = {
@@ -21582,6 +28050,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutActividades_creadasInput = {
@@ -21598,6 +28069,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type CicloUpsertWithoutActividadesInput = {
@@ -21663,6 +28137,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutRegistros_actInput = {
@@ -21679,6 +28156,9 @@ export namespace Prisma {
     actividades_creadas?: ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutRegistros_actInput = {
@@ -21725,6 +28205,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadCreateNestedManyWithoutAlumnoInput
     logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutRegistros_puntosInput = {
@@ -21741,6 +28224,9 @@ export namespace Prisma {
     actividades_creadas?: ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutRegistros_puntosInput = {
@@ -21800,6 +28286,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutRegistros_actInput = {
@@ -21816,6 +28305,9 @@ export namespace Prisma {
     actividades_creadas?: ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type ActividadUpsertWithoutAlumnoActsInput = {
@@ -21874,6 +28366,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUpdateManyWithoutAlumnoNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutRegistros_puntosInput = {
@@ -21890,6 +28385,9 @@ export namespace Prisma {
     actividades_creadas?: ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type CicloUpsertWithoutAlumnoActsInput = {
@@ -22047,6 +28545,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
     generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioUncheckedCreateWithoutLogsInput = {
@@ -22063,6 +28564,9 @@ export namespace Prisma {
     actividades_creadas?: ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
     registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
     registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
   }
 
   export type UsuarioCreateOrConnectWithoutLogsInput = {
@@ -22094,6 +28598,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutLogsInput = {
@@ -22110,6 +28617,666 @@ export namespace Prisma {
     actividades_creadas?: ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
+  }
+
+  export type ClubReglaCreateWithoutClubInput = {
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+    registros?: ClubPuntosRegistroCreateNestedManyWithoutReglaInput
+  }
+
+  export type ClubReglaUncheckedCreateWithoutClubInput = {
+    id_regla?: number
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+    registros?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutReglaInput
+  }
+
+  export type ClubReglaCreateOrConnectWithoutClubInput = {
+    where: ClubReglaWhereUniqueInput
+    create: XOR<ClubReglaCreateWithoutClubInput, ClubReglaUncheckedCreateWithoutClubInput>
+  }
+
+  export type ClubReglaCreateManyClubInputEnvelope = {
+    data: ClubReglaCreateManyClubInput | ClubReglaCreateManyClubInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClubMiembroCreateWithoutClubInput = {
+    fecha_ingreso?: Date | string
+    estado?: string
+    alumno: UsuarioCreateNestedOneWithoutClubes_miembroInput
+  }
+
+  export type ClubMiembroUncheckedCreateWithoutClubInput = {
+    id_miembro?: number
+    id_alumno: number
+    fecha_ingreso?: Date | string
+    estado?: string
+  }
+
+  export type ClubMiembroCreateOrConnectWithoutClubInput = {
+    where: ClubMiembroWhereUniqueInput
+    create: XOR<ClubMiembroCreateWithoutClubInput, ClubMiembroUncheckedCreateWithoutClubInput>
+  }
+
+  export type ClubMiembroCreateManyClubInputEnvelope = {
+    data: ClubMiembroCreateManyClubInput | ClubMiembroCreateManyClubInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClubPuntosRegistroCreateWithoutClubInput = {
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    regla: ClubReglaCreateNestedOneWithoutRegistrosInput
+    alumno: UsuarioCreateNestedOneWithoutClubes_puntosInput
+    coordinador: UsuarioCreateNestedOneWithoutClubes_puntos_coordInput
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateWithoutClubInput = {
+    id_registro?: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroCreateOrConnectWithoutClubInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    create: XOR<ClubPuntosRegistroCreateWithoutClubInput, ClubPuntosRegistroUncheckedCreateWithoutClubInput>
+  }
+
+  export type ClubPuntosRegistroCreateManyClubInputEnvelope = {
+    data: ClubPuntosRegistroCreateManyClubInput | ClubPuntosRegistroCreateManyClubInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClubReglaUpsertWithWhereUniqueWithoutClubInput = {
+    where: ClubReglaWhereUniqueInput
+    update: XOR<ClubReglaUpdateWithoutClubInput, ClubReglaUncheckedUpdateWithoutClubInput>
+    create: XOR<ClubReglaCreateWithoutClubInput, ClubReglaUncheckedCreateWithoutClubInput>
+  }
+
+  export type ClubReglaUpdateWithWhereUniqueWithoutClubInput = {
+    where: ClubReglaWhereUniqueInput
+    data: XOR<ClubReglaUpdateWithoutClubInput, ClubReglaUncheckedUpdateWithoutClubInput>
+  }
+
+  export type ClubReglaUpdateManyWithWhereWithoutClubInput = {
+    where: ClubReglaScalarWhereInput
+    data: XOR<ClubReglaUpdateManyMutationInput, ClubReglaUncheckedUpdateManyWithoutClubInput>
+  }
+
+  export type ClubReglaScalarWhereInput = {
+    AND?: ClubReglaScalarWhereInput | ClubReglaScalarWhereInput[]
+    OR?: ClubReglaScalarWhereInput[]
+    NOT?: ClubReglaScalarWhereInput | ClubReglaScalarWhereInput[]
+    id_regla?: IntFilter<"ClubRegla"> | number
+    id_club?: IntFilter<"ClubRegla"> | number
+    nombre?: StringFilter<"ClubRegla"> | string
+    descripcion?: StringNullableFilter<"ClubRegla"> | string | null
+    puntos?: IntFilter<"ClubRegla"> | number
+    tipo?: StringFilter<"ClubRegla"> | string
+    fecha_creacion?: DateTimeFilter<"ClubRegla"> | Date | string
+  }
+
+  export type ClubMiembroUpsertWithWhereUniqueWithoutClubInput = {
+    where: ClubMiembroWhereUniqueInput
+    update: XOR<ClubMiembroUpdateWithoutClubInput, ClubMiembroUncheckedUpdateWithoutClubInput>
+    create: XOR<ClubMiembroCreateWithoutClubInput, ClubMiembroUncheckedCreateWithoutClubInput>
+  }
+
+  export type ClubMiembroUpdateWithWhereUniqueWithoutClubInput = {
+    where: ClubMiembroWhereUniqueInput
+    data: XOR<ClubMiembroUpdateWithoutClubInput, ClubMiembroUncheckedUpdateWithoutClubInput>
+  }
+
+  export type ClubMiembroUpdateManyWithWhereWithoutClubInput = {
+    where: ClubMiembroScalarWhereInput
+    data: XOR<ClubMiembroUpdateManyMutationInput, ClubMiembroUncheckedUpdateManyWithoutClubInput>
+  }
+
+  export type ClubPuntosRegistroUpsertWithWhereUniqueWithoutClubInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    update: XOR<ClubPuntosRegistroUpdateWithoutClubInput, ClubPuntosRegistroUncheckedUpdateWithoutClubInput>
+    create: XOR<ClubPuntosRegistroCreateWithoutClubInput, ClubPuntosRegistroUncheckedCreateWithoutClubInput>
+  }
+
+  export type ClubPuntosRegistroUpdateWithWhereUniqueWithoutClubInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    data: XOR<ClubPuntosRegistroUpdateWithoutClubInput, ClubPuntosRegistroUncheckedUpdateWithoutClubInput>
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithWhereWithoutClubInput = {
+    where: ClubPuntosRegistroScalarWhereInput
+    data: XOR<ClubPuntosRegistroUpdateManyMutationInput, ClubPuntosRegistroUncheckedUpdateManyWithoutClubInput>
+  }
+
+  export type ClubCreateWithoutReglasInput = {
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    miembros?: ClubMiembroCreateNestedManyWithoutClubInput
+    registros?: ClubPuntosRegistroCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubUncheckedCreateWithoutReglasInput = {
+    id_club?: number
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    miembros?: ClubMiembroUncheckedCreateNestedManyWithoutClubInput
+    registros?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubCreateOrConnectWithoutReglasInput = {
+    where: ClubWhereUniqueInput
+    create: XOR<ClubCreateWithoutReglasInput, ClubUncheckedCreateWithoutReglasInput>
+  }
+
+  export type ClubPuntosRegistroCreateWithoutReglaInput = {
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    club: ClubCreateNestedOneWithoutRegistrosInput
+    alumno: UsuarioCreateNestedOneWithoutClubes_puntosInput
+    coordinador: UsuarioCreateNestedOneWithoutClubes_puntos_coordInput
+  }
+
+  export type ClubPuntosRegistroUncheckedCreateWithoutReglaInput = {
+    id_registro?: number
+    id_club: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroCreateOrConnectWithoutReglaInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    create: XOR<ClubPuntosRegistroCreateWithoutReglaInput, ClubPuntosRegistroUncheckedCreateWithoutReglaInput>
+  }
+
+  export type ClubPuntosRegistroCreateManyReglaInputEnvelope = {
+    data: ClubPuntosRegistroCreateManyReglaInput | ClubPuntosRegistroCreateManyReglaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClubUpsertWithoutReglasInput = {
+    update: XOR<ClubUpdateWithoutReglasInput, ClubUncheckedUpdateWithoutReglasInput>
+    create: XOR<ClubCreateWithoutReglasInput, ClubUncheckedCreateWithoutReglasInput>
+    where?: ClubWhereInput
+  }
+
+  export type ClubUpdateToOneWithWhereWithoutReglasInput = {
+    where?: ClubWhereInput
+    data: XOR<ClubUpdateWithoutReglasInput, ClubUncheckedUpdateWithoutReglasInput>
+  }
+
+  export type ClubUpdateWithoutReglasInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    miembros?: ClubMiembroUpdateManyWithoutClubNestedInput
+    registros?: ClubPuntosRegistroUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubUncheckedUpdateWithoutReglasInput = {
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    miembros?: ClubMiembroUncheckedUpdateManyWithoutClubNestedInput
+    registros?: ClubPuntosRegistroUncheckedUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubPuntosRegistroUpsertWithWhereUniqueWithoutReglaInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    update: XOR<ClubPuntosRegistroUpdateWithoutReglaInput, ClubPuntosRegistroUncheckedUpdateWithoutReglaInput>
+    create: XOR<ClubPuntosRegistroCreateWithoutReglaInput, ClubPuntosRegistroUncheckedCreateWithoutReglaInput>
+  }
+
+  export type ClubPuntosRegistroUpdateWithWhereUniqueWithoutReglaInput = {
+    where: ClubPuntosRegistroWhereUniqueInput
+    data: XOR<ClubPuntosRegistroUpdateWithoutReglaInput, ClubPuntosRegistroUncheckedUpdateWithoutReglaInput>
+  }
+
+  export type ClubPuntosRegistroUpdateManyWithWhereWithoutReglaInput = {
+    where: ClubPuntosRegistroScalarWhereInput
+    data: XOR<ClubPuntosRegistroUpdateManyMutationInput, ClubPuntosRegistroUncheckedUpdateManyWithoutReglaInput>
+  }
+
+  export type ClubCreateWithoutMiembrosInput = {
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    reglas?: ClubReglaCreateNestedManyWithoutClubInput
+    registros?: ClubPuntosRegistroCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubUncheckedCreateWithoutMiembrosInput = {
+    id_club?: number
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    reglas?: ClubReglaUncheckedCreateNestedManyWithoutClubInput
+    registros?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubCreateOrConnectWithoutMiembrosInput = {
+    where: ClubWhereUniqueInput
+    create: XOR<ClubCreateWithoutMiembrosInput, ClubUncheckedCreateWithoutMiembrosInput>
+  }
+
+  export type UsuarioCreateWithoutClubes_miembroInput = {
+    num_cuenta: string
+    nip: string
+    nombre: string
+    correo?: string | null
+    rol: $Enums.Rol
+    activo?: boolean
+    escuela: EscuelaCreateNestedOneWithoutUsuariosInput
+    grupo?: GrupoCreateNestedOneWithoutAlumnosInput
+    actividades_creadas?: ActividadCreateNestedManyWithoutCoordinadorInput
+    registros_act?: AlumnoActividadCreateNestedManyWithoutAlumnoInput
+    registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
+    logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
+    generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutClubes_miembroInput = {
+    id_usuario?: number
+    num_cuenta: string
+    nip: string
+    nombre: string
+    correo?: string | null
+    rol: $Enums.Rol
+    id_escuela: number
+    id_grupo?: number | null
+    activo?: boolean
+    generacionId_generacion?: number | null
+    actividades_creadas?: ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
+    registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutClubes_miembroInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutClubes_miembroInput, UsuarioUncheckedCreateWithoutClubes_miembroInput>
+  }
+
+  export type ClubUpsertWithoutMiembrosInput = {
+    update: XOR<ClubUpdateWithoutMiembrosInput, ClubUncheckedUpdateWithoutMiembrosInput>
+    create: XOR<ClubCreateWithoutMiembrosInput, ClubUncheckedCreateWithoutMiembrosInput>
+    where?: ClubWhereInput
+  }
+
+  export type ClubUpdateToOneWithWhereWithoutMiembrosInput = {
+    where?: ClubWhereInput
+    data: XOR<ClubUpdateWithoutMiembrosInput, ClubUncheckedUpdateWithoutMiembrosInput>
+  }
+
+  export type ClubUpdateWithoutMiembrosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    reglas?: ClubReglaUpdateManyWithoutClubNestedInput
+    registros?: ClubPuntosRegistroUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubUncheckedUpdateWithoutMiembrosInput = {
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    reglas?: ClubReglaUncheckedUpdateManyWithoutClubNestedInput
+    registros?: ClubPuntosRegistroUncheckedUpdateManyWithoutClubNestedInput
+  }
+
+  export type UsuarioUpsertWithoutClubes_miembroInput = {
+    update: XOR<UsuarioUpdateWithoutClubes_miembroInput, UsuarioUncheckedUpdateWithoutClubes_miembroInput>
+    create: XOR<UsuarioCreateWithoutClubes_miembroInput, UsuarioUncheckedCreateWithoutClubes_miembroInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutClubes_miembroInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutClubes_miembroInput, UsuarioUncheckedUpdateWithoutClubes_miembroInput>
+  }
+
+  export type UsuarioUpdateWithoutClubes_miembroInput = {
+    num_cuenta?: StringFieldUpdateOperationsInput | string
+    nip?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    escuela?: EscuelaUpdateOneRequiredWithoutUsuariosNestedInput
+    grupo?: GrupoUpdateOneWithoutAlumnosNestedInput
+    actividades_creadas?: ActividadUpdateManyWithoutCoordinadorNestedInput
+    registros_act?: AlumnoActividadUpdateManyWithoutAlumnoNestedInput
+    registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
+    logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
+    generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutClubes_miembroInput = {
+    id_usuario?: IntFieldUpdateOperationsInput | number
+    num_cuenta?: StringFieldUpdateOperationsInput | string
+    nip?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    id_escuela?: IntFieldUpdateOperationsInput | number
+    id_grupo?: NullableIntFieldUpdateOperationsInput | number | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    generacionId_generacion?: NullableIntFieldUpdateOperationsInput | number | null
+    actividades_creadas?: ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
+    registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
+  }
+
+  export type ClubCreateWithoutRegistrosInput = {
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    reglas?: ClubReglaCreateNestedManyWithoutClubInput
+    miembros?: ClubMiembroCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubUncheckedCreateWithoutRegistrosInput = {
+    id_club?: number
+    nombre: string
+    descripcion?: string | null
+    fecha_creacion?: Date | string
+    reglas?: ClubReglaUncheckedCreateNestedManyWithoutClubInput
+    miembros?: ClubMiembroUncheckedCreateNestedManyWithoutClubInput
+  }
+
+  export type ClubCreateOrConnectWithoutRegistrosInput = {
+    where: ClubWhereUniqueInput
+    create: XOR<ClubCreateWithoutRegistrosInput, ClubUncheckedCreateWithoutRegistrosInput>
+  }
+
+  export type ClubReglaCreateWithoutRegistrosInput = {
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+    club: ClubCreateNestedOneWithoutReglasInput
+  }
+
+  export type ClubReglaUncheckedCreateWithoutRegistrosInput = {
+    id_regla?: number
+    id_club: number
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+  }
+
+  export type ClubReglaCreateOrConnectWithoutRegistrosInput = {
+    where: ClubReglaWhereUniqueInput
+    create: XOR<ClubReglaCreateWithoutRegistrosInput, ClubReglaUncheckedCreateWithoutRegistrosInput>
+  }
+
+  export type UsuarioCreateWithoutClubes_puntosInput = {
+    num_cuenta: string
+    nip: string
+    nombre: string
+    correo?: string | null
+    rol: $Enums.Rol
+    activo?: boolean
+    escuela: EscuelaCreateNestedOneWithoutUsuariosInput
+    grupo?: GrupoCreateNestedOneWithoutAlumnosInput
+    actividades_creadas?: ActividadCreateNestedManyWithoutCoordinadorInput
+    registros_act?: AlumnoActividadCreateNestedManyWithoutAlumnoInput
+    registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
+    logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
+    generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroCreateNestedManyWithoutCoordinadorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutClubes_puntosInput = {
+    id_usuario?: number
+    num_cuenta: string
+    nip: string
+    nombre: string
+    correo?: string | null
+    rol: $Enums.Rol
+    id_escuela: number
+    id_grupo?: number | null
+    activo?: boolean
+    generacionId_generacion?: number | null
+    actividades_creadas?: ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
+    registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutCoordinadorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutClubes_puntosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutClubes_puntosInput, UsuarioUncheckedCreateWithoutClubes_puntosInput>
+  }
+
+  export type UsuarioCreateWithoutClubes_puntos_coordInput = {
+    num_cuenta: string
+    nip: string
+    nombre: string
+    correo?: string | null
+    rol: $Enums.Rol
+    activo?: boolean
+    escuela: EscuelaCreateNestedOneWithoutUsuariosInput
+    grupo?: GrupoCreateNestedOneWithoutAlumnosInput
+    actividades_creadas?: ActividadCreateNestedManyWithoutCoordinadorInput
+    registros_act?: AlumnoActividadCreateNestedManyWithoutAlumnoInput
+    registros_puntos?: AlumnoActividadCreateNestedManyWithoutCoordinadorInput
+    logs?: RegistroCambiosCreateNestedManyWithoutUsuarioInput
+    generacion?: GeneracionCreateNestedOneWithoutAlumnosInput
+    clubes_miembro?: ClubMiembroCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroCreateNestedManyWithoutAlumnoInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutClubes_puntos_coordInput = {
+    id_usuario?: number
+    num_cuenta: string
+    nip: string
+    nombre: string
+    correo?: string | null
+    rol: $Enums.Rol
+    id_escuela: number
+    id_grupo?: number | null
+    activo?: boolean
+    generacionId_generacion?: number | null
+    actividades_creadas?: ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    registros_act?: AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
+    registros_puntos?: AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+    logs?: RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+    clubes_miembro?: ClubMiembroUncheckedCreateNestedManyWithoutAlumnoInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedCreateNestedManyWithoutAlumnoInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutClubes_puntos_coordInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutClubes_puntos_coordInput, UsuarioUncheckedCreateWithoutClubes_puntos_coordInput>
+  }
+
+  export type ClubUpsertWithoutRegistrosInput = {
+    update: XOR<ClubUpdateWithoutRegistrosInput, ClubUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<ClubCreateWithoutRegistrosInput, ClubUncheckedCreateWithoutRegistrosInput>
+    where?: ClubWhereInput
+  }
+
+  export type ClubUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: ClubWhereInput
+    data: XOR<ClubUpdateWithoutRegistrosInput, ClubUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type ClubUpdateWithoutRegistrosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    reglas?: ClubReglaUpdateManyWithoutClubNestedInput
+    miembros?: ClubMiembroUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubUncheckedUpdateWithoutRegistrosInput = {
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    reglas?: ClubReglaUncheckedUpdateManyWithoutClubNestedInput
+    miembros?: ClubMiembroUncheckedUpdateManyWithoutClubNestedInput
+  }
+
+  export type ClubReglaUpsertWithoutRegistrosInput = {
+    update: XOR<ClubReglaUpdateWithoutRegistrosInput, ClubReglaUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<ClubReglaCreateWithoutRegistrosInput, ClubReglaUncheckedCreateWithoutRegistrosInput>
+    where?: ClubReglaWhereInput
+  }
+
+  export type ClubReglaUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: ClubReglaWhereInput
+    data: XOR<ClubReglaUpdateWithoutRegistrosInput, ClubReglaUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type ClubReglaUpdateWithoutRegistrosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    club?: ClubUpdateOneRequiredWithoutReglasNestedInput
+  }
+
+  export type ClubReglaUncheckedUpdateWithoutRegistrosInput = {
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsuarioUpsertWithoutClubes_puntosInput = {
+    update: XOR<UsuarioUpdateWithoutClubes_puntosInput, UsuarioUncheckedUpdateWithoutClubes_puntosInput>
+    create: XOR<UsuarioCreateWithoutClubes_puntosInput, UsuarioUncheckedCreateWithoutClubes_puntosInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutClubes_puntosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutClubes_puntosInput, UsuarioUncheckedUpdateWithoutClubes_puntosInput>
+  }
+
+  export type UsuarioUpdateWithoutClubes_puntosInput = {
+    num_cuenta?: StringFieldUpdateOperationsInput | string
+    nip?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    escuela?: EscuelaUpdateOneRequiredWithoutUsuariosNestedInput
+    grupo?: GrupoUpdateOneWithoutAlumnosNestedInput
+    actividades_creadas?: ActividadUpdateManyWithoutCoordinadorNestedInput
+    registros_act?: AlumnoActividadUpdateManyWithoutAlumnoNestedInput
+    registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
+    logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
+    generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutClubes_puntosInput = {
+    id_usuario?: IntFieldUpdateOperationsInput | number
+    num_cuenta?: StringFieldUpdateOperationsInput | string
+    nip?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    id_escuela?: IntFieldUpdateOperationsInput | number
+    id_grupo?: NullableIntFieldUpdateOperationsInput | number | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    generacionId_generacion?: NullableIntFieldUpdateOperationsInput | number | null
+    actividades_creadas?: ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
+    registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
+  }
+
+  export type UsuarioUpsertWithoutClubes_puntos_coordInput = {
+    update: XOR<UsuarioUpdateWithoutClubes_puntos_coordInput, UsuarioUncheckedUpdateWithoutClubes_puntos_coordInput>
+    create: XOR<UsuarioCreateWithoutClubes_puntos_coordInput, UsuarioUncheckedCreateWithoutClubes_puntos_coordInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutClubes_puntos_coordInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutClubes_puntos_coordInput, UsuarioUncheckedUpdateWithoutClubes_puntos_coordInput>
+  }
+
+  export type UsuarioUpdateWithoutClubes_puntos_coordInput = {
+    num_cuenta?: StringFieldUpdateOperationsInput | string
+    nip?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    escuela?: EscuelaUpdateOneRequiredWithoutUsuariosNestedInput
+    grupo?: GrupoUpdateOneWithoutAlumnosNestedInput
+    actividades_creadas?: ActividadUpdateManyWithoutCoordinadorNestedInput
+    registros_act?: AlumnoActividadUpdateManyWithoutAlumnoNestedInput
+    registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
+    logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
+    generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutClubes_puntos_coordInput = {
+    id_usuario?: IntFieldUpdateOperationsInput | number
+    num_cuenta?: StringFieldUpdateOperationsInput | string
+    nip?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    id_escuela?: IntFieldUpdateOperationsInput | number
+    id_grupo?: NullableIntFieldUpdateOperationsInput | number | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    generacionId_generacion?: NullableIntFieldUpdateOperationsInput | number | null
+    actividades_creadas?: ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
+    registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+    logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
   }
 
   export type PlanDeEstudioCreateManyEscuelaInput = {
@@ -22223,6 +29390,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutEscuelaInput = {
@@ -22239,6 +29409,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateManyWithoutEscuelaInput = {
@@ -22664,6 +29837,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutGeneracionInput = {
@@ -22680,6 +29856,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateManyWithoutGeneracionInput = {
@@ -22794,6 +29973,31 @@ export namespace Prisma {
     fecha?: Date | string
   }
 
+  export type ClubMiembroCreateManyAlumnoInput = {
+    id_miembro?: number
+    id_club: number
+    fecha_ingreso?: Date | string
+    estado?: string
+  }
+
+  export type ClubPuntosRegistroCreateManyAlumnoInput = {
+    id_registro?: number
+    id_club: number
+    id_regla: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroCreateManyCoordinadorInput = {
+    id_registro?: number
+    id_club: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+  }
+
   export type ActividadUpdateWithoutCoordinadorInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22900,6 +30104,78 @@ export namespace Prisma {
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ClubMiembroUpdateWithoutAlumnoInput = {
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    club?: ClubUpdateOneRequiredWithoutMiembrosNestedInput
+  }
+
+  export type ClubMiembroUncheckedUpdateWithoutAlumnoInput = {
+    id_miembro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubMiembroUncheckedUpdateManyWithoutAlumnoInput = {
+    id_miembro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubPuntosRegistroUpdateWithoutAlumnoInput = {
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    club?: ClubUpdateOneRequiredWithoutRegistrosNestedInput
+    regla?: ClubReglaUpdateOneRequiredWithoutRegistrosNestedInput
+    coordinador?: UsuarioUpdateOneRequiredWithoutClubes_puntos_coordNestedInput
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateWithoutAlumnoInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubPuntosRegistroUpdateWithoutCoordinadorInput = {
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    club?: ClubUpdateOneRequiredWithoutRegistrosNestedInput
+    regla?: ClubReglaUpdateOneRequiredWithoutRegistrosNestedInput
+    alumno?: UsuarioUpdateOneRequiredWithoutClubes_puntosNestedInput
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateWithoutCoordinadorInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UsuarioCreateManyGrupoInput = {
     id_usuario?: number
     num_cuenta: string
@@ -22925,6 +30201,9 @@ export namespace Prisma {
     registros_puntos?: AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUpdateManyWithoutUsuarioNestedInput
     generacion?: GeneracionUpdateOneWithoutAlumnosNestedInput
+    clubes_miembro?: ClubMiembroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutGrupoInput = {
@@ -22941,6 +30220,9 @@ export namespace Prisma {
     registros_act?: AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
     registros_puntos?: AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
     logs?: RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+    clubes_miembro?: ClubMiembroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos?: ClubPuntosRegistroUncheckedUpdateManyWithoutAlumnoNestedInput
+    clubes_puntos_coord?: ClubPuntosRegistroUncheckedUpdateManyWithoutCoordinadorNestedInput
   }
 
   export type UsuarioUncheckedUpdateManyWithoutGrupoInput = {
@@ -22988,6 +30270,140 @@ export namespace Prisma {
     fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
     id_coordinador?: IntFieldUpdateOperationsInput | number
     id_ciclo?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubReglaCreateManyClubInput = {
+    id_regla?: number
+    nombre: string
+    descripcion?: string | null
+    puntos: number
+    tipo: string
+    fecha_creacion?: Date | string
+  }
+
+  export type ClubMiembroCreateManyClubInput = {
+    id_miembro?: number
+    id_alumno: number
+    fecha_ingreso?: Date | string
+    estado?: string
+  }
+
+  export type ClubPuntosRegistroCreateManyClubInput = {
+    id_registro?: number
+    id_regla: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubReglaUpdateWithoutClubInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: ClubPuntosRegistroUpdateManyWithoutReglaNestedInput
+  }
+
+  export type ClubReglaUncheckedUpdateWithoutClubInput = {
+    id_regla?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: ClubPuntosRegistroUncheckedUpdateManyWithoutReglaNestedInput
+  }
+
+  export type ClubReglaUncheckedUpdateManyWithoutClubInput = {
+    id_regla?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    puntos?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClubMiembroUpdateWithoutClubInput = {
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    alumno?: UsuarioUpdateOneRequiredWithoutClubes_miembroNestedInput
+  }
+
+  export type ClubMiembroUncheckedUpdateWithoutClubInput = {
+    id_miembro?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubMiembroUncheckedUpdateManyWithoutClubInput = {
+    id_miembro?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    fecha_ingreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClubPuntosRegistroUpdateWithoutClubInput = {
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    regla?: ClubReglaUpdateOneRequiredWithoutRegistrosNestedInput
+    alumno?: UsuarioUpdateOneRequiredWithoutClubes_puntosNestedInput
+    coordinador?: UsuarioUpdateOneRequiredWithoutClubes_puntos_coordNestedInput
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateWithoutClubInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutClubInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_regla?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubPuntosRegistroCreateManyReglaInput = {
+    id_registro?: number
+    id_club: number
+    id_alumno: number
+    puntos_otorgados: number
+    fecha_registro?: Date | string
+    id_coordinador: number
+  }
+
+  export type ClubPuntosRegistroUpdateWithoutReglaInput = {
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    club?: ClubUpdateOneRequiredWithoutRegistrosNestedInput
+    alumno?: UsuarioUpdateOneRequiredWithoutClubes_puntosNestedInput
+    coordinador?: UsuarioUpdateOneRequiredWithoutClubes_puntos_coordNestedInput
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateWithoutReglaInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClubPuntosRegistroUncheckedUpdateManyWithoutReglaInput = {
+    id_registro?: IntFieldUpdateOperationsInput | number
+    id_club?: IntFieldUpdateOperationsInput | number
+    id_alumno?: IntFieldUpdateOperationsInput | number
+    puntos_otorgados?: IntFieldUpdateOperationsInput | number
+    fecha_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_coordinador?: IntFieldUpdateOperationsInput | number
   }
 
 

@@ -7,8 +7,9 @@
 generator client {
   provider   = "prisma-client-js" // or "prisma-client"
   engineType = "client"
-  output   = "./generated/client"
+  output     = "./generated/client"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -158,6 +159,9 @@ model Usuario {
   logs                    RegistroCambios[]
   generacion              Generacion?       @relation(fields: [generacionId_generacion], references: [id_generacion])
   generacionId_generacion Int?
+  clubes_miembro          ClubMiembro[]     @relation("AlumnoClub")
+  clubes_puntos           ClubPuntosRegistro[] @relation("AlumnoClubPuntos")
+  clubes_puntos_coord     ClubPuntosRegistro[] @relation("CoordinadorClubPuntos")
 
   @@map("usuario")
 }
@@ -256,4 +260,76 @@ model RegistroCambios {
   usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
 
   @@map("registro_cambios")
+}
+
+// ======================================
+// ============   CLUBES    =============
+// ======================================
+
+model Club {
+  id_club        Int      @id @default(autoincrement())
+  nombre         String
+  descripcion    String?
+  fecha_creacion DateTime @default(now())
+
+  reglas    ClubRegla[]
+  miembros  ClubMiembro[]
+  registros ClubPuntosRegistro[]
+
+  @@map("club")
+}
+
+// --------------------------------------
+
+model ClubRegla {
+  id_regla       Int      @id @default(autoincrement())
+  id_club        Int
+  nombre         String
+  descripcion    String?
+  puntos         Int // Puntos que asigna la regla
+  tipo           String // Ej: "asistencia", "participación", "mensual", etc.
+  fecha_creacion DateTime @default(now())
+
+  // Relaciones
+  club      Club                 @relation(fields: [id_club], references: [id_club])
+  registros ClubPuntosRegistro[]
+
+  @@map("club_regla")
+}
+
+// --------------------------------------
+
+model ClubMiembro {
+  id_miembro    Int      @id @default(autoincrement())
+  id_club       Int
+  id_alumno     Int
+  fecha_ingreso DateTime @default(now())
+  estado        String   @default("ACTIVO") // ACTIVO | INACTIVO
+
+  // Relaciones
+  club   Club    @relation(fields: [id_club], references: [id_club])
+  alumno Usuario @relation("AlumnoClub", fields: [id_alumno], references: [id_usuario])
+
+  @@unique([id_club, id_alumno]) // Un alumno no puede duplicarse en un club
+  @@map("club_miembro")
+}
+
+// --------------------------------------
+
+model ClubPuntosRegistro {
+  id_registro      Int      @id @default(autoincrement())
+  id_club          Int
+  id_regla         Int
+  id_alumno        Int
+  puntos_otorgados Int
+  fecha_registro   DateTime @default(now())
+  id_coordinador   Int
+
+  // Relaciones
+  club        Club      @relation(fields: [id_club], references: [id_club])
+  regla       ClubRegla @relation(fields: [id_regla], references: [id_regla])
+  alumno      Usuario   @relation("AlumnoClubPuntos", fields: [id_alumno], references: [id_usuario])
+  coordinador Usuario   @relation("CoordinadorClubPuntos", fields: [id_coordinador], references: [id_usuario])
+
+  @@map("club_puntos_registro")
 }
