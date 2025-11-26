@@ -1,7 +1,9 @@
-import { getAllActivitiesAction } from "@/app/actions/activity-actions";
-import { Activity } from "@/app/models";
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+// store/activityStore.ts
+import { getActivityByIdAction, getAllActivitiesAction } from '@/app/actions/activity-actions';
+import { Activity } from '@/app/models';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+
 interface ActivityStore {
   activityList: Activity[];
   nextActivities: Activity[];
@@ -11,10 +13,11 @@ interface ActivityStore {
   setActivityList: (activities: Activity[]) => void;
   setNextActivities: (activities: Activity[]) => void;
   setActivitySelected: (activity: Activity | null) => void;
-  updateActivity: (activity: Activity) => void;
   loadActivities: () => Promise<void>;
   loadNextActivities: () => Promise<void>;
   addActivity: (activity: Activity) => void;
+  getActivityById: (id: string | number) => Activity | undefined; 
+  loadActivityById: (id: string | number) => Promise<void>;
 }
 
 export const useActivityStore = create<ActivityStore>()(
@@ -22,33 +25,56 @@ export const useActivityStore = create<ActivityStore>()(
     activityList: [],
     nextActivities: [],
     activitySelected: null,
+
     setActivityList: (activities) => set({ activityList: activities }),
     setNextActivities: (activities) => set({ nextActivities: activities }),
     setActivitySelected: (activity) => set({ activitySelected: activity }),
+
     loadActivities: async () => {
+      // ¡MIRA QUÉ LIMPIO QUEDÓ ESTO!
+      // Como el action ya devuelve Promise<Activity[]>, TS está feliz.
       const response = await getAllActivitiesAction();
-      // Normalize possible null descripcion to undefined to match Activity type
-      const normalized = (response as any[]).map((a) => ({
-        ...a,
-        descripcion: a.descripcion ?? undefined,
-      })) as Activity[];
-      set({ activityList: normalized });
+      set({ activityList: response }); 
     },
+
     addActivity: (activity) =>
       set((state) => ({
         activityList: [...state.activityList, activity],
       })),
-    updateActivity: (activity) =>
-      set((state) => ({
-        activityList: state.activityList.map((a) =>
-          a.id_actividad === activity.id_actividad ? activity : a
-        ),
-        activitySelected: null,
-      })),
+
+    // ... updateActivity ...
+
     loadNextActivities: async () => {
+      // Asegúrate de que tu API route también devuelva el formato correcto
       const response = await fetch(`/api/activities/next`);
-      const data = await response.json();
+      const data: Activity[] = await response.json(); // Forzamos el tipo si viene de fetch
       set({ nextActivities: data });
+    },
+
+    getActivityById: (id) => {
+      const { activityList } = get();
+      return activityList.find((a) => a.id_actividad === Number(id));
+    },
+
+    loadActivityById: async (id) => {
+      try {
+        const activity = await getActivityByIdAction(Number(id));
+
+        if (!activity) return;
+
+        // Ya no necesitamos normalizar nada aquí
+        set((state) => {
+          const exists = state.activityList.find(
+            (a) => a.id_actividad === activity.id_actividad
+          );
+          if (exists) return state;
+          return { activityList: [...state.activityList, activity] };
+        });
+
+        set({ activitySelected: activity });
+      } catch (error) {
+        console.error("Error cargando actividad:", error);
+      }
     },
   }))
 );

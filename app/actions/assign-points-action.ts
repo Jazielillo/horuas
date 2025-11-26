@@ -46,7 +46,7 @@ export async function assignPointsAction(form: AssignPointsForm) {
   });
   if (!activity) return { ok: false, error: "Actividad no encontrada" };
 
-  const pointsValue = activity.puntos;
+  const pointsValue = activity.puntos_participacion;
 
   // 4) construir lista de alumnos a asignar
   let alumnosIds: number[] = [];
@@ -77,7 +77,6 @@ export async function assignPointsAction(form: AssignPointsForm) {
       data: {
         id_alumno: alumnoId,
         id_actividad: activity.id_actividad,
-        puntos_otorgados: pointsValue,
         fecha_registro: ahora,
         id_coordinador: coordinatorId,
         id_ciclo: cicloActivo.id_ciclo,

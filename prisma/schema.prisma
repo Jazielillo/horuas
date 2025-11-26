@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider   = "prisma-client-js" // or "prisma-client"
+  provider   = "prisma-client" // or "prisma-client"
   engineType = "client"
   output     = "./generated/client"
 }
@@ -18,6 +18,11 @@ datasource db {
 // ---------------------------------------------------------
 // ENUMS
 // ---------------------------------------------------------
+
+enum ActividadTipo {
+  NORMAL
+  CLUB
+}
 
 enum Rol {
   ADMINISTRADOR
@@ -140,28 +145,25 @@ model Departamento {
 // ---------------------------------------------------------
 
 model Usuario {
-  id_usuario Int     @id @default(autoincrement())
-  num_cuenta String  @unique
-  nip        String
-  nombre     String
-  correo     String?
-  rol        Rol
-  id_escuela Int
-  id_grupo   Int?
-  activo     Boolean @default(true)
-
+  id_usuario              Int                @id @default(autoincrement())
+  num_cuenta              String             @unique
+  nip                     String
+  nombre                  String
+  correo                  String?
+  rol                     Rol
+  id_escuela              Int
+  id_grupo                Int?
+  activo                  Boolean            @default(true)
+  premios                 GanadorActividad[]
   // Relaciones
-  escuela                 Escuela           @relation(fields: [id_escuela], references: [id_escuela])
-  grupo                   Grupo?            @relation(fields: [id_grupo], references: [id_grupo])
-  actividades_creadas     Actividad[]       @relation("CoordinadorActividad")
-  registros_act           AlumnoActividad[] @relation("AlumnoParticipacion")
-  registros_puntos        AlumnoActividad[] @relation("CoordinadorRegistro")
+  escuela                 Escuela            @relation(fields: [id_escuela], references: [id_escuela])
+  grupo                   Grupo?             @relation(fields: [id_grupo], references: [id_grupo])
+  actividades_creadas     Actividad[]        @relation("CoordinadorActividad")
+  registros_act           AlumnoActividad[]  @relation("AlumnoParticipacion")
+  registros_puntos        AlumnoActividad[]  @relation("CoordinadorRegistro")
   logs                    RegistroCambios[]
-  generacion              Generacion?       @relation(fields: [generacionId_generacion], references: [id_generacion])
+  generacion              Generacion?        @relation(fields: [generacionId_generacion], references: [id_generacion])
   generacionId_generacion Int?
-  clubes_miembro          ClubMiembro[]     @relation("AlumnoClub")
-  clubes_puntos           ClubPuntosRegistro[] @relation("AlumnoClubPuntos")
-  clubes_puntos_coord     ClubPuntosRegistro[] @relation("CoordinadorClubPuntos")
 
   @@map("usuario")
 }
@@ -192,44 +194,7 @@ model Grupo {
 
 // ---------------------------------------------------------
 
-model Actividad {
-  id_actividad    Int      @id @default(autoincrement())
-  nombre          String
-  descripcion     String?
-  fecha           DateTime
-  puntos          Int
-  id_departamento Int
-  id_coordinador  Int
-  id_ciclo        Int
-
-  // Relaciones
-  departamento Departamento      @relation(fields: [id_departamento], references: [id_departamento])
-  coordinador  Usuario           @relation("CoordinadorActividad", fields: [id_coordinador], references: [id_usuario])
-  ciclo        Ciclo             @relation(fields: [id_ciclo], references: [id_ciclo])
-  alumnoActs   AlumnoActividad[]
-
-  @@map("actividad")
-}
-
 // ---------------------------------------------------------
-
-model AlumnoActividad {
-  id_alumno_actividad Int      @id @default(autoincrement())
-  id_alumno           Int
-  id_actividad        Int
-  puntos_otorgados    Int
-  fecha_registro      DateTime
-  id_coordinador      Int
-  id_ciclo            Int
-
-  // Relaciones
-  alumno      Usuario   @relation("AlumnoParticipacion", fields: [id_alumno], references: [id_usuario])
-  actividad   Actividad @relation(fields: [id_actividad], references: [id_actividad])
-  coordinador Usuario   @relation("CoordinadorRegistro", fields: [id_coordinador], references: [id_usuario])
-  ciclo       Ciclo     @relation(fields: [id_ciclo], references: [id_ciclo])
-
-  @@map("alumno_actividad")
-}
 
 // ---------------------------------------------------------
 
@@ -262,74 +227,75 @@ model RegistroCambios {
   @@map("registro_cambios")
 }
 
-// ======================================
-// ============   CLUBES    =============
-// ======================================
-
-model Club {
-  id_club        Int      @id @default(autoincrement())
-  nombre         String
-  descripcion    String?
-  fecha_creacion DateTime @default(now())
-
-  reglas    ClubRegla[]
-  miembros  ClubMiembro[]
-  registros ClubPuntosRegistro[]
-
-  @@map("club")
-}
-
-// --------------------------------------
-
-model ClubRegla {
-  id_regla       Int      @id @default(autoincrement())
-  id_club        Int
-  nombre         String
-  descripcion    String?
-  puntos         Int // Puntos que asigna la regla
-  tipo           String // Ej: "asistencia", "participación", "mensual", etc.
-  fecha_creacion DateTime @default(now())
+model Actividad {
+  id_actividad         Int           @id @default(autoincrement())
+  nombre               String
+  descripcion          String?
+  fecha                DateTime
+  puntos_participacion Int
+  id_departamento      Int
+  id_coordinador       Int
+  id_ciclo             Int
+  tipo                 ActividadTipo @default(NORMAL)
 
   // Relaciones
-  club      Club                 @relation(fields: [id_club], references: [id_club])
-  registros ClubPuntosRegistro[]
-
-  @@map("club_regla")
-}
-
-// --------------------------------------
-
-model ClubMiembro {
-  id_miembro    Int      @id @default(autoincrement())
-  id_club       Int
-  id_alumno     Int
-  fecha_ingreso DateTime @default(now())
-  estado        String   @default("ACTIVO") // ACTIVO | INACTIVO
 
   // Relaciones
-  club   Club    @relation(fields: [id_club], references: [id_club])
-  alumno Usuario @relation("AlumnoClub", fields: [id_alumno], references: [id_usuario])
+  departamento Departamento       @relation(fields: [id_departamento], references: [id_departamento])
+  coordinador  Usuario            @relation("CoordinadorActividad", fields: [id_coordinador], references: [id_usuario])
+  ciclo        Ciclo              @relation(fields: [id_ciclo], references: [id_ciclo])
+  alumnoActs   AlumnoActividad[]
+  premios      ActividadPremio[]
+  ganadores    GanadorActividad[]
 
-  @@unique([id_club, id_alumno]) // Un alumno no puede duplicarse en un club
-  @@map("club_miembro")
+  @@map("actividad")
 }
 
-// --------------------------------------
-
-model ClubPuntosRegistro {
-  id_registro      Int      @id @default(autoincrement())
-  id_club          Int
-  id_regla         Int
-  id_alumno        Int
-  puntos_otorgados Int
-  fecha_registro   DateTime @default(now())
-  id_coordinador   Int
+model AlumnoActividad {
+  id_alumno_actividad Int      @id @default(autoincrement())
+  id_alumno           Int
+  id_actividad        Int
+  fecha_registro      DateTime
+  id_coordinador      Int
+  id_ciclo            Int
 
   // Relaciones
-  club        Club      @relation(fields: [id_club], references: [id_club])
-  regla       ClubRegla @relation(fields: [id_regla], references: [id_regla])
-  alumno      Usuario   @relation("AlumnoClubPuntos", fields: [id_alumno], references: [id_usuario])
-  coordinador Usuario   @relation("CoordinadorClubPuntos", fields: [id_coordinador], references: [id_usuario])
+  alumno      Usuario   @relation("AlumnoParticipacion", fields: [id_alumno], references: [id_usuario])
+  actividad   Actividad @relation(fields: [id_actividad], references: [id_actividad])
+  coordinador Usuario   @relation("CoordinadorRegistro", fields: [id_coordinador], references: [id_usuario])
+  ciclo       Ciclo     @relation(fields: [id_ciclo], references: [id_ciclo])
 
-  @@map("club_puntos_registro")
+  @@map("alumno_actividad")
+}
+
+model ActividadPremio {
+  id          Int  @id @default(autoincrement())
+  actividadId Int
+  lugar       Int? // puede ser null si quieres premios no ordinales
+  puntos      Int
+
+  actividad Actividad          @relation(fields: [actividadId], references: [id_actividad])
+  ganadores GanadorActividad[]
+
+  // Evitar duplicar un mismo lugar dentro de la misma actividad
+  @@unique([actividadId, lugar])
+  @@index([actividadId])
+}
+
+model GanadorActividad {
+  id                Int @id @default(autoincrement())
+  actividadPremioId Int
+
+  alumnoId Int // ganador individual
+
+  // Relaciones
+  premio                ActividadPremio @relation(fields: [actividadPremioId], references: [id])
+  alumno                Usuario         @relation(fields: [alumnoId], references: [id_usuario])
+  actividad             Actividad?      @relation(fields: [actividadId_actividad], references: [id_actividad])
+  actividadId_actividad Int?
+
+  // Evitar asignar el mismo premio a la misma persona dos veces
+  @@unique([actividadPremioId, alumnoId])
+  @@index([actividadPremioId])
+  @@index([alumnoId])
 }

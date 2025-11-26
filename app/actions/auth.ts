@@ -5,6 +5,7 @@ import { createSession, deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export async function login(state: FormState, formData: FormData) {
+  console.log("Login action called");
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     num_cuenta: formData.get("num_cuenta"),
@@ -18,7 +19,6 @@ export async function login(state: FormState, formData: FormData) {
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-
   // Call the provider or db to create a user...
   const data = await prisma.usuario.findFirst({
     where: {
@@ -30,10 +30,13 @@ export async function login(state: FormState, formData: FormData) {
   const user = data;
 
   if (!user) {
+    console.log("Número de cuenta o NIP incorrectos.");
     return {
       message: "Número de cuenta o NIP incorrectos.",
     };
   }
+  
+  console.log(user.rol);
 
   await createSession(user.id_usuario, user.num_cuenta, user.rol);
 

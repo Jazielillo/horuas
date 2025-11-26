@@ -18,7 +18,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import ActivityForm from "@/app/components/forms/activity-form";
 import { AllActivities } from "../components/all-activities";
 import { getAllActivitiesAction } from "@/app/actions/activity-actions";
 import { useActivityStore } from "@/store/use-activity-store";
@@ -37,33 +36,21 @@ const CoordinatorActivities = () => {
   const { activityList, setActivitySelected, loadActivities } =
     useActivityStore();
   const { toast } = useToast();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingActivity, setEditingActivity] = useState<any>(null);
-
-  // Mock data
-
-  const handleCreateActivity = () => {
-    toast({
-      title: "Actividad creada",
-      description: "La actividad se ha registrado exitosamente.",
-    });
-    setIsDialogOpen(false);
-  };
-
-  const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchActivities = async () => {
-      await loadActivities();
+    // TRUCO DE SENIOR:
+    // Solo cargamos si la lista está vacía.
+    // Así, si vas al detalle y vuelves, no se vuelve a disparar la petición.
+    if (activityList.length === 0) {
+      loadActivities().then(() => setLoading(false));
+    } else {
       setLoading(false);
-    };
-    fetchActivities();
-  }, [loadActivities]);
+    }
+  }, [loadActivities, activityList.length]);
 
   const handleEditActivity = (activity: any) => {
     setActivitySelected(activity);
-    setIsDialogOpen(true);
   };
 
   const handleDeleteActivity = (id: number) => {
@@ -95,7 +82,18 @@ const CoordinatorActivities = () => {
               Asignar puntos
             </Link>
           </Button>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+
+          <Button
+            asChild
+            size="lg"
+            className="bg-blue-900 hover:bg-primary text-white"
+          >
+            <Link href="/coordinador/actividades/nuevo">
+              <Plus className="w-4 h-4 mr-2" />
+              Crear actividad
+            </Link>
+          </Button>
+          {/* <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button
                 size="lg"
@@ -119,7 +117,7 @@ const CoordinatorActivities = () => {
               </DialogHeader>
               <ActivityForm onSuccess={handleCreateActivity} />
             </DialogContent>
-          </Dialog>
+          </Dialog> */}
         </div>
       </div>
 

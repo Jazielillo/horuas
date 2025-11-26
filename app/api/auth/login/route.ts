@@ -8,6 +8,7 @@ import { getGroup } from "../../utils/getGroup";
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function POST(req: Request) {
+  console.log("Login API called");
   try {
     const { num_cuenta, nip } = await req.json();
 
