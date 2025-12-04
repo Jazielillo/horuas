@@ -26,32 +26,48 @@ import {
 import { Activity, Alumno } from "@/app/models";
 import { Button } from "@/components/ui/button";
 import { setgroups } from "process";
+import { useActivityStore } from "@/store/use-activity-store";
+import { useParams } from "next/navigation";
 
 export default function AssignPointsForm() {
   const {
     selectedYear,
     selectedGroup,
     selectedStudent,
-    selectedActivity,
     groups,
 
     setYear,
     setGroup,
     setStudent,
-    setActivity,
     setGroups,
 
     loadGroupsByYear,
     loadStudentsByGroup,
+    checkStudentActivity,
   } = usePointsAssignmentStore();
 
+  const { activitySelected } = useActivityStore();
+
+  const { id } = useParams(); // Obtenemos el ID del URL
+
+  const handleSelectStudent = (student: Alumno | null) => {
+    if (student) {
+      setStudent(student);
+      checkStudentActivity(student.id_usuario, Number(id));
+    }
+  };
+
   useEffect(() => {
-    if (selectedGroup && selectedActivity) {
+    if (selectedGroup && activitySelected) {
       // Clear student selection if group is selected
       console.log("Group and activity selected, clearing student");
-      loadStudentsByGroup(selectedGroup.id_grupo.toString());
+      loadStudentsByGroup(
+        selectedGroup.id_grupo.toString(),
+        activitySelected.id_actividad,
+        false
+      );
     }
-  }, [selectedGroup, selectedActivity]);
+  }, [selectedGroup, activitySelected]);
 
   const fetchLastActivities = async () => {
     const res = await fetch("/api/actividades/last10");
@@ -59,7 +75,8 @@ export default function AssignPointsForm() {
   };
 
   const fetchLastStudents = async () => {
-    const res = await fetch("/api/alumnos/ten");
+    let id = activitySelected?.departamento === "Deportes" ? 1 : 2;
+    const res = await fetch(`/api/alumnos/ten/${id}`);
     return await res.json();
   };
 
@@ -99,7 +116,7 @@ export default function AssignPointsForm() {
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Activities select (simple select) */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {/* Año */}
               <div>
                 <label
@@ -179,32 +196,8 @@ export default function AssignPointsForm() {
                   labelField="nombre"
                   valueField="id_usuario"
                   value={selectedStudent}
-                  onSelect={setStudent}
+                  onSelect={handleSelectStudent}
                   disabled={!!selectedGroup || !!selectedYear}
-                />
-                {form.formState.errors.id_actividad && (
-                  <p className="mt-2 text-sm text-red-600">
-                    {String(form.formState.errors.id_actividad?.message)}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="id_actividad"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Actividad
-                </label>
-                <SmartComboBox<Activity>
-                  placeholder="Selecciona actividad"
-                  searchPlaceholder="Buscar actividad..."
-                  fetchInitial={fetchLastActivities}
-                  searchFn={searchActivities}
-                  labelField="nombre"
-                  valueField="id_actividad"
-                  value={selectedActivity}
-                  onSelect={setActivity}
                 />
                 {form.formState.errors.id_actividad && (
                   <p className="mt-2 text-sm text-red-600">

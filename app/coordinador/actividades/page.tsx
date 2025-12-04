@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ArrowDownToDotIcon, Plus, TicketPlus } from "lucide-react";
+import { ArrowDownToDotIcon, Plus, Search, TicketPlus } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -9,49 +9,74 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { AllActivities } from "../components/all-activities";
-import { getAllActivitiesAction } from "@/app/actions/activity-actions";
 import { useActivityStore } from "@/store/use-activity-store";
 import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
-
-interface Activity {
-  id_actividad: number;
-  nombre: string;
-  descripcion: string | null;
-  fecha: Date;
-  puntos: number;
-}
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CoordinatorActivities = () => {
-  const { activityList, setActivitySelected, loadActivities } =
-    useActivityStore();
+  const {
+    activityList,
+    setActivitySelected,
+    loadActivities,
+    loadCiclos,
+    setCicloSelected,
+    cicloSelected,
+    ciclos,
+    departamentSelected,
+    departaments,
+    loadDepartaments,
+    setDepartamentSelected,
+    cleanStore,
+  } = useActivityStore();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
-
+  const [loadingActivities, setLoadingActivities] = useState(false);
+  
   useEffect(() => {
-    // TRUCO DE SENIOR:
-    // Solo cargamos si la lista está vacía.
-    // Así, si vas al detalle y vuelves, no se vuelve a disparar la petición.
-    if (activityList.length === 0) {
-      loadActivities().then(() => setLoading(false));
-    } else {
-      setLoading(false);
+    setLoadingActivities(true);
+    if (ciclos === undefined || ciclos.length === 0) {
+      loadCiclos();
     }
-  }, [loadActivities, activityList.length]);
+    if (departaments === undefined || departaments.length === 0) {
+      loadDepartaments();
+    }
+    loadActivities().then(() => setLoadingActivities(false));
+    setLoading(false);
+  }, [
+    loadActivities,
+    loadCiclos,
+    activityList.length,
+    cicloSelected,
+    loadDepartaments,
+    departaments,
+    departamentSelected,
+  ]);
 
   const handleEditActivity = (activity: any) => {
     setActivitySelected(activity);
   };
+
+  const [activitieSearch, setActivitieSearch] = useState("");
+
+  // 2. Variable que contiene SIEMPRE la lista filtrada
+  const filteredActivites = activityList.filter((activity) => {
+    // Convertimos a minúsculas para que la búsqueda no sea sensible a mayúsculas
+    const searchLower = activitieSearch.toLowerCase();
+    const activitieName = activity.nombre.toLowerCase();
+
+    // Retornamos true si el nombre O el número de cuenta coinciden
+    return activitieName.includes(searchLower);
+  });
 
   const handleDeleteActivity = (id: number) => {
     toast({
@@ -75,76 +100,150 @@ const CoordinatorActivities = () => {
           <Button
             asChild
             size="lg"
-            className="bg-green-600 hover:bg-green-700 text-white"
-          >
-            <Link href="/coordinador/actividades/asignar-puntos">
-              <TicketPlus className="w-4 h-4 mr-2" />
-              Asignar puntos
-            </Link>
-          </Button>
-
-          <Button
-            asChild
-            size="lg"
             className="bg-blue-900 hover:bg-primary text-white"
+            onClick={() => setActivitySelected(null)}
           >
             <Link href="/coordinador/actividades/nuevo">
               <Plus className="w-4 h-4 mr-2" />
               Crear actividad
             </Link>
           </Button>
-          {/* <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button
-                size="lg"
-                onClick={() => setEditingActivity(null)}
-                className="cursor-pointer"
-              >
-                <Plus className="w-4 h-4 mr-2 cursor-pointer" />
-                Nueva Actividad
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>
-                  {editingActivity
-                    ? "Editar Actividad"
-                    : "Crear Nueva Actividad"}
-                </DialogTitle>
-                <DialogDescription>
-                  Complete los datos de la actividad extracurricular
-                </DialogDescription>
-              </DialogHeader>
-              <ActivityForm onSuccess={handleCreateActivity} />
-            </DialogContent>
-          </Dialog> */}
         </div>
       </div>
 
       {/* Activities List */}
-      {loading ? (
-        <div className="flex justify-center items-center flex-col gap-4 mt-60">
-          <Spinner className="size-20 text-primary" />
-        </div>
-      ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle>Lista de Actividades</CardTitle>
-            {/* <CardDescription>
-            {activities.length} actividades registradas
-          </CardDescription> */}
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Lista de Actividades</CardTitle>
+          <CardDescription>
+            Administra las actividades extracurriculares creadas
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="relative mb-5">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground " />
+              <Input
+                placeholder="Buscar por nombre"
+                value={activitieSearch}
+                onChange={(e) => setActivitieSearch(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <div className="flex gap-2">
+              <Select
+                value={departamentSelected?.id_departamento.toString() || ""}
+                onValueChange={(dept) => {
+                  setDepartamentSelected(
+                    departaments?.find(
+                      (d) => d.id_departamento.toString() === dept
+                    ) || null
+                  );
+                }}
+              >
+                <SelectTrigger className="w-full cursor-pointer">
+                  <SelectValue placeholder="Seleccionar departamento" />
+                </SelectTrigger>
+                <SelectContent>
+                  {departaments?.map((departament) => (
+                    <SelectItem
+                      key={departament.id_departamento}
+                      value={departament.id_departamento.toString()}
+                      className="cursor-pointer"
+                    >
+                      {departament.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={cicloSelected?.id_ciclo.toString() || ""}
+                onValueChange={(cicloId) => {
+                  setCicloSelected(
+                    ciclos?.find((c) => c.id_ciclo.toString() === cicloId) ||
+                      null
+                  );
+                }}
+              >
+                <SelectTrigger className="w-full cursor-pointer">
+                  <SelectValue placeholder="Seleccionar ciclo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ciclos?.map((ciclo) => (
+                    <SelectItem
+                      key={ciclo.id_ciclo}
+                      className="cursor-pointer"
+                      value={ciclo.id_ciclo.toString()}
+                    >
+                      {ciclo.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          {(cicloSelected || departamentSelected) && (
+            <div className="flex items-center gap-2 p-3 bg-muted rounded-lg mb-2">
+              {cicloSelected && (
+                <div className="text-sm flex items-center">
+                  <span className="font-medium mr-1">Ciclo seleccionado:</span>
+                  <span className="mr-2">{cicloSelected.nombre}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6"
+                    onClick={() => setCicloSelected(null)}
+                  >
+                    Limpiar
+                  </Button>
+                </div>
+              )}
+
+              {departamentSelected && (
+                <div className="text-sm flex items-center">
+                  <span className="font-medium mr-1">
+                    Departamento seleccionado:
+                  </span>
+                  <span className="mr-2">{departamentSelected.nombre}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6"
+                    onClick={() => setDepartamentSelected(null)}
+                  >
+                    Limpiar
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+          <div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+              <ArrowDownToDotIcon className="h-4 w-4" />
+              <span>Haz clic en una actividad para asignar puntos.</span>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {loadingActivities ? (
+              <div className="flex justify-center items-center flex-col gap-4 mt-20">
+                <Spinner className="size-20 text-primary" />
+              </div>
+            ) : filteredActivites.length > 0 ? (
               <AllActivities
-                activities={activityList}
+                activities={filteredActivites}
                 handleEditActivity={handleEditActivity}
                 handleDeleteActivity={handleDeleteActivity}
               />
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            ) : (
+              <p className="text-center text-muted-foreground my-10">
+                No se encontraron actividades.
+              </p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

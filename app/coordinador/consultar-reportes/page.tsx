@@ -37,18 +37,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alumno } from "@/app/models/alumno";
 import { SmartComboBox } from "@/components/ui/searchable-combobox";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/spinner";
+import { useActivityStore } from "@/store/use-activity-store";
+import Link from "next/link";
+import { useAlumnoStore } from "@/store/use-alumno-store";
 
 const CoordinatorReports = () => {
   const {
@@ -56,27 +48,21 @@ const CoordinatorReports = () => {
     selectedGroup,
     selectedStudent,
     loading,
-    selectedActivity,
     groups,
     studentsOfGroup,
-    activitiesOfStudent,
-    loadingActivities,
     setYear,
     setGroup,
     setStudent,
-    setActivity,
     setGroups,
-    setActivitiesOfStudent,
 
-    loadActivitiesOfStudent,
     loadGroupsByYear,
-    loadStudentsByGroups,
+    loadStudentsByGroup,
   } = usePointsAssignmentStore();
 
+  const {reset} = useAlumnoStore();
+
   useEffect(() => {
-    setYear("");
-    setGroup(null);
-    setStudent(null);
+    reset();
   }, []);
 
   const { toast } = useToast();
@@ -96,7 +82,8 @@ const CoordinatorReports = () => {
 
   useEffect(() => {
     if (selectedGroup) {
-      loadStudentsByGroups(selectedGroup.id_grupo.toString());
+      console.log("Cargando alumnos del grupo", selectedGroup);
+      loadStudentsByGroup(selectedGroup.id_grupo.toString(), 0, true);
     }
   }, [selectedGroup]);
 
@@ -346,9 +333,11 @@ const CoordinatorReports = () => {
                     <TableRow>
                       <TableHead>Nombre</TableHead>
                       <TableHead>No. Cuenta</TableHead>
-                      <TableHead>Grupo</TableHead>
+                      {selectedGroup != null ? null : (
+                        <TableHead>Grupo</TableHead>
+                      )}
                       <TableHead className="text-center">
-                        Puntos Actuales
+                        Puntos Totales
                       </TableHead>
                       <TableHead className="text-center">Acciones</TableHead>
                     </TableRow>
@@ -363,13 +352,20 @@ const CoordinatorReports = () => {
                         <TableCell className="text-muted-foreground">
                           {selectedStudent.num_cuenta}
                         </TableCell>
-                        <TableCell>{selectedStudent.grupo ?? "N/A"}</TableCell>
+                        <TableCell>{selectedStudent?.grupo ?? "N/A"}</TableCell>
                         <TableCell className="text-center">
                           {selectedStudent.puntos ?? 0}
                         </TableCell>
                         <TableCell className="font-semibold text-center">
-                          <Button className="bg-primary text-center cursor-pointer">
-                            Historial
+                          <Button
+                            className="bg-primary text-center cursor-pointer"
+                            asChild
+                          >
+                            <Link
+                              href={`/coordinador/consultar-reportes/detalle/${selectedStudent.id_usuario}`}
+                            >
+                              Historial
+                            </Link>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -403,78 +399,20 @@ const CoordinatorReports = () => {
                           <TableCell className="text-muted-foreground">
                             {student.num_cuenta}
                           </TableCell>
-                          <TableCell>{student.grupo ?? "N/A"}</TableCell>
                           <TableCell className="text-center">
                             {student.puntos ?? 0}
                           </TableCell>
                           <TableCell className="font-semibold text-center">
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  className="cursor-pointer"
-                                  onClick={() =>
-                                    loadActivitiesOfStudent(student.id_usuario)
-                                  }
-                                >
-                                  Historial
-                                </Button>
-                              </DialogTrigger>
-                              {/* ... Tu DialogContent original va aquí ... */}
-                              <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
-                                  <DialogTitle className="text-center">
-                                    Actividades realizadas
-                                  </DialogTitle>
-                                </DialogHeader>
-                                {loadingActivities ? (
-                                  <div className="p-8 flex justify-center">
-                                    <Spinner />
-                                  </div>
-                                ) : (
-                                  <div className="space-y-4 max-h-[400px] overflow-y-auto">
-                                    {activitiesOfStudent &&
-                                    activitiesOfStudent.length > 0 ? (
-                                      activitiesOfStudent.map((activity) => (
-                                        <div
-                                          key={activity.id_actividad}
-                                          className="p-4 border rounded-lg bg-muted/5 shadow-sm space-y-2 cursor-pointer hover:bg-muted/10 transition-colors"
-                                        >
-                                          <div className="flex items-start justify-between gap-4">
-                                            <div className="flex-1 min-w-0">
-                                              <h3 className="font-semibold text-lg truncate">
-                                                {activity.nombre}
-                                              </h3>
-                                              <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
-                                                {activity.descripcion}
-                                              </p>
-                                            </div>
-                                            <div className="flex flex-col items-end gap-2">
-                                              <div className="text-xs text-muted-foreground">
-                                                Fecha
-                                              </div>
-                                              <div className="font-medium">
-                                                {new Date(
-                                                  activity.fecha || ""
-                                                ).toLocaleDateString()}
-                                              </div>
-                                              <Badge className="bg-primary/10 text-primary">
-                                                {activity.puntos} pts
-                                              </Badge>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ))
-                                    ) : (
-                                      <p className="text-center text-muted-foreground">
-                                        No se encontraron actividades para este
-                                        alumno.
-                                      </p>
-                                    )}
-                                  </div>
-                                )}
-                              </DialogContent>
-                            </Dialog>
+                            <Button
+                              className="bg-primary text-center cursor-pointer"
+                              asChild
+                            >
+                              <Link
+                                href={`/coordinador/consultar-reportes/detalle/${student.id_usuario}`}
+                              >
+                                Historial
+                              </Link>
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))

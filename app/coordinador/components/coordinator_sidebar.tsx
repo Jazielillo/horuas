@@ -25,11 +25,6 @@ import { title } from "process";
 const navigationItems = [
   { title: "Actividades", url: "/coordinador/actividades", icon: Calendar },
   {
-    title: "Clubes",
-    url: "/coordinador/clubes",
-    icon: LayoutDashboard,
-  },
-  {
     title: "Consultas y Reportes",
     url: "/coordinador/consultar-reportes",
     icon: FileText,

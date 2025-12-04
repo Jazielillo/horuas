@@ -1,4 +1,7 @@
+import { getAlumnoInfo } from "@/app/actions/students-actions";
 import { Activity, Alumno } from "@/app/models";
+import { ActivityPrize } from "@/app/models/activity";
+import { AlumnoCompleto } from "@/app/models/alumno-completo";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 interface AlumnoState {
@@ -6,6 +9,7 @@ interface AlumnoState {
   activityList: Activity[];
   nextActivities: Activity[];
   loading: boolean;
+  selectedAlumnoCompleto: AlumnoCompleto | null;
 
   // Actions
   setLoading: (loading: boolean) => void;
@@ -13,6 +17,15 @@ interface AlumnoState {
   setSelectedAlumno: (alumno: Alumno | null) => void;
   loadActivitiesOfAlumno: () => Promise<void>;
   loadNextActivitiesOfAlumno: () => Promise<void>;
+  setSelectedAlumnoCompleto: (alumno: AlumnoCompleto | null) => void;
+  loadAlumnoCompleto: (id_usuario: number) => Promise<void>;
+  changeActivityInAlumnoCompleto: (editActivity: Activity) => void;
+  deleteActivityInAlumnoCompleto: (id_actividad: number) => void;
+  changePrizeInActivity: (
+    premio?: ActivityPrize,
+    id_actividad?: number
+  ) => void;
+  reset: () => void;
 }
 
 export const useAlumnoStore = create<AlumnoState>()(
@@ -20,13 +33,16 @@ export const useAlumnoStore = create<AlumnoState>()(
     selectedAlumno: null,
     activityList: [],
     nextActivities: [],
+    selectedAlumnoCompleto: null,
     loading: true,
     setSelectedAlumno: (alumno) => set({ selectedAlumno: alumno }),
     loadActivitiesOfAlumno: async () => {
       set({ loading: true });
-      if (get().selectedAlumno) {
+      if (get().selectedAlumnoCompleto) {
         const response = await fetch(
-          `/api/alumnos/actividades?alumno=${get().selectedAlumno?.id_usuario}`
+          `/api/alumnos/actividades?alumno=${
+            get().selectedAlumnoCompleto?.alumno.id_usuario
+          }`
         );
         const data = await response.json();
         set({ activityList: data, loading: false });
@@ -40,7 +56,6 @@ export const useAlumnoStore = create<AlumnoState>()(
         `/api/alumnos/informacion?id_alumno=${id_usuario}`
       );
       const data = await response.json();
-      console.log("Fetched alumno data:", data);
       set({
         selectedAlumno: {
           id_usuario: data.id_usuario,
@@ -58,5 +73,139 @@ export const useAlumnoStore = create<AlumnoState>()(
       const data = await response.json();
       set({ nextActivities: data });
     },
+    setSelectedAlumnoCompleto: (alumno) =>
+      set({ selectedAlumnoCompleto: alumno }),
+    loadAlumnoCompleto: async (id_usuario: number) => {
+      set({ loading: true });
+      const response = await getAlumnoInfo(id_usuario);
+      set({ selectedAlumnoCompleto: response, loading: false });
+    },
+    changeActivityInAlumnoCompleto: (editActivity) => {
+      console.log("Updating activity in alumno completo:", editActivity);
+      const currentAlumnoCompleto = get().selectedAlumnoCompleto;
+      if (!currentAlumnoCompleto) return;
+      const updatedActivities = currentAlumnoCompleto.actividades.map(
+        (activity) =>
+          activity.id_actividad === editActivity.id_actividad
+            ? {
+                ...activity,
+                ...editActivity,
+                premio: Array.isArray(editActivity.premio)
+                  ? editActivity.premio.length
+                    ? editActivity.premio[0]
+                    : null
+                  : editActivity.premio ?? null,
+              }
+            : activity
+      );
+      set({
+        selectedAlumnoCompleto: {
+          ...currentAlumnoCompleto,
+          actividades: updatedActivities,
+        },
+      });
+    },
+    deleteActivityInAlumnoCompleto: (id_actividad) => {
+      const currentAlumnoCompleto = get().selectedAlumnoCompleto;
+      if (!currentAlumnoCompleto) return;
+
+      // 1. Eliminar la actividad
+      const updatedActivities = currentAlumnoCompleto.actividades.filter(
+        (activity) => activity.id_actividad !== id_actividad
+      );
+
+      // 2. Recalcular puntos después de eliminar una actividad
+      let deportes = 0;
+      let cultura = 0;
+
+      updatedActivities.forEach((act) => {
+        const puntosParticipacion = act.puntos_participacion;
+        const puntosPremio = act.premio?.puntos_otorgados ?? 0;
+
+        const totalActividad = puntosParticipacion + puntosPremio;
+
+        if (act.departamento === "Deportes") {
+          deportes += totalActividad;
+        } else if (act.departamento === "Cultura") {
+          cultura += totalActividad;
+        }
+      });
+
+      const total = deportes + cultura;
+
+      // 3. Actualizar estado final
+      set({
+        selectedAlumnoCompleto: {
+          ...currentAlumnoCompleto,
+          actividades: updatedActivities,
+          puntos: {
+            total,
+            deportes,
+            cultura,
+          },
+        },
+      });
+    },
+
+    changePrizeInActivity: (premio, id_actividad) => {
+      const currentAlumnoCompleto = get().selectedAlumnoCompleto;
+      if (!currentAlumnoCompleto || id_actividad === undefined) return;
+
+      // 1. Actualizar actividades (como ya lo hacías)
+      const updatedActivities = currentAlumnoCompleto.actividades.map(
+        (activity) =>
+          activity.id_actividad === id_actividad
+            ? {
+                ...activity,
+                premio: premio ?? null,
+              }
+            : activity
+      );
+
+      // 2. Recalcular puntos después del cambio
+      let deportes = 0;
+      let cultura = 0;
+
+      updatedActivities.forEach((act) => {
+        // puntos por participación
+        const puntosParticipacion = act.puntos_participacion;
+
+        // puntos por premio (si existe)
+        const puntosPremio = act.premio?.puntos_otorgados ?? 0;
+
+        const totalActividad = puntosParticipacion + puntosPremio;
+
+        if (act.departamento === "Deportes") {
+          deportes += totalActividad;
+        } else if (act.departamento === "Cultura") {
+          cultura += totalActividad;
+        }
+      });
+
+      const total = deportes + cultura;
+
+      // 3. Actualizar store completo
+      set({
+        selectedAlumnoCompleto: {
+          ...currentAlumnoCompleto,
+          actividades: updatedActivities,
+          puntos: {
+            total,
+            deportes,
+            cultura,
+          },
+        },
+      });
+    },
+
+    reset: () =>
+      set({
+        selectedAlumno: null,
+        activityList: [],
+        nextActivities: [],
+        selectedAlumnoCompleto: null,
+        loading: false,
+      }),
+    setLoading: (loading: boolean) => set({ loading }),
   }))
 );

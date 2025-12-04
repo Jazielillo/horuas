@@ -23,7 +23,7 @@ export async function createActivityAction(formData: ActivitySchema) {
   // 2. Completar datos que NO están en el formulario
   const fullData = {
     ...parsedForm.data,
-    id_departamento: 1, // puedes obtenerlo por sesión
+    id_departamento: formData.departamento === "Deportes" ? 1 : 2, // puedes obtenerlo por sesión
     id_coordinador: 137, // por rol / sesión
     id_ciclo: 1, // lógica interna
   };
@@ -44,8 +44,8 @@ export async function createActivityAction(formData: ActivitySchema) {
     },
   });
 
-  if (formData.premios!.length > 0) {
-    const premiosData = formData.premios!.map((premio) => ({
+  if (formData.premio!.length > 0) {
+    const premiosData = formData.premio!.map((premio) => ({
       actividadId: activity.id_actividad,
       lugar: premio.lugar,
       puntos: premio.puntos_otorgados,
@@ -63,19 +63,86 @@ export async function updateActivityAction(
   id: number
 ) {
   console.log("Updating activity in action...", activity);
-  const updatedActivity = await prisma.actividad.update({
+  await prisma.actividad.update({
     where: { id_actividad: id },
     data: {
+      id_departamento: activity.departamento === "Deportes" ? 1 : 2,
       nombre: activity.nombre,
       descripcion: activity.descripcion,
       fecha: new Date(activity.fecha_realizacion),
       puntos_participacion: activity.puntos_otorgados,
     },
   });
-  return { ok: true, updatedActivity };
+  console.log(
+    "Activity updated, now handling prizes...",
+    activity.premio?.length
+  );
+  if (activity?.premio && activity.premio?.length > 0) {
+    // Obtener premios existentes para esta actividad
+    console.log("Activity has prizes to update:", activity.premio);
+    const existingPrizes = await prisma.actividadPremio.findMany({
+      where: { actividadId: id },
+    });
+    const existingIds = new Set(existingPrizes.map((p) => p.id));
+
+    const incomingIds = new Set<number>();
+    const ops: any[] = [];
+
+    for (const premio of activity.premio) {
+      // Si viene con id y pertenece a esta actividad, lo actualizamos
+      if (premio.id && existingIds.has(premio.id)) {
+        incomingIds.add(premio.id);
+        ops.push(
+          prisma.actividadPremio.update({
+            where: { id: premio.id },
+            data: {
+              lugar: premio.lugar ?? undefined,
+              puntos: premio.puntos_otorgados,
+              actividadId: id,
+            },
+          })
+        );
+      } else {
+        // Si no tiene id (o no pertenece), lo creamos como nuevo
+        ops.push(
+          prisma.actividadPremio.create({
+            data: {
+              lugar: premio.lugar ?? undefined,
+              puntos: premio.puntos_otorgados,
+              actividadId: id,
+            },
+          })
+        );
+      }
+    }
+
+    // Borrar los premios que existen en BD pero no vinieron en el payload
+    const idsToDelete = existingPrizes
+      .map((p) => p.id)
+      .filter((existingId) => !incomingIds.has(existingId));
+
+    if (idsToDelete.length > 0) {
+      ops.push(
+        prisma.actividadPremio.deleteMany({
+          where: { id: { in: idsToDelete } },
+        })
+      );
+    }
+
+    // Ejecutar todas las operaciones en una transacción
+    await prisma.$transaction(ops);
+  } else {
+    // Si no viene ningún premio en el payload => eliminar todos los premios de la actividad
+    await prisma.actividadPremio.deleteMany({
+      where: { actividadId: id },
+    });
+  }
+
+  return { ok: true };
 }
 
 import { revalidatePath } from "next/cache";
+import { checkIdUsuario } from "@/lib/check-id-usuario";
 
 // --- 1. FUNCIÓN MAPPER (EL SECRETO) ---
 // Esta función convierte CUALQUIER resultado de Prisma al tipo Activity limpio
@@ -90,8 +157,9 @@ function mapPrismaActivityToFrontend(item: any): Activity {
     // Aplanamiento: Sacamos el nombre del objeto departamento
     departamento: item.departamento?.nombre || "Sin departamento",
     // Mapeo de array anidado
-    premios:
+    premio:
       item.premios?.map((p: any) => ({
+        id: p.id,
         lugar: p.lugar,
         puntos_otorgados: p.puntos, // Renombramos 'puntos' a 'puntos_otorgados'
       })) || [],
@@ -100,15 +168,23 @@ function mapPrismaActivityToFrontend(item: any): Activity {
 
 // --- 2. TUS ACTIONS OPTIMIZADOS ---
 
-export async function getAllActivitiesAction(): Promise<Activity[]> {
+export async function getAllActivitiesAction({
+  ciclo_id,
+  departamento_id,
+}: {
+  ciclo_id?: number;
+  departamento_id?: number;
+}): Promise<Activity[]> {
+  const where: any = {};
+  if (ciclo_id != null) where.id_ciclo = ciclo_id;
+  if (departamento_id != null) where.id_departamento = departamento_id;
+
   const activities = await prisma.actividad.findMany({
+    where,
     orderBy: { fecha: "desc" },
-    // Usamos include para traer todo de una vez (MUCHO más rápido)
     include: {
-      departamento: {
-        select: { nombre: true },
-      },
-      premios: true, // Trae todos los premios asociados automáticamente
+      departamento: { select: { nombre: true } },
+      premios: true,
     },
   });
 
@@ -135,3 +211,134 @@ export async function getActivityByIdAction(
 }
 
 // ... tus create/update actions aquí ...
+
+export async function getActivitiesPrizesAction(activity_id: number) {
+  const premios = await prisma.actividadPremio.findMany({
+    where: { actividadId: activity_id },
+  });
+  return premios.map((p) => ({
+    id: p.id,
+    lugar: p.lugar,
+    puntos_otorgados: p.puntos,
+  }));
+}
+
+export async function updatePrizeAction(
+  prizeId: number,
+  alumnoId: number,
+  actividadId: number
+) {
+  if (prizeId === 0) {
+    // Si prizeId es 0, significa que se está removiendo el premio
+    console.log("VOY A REMOVERRRRRRRRRRRRRRRR");
+    await prisma.ganadorActividad.deleteMany({
+      where: {
+        alumnoId: alumnoId,
+        actividadId_actividad: actividadId,
+      },
+    });
+    const actividad = await prisma.actividad.findUnique({
+      where: { id_actividad: actividadId },
+      include: {
+        departamento: { select: { nombre: true } },
+      },
+    });
+    return mapPrismaActivityToFrontend(actividad);
+  }
+  const existingWinner = await prisma.ganadorActividad.findFirst({
+    where: {
+      alumnoId: alumnoId,
+      actividadId_actividad: actividadId,
+    },
+  });
+
+  if (existingWinner) {
+    // 2. Si existe, actualizamos el registro para apuntar al nuevo premio (prizeId)
+    await prisma.ganadorActividad.update({
+      where: { id: existingWinner.id },
+      data: {
+        actividadPremioId: prizeId,
+      },
+    });
+  } else {
+    // 3. Si no existe, creamos un nuevo registro
+    console.log("VOY A CREARRRRRRRRRRRRRRRR");
+    await prisma.ganadorActividad.create({
+      data: {
+        alumnoId: alumnoId,
+        actividadPremioId: prizeId,
+        actividadId_actividad: actividadId,
+      },
+    });
+  }
+  const actividad = await prisma.actividad.findUnique({
+    where: { id_actividad: actividadId },
+    include: {
+      departamento: { select: { nombre: true } },
+      premios: true,
+    },
+  });
+
+  if (!actividad) return null;
+
+  return mapPrismaActivityToFrontend(actividad);
+}
+
+export async function deleteActivityStudentAction(
+  id_actividad: number,
+  id_alumno: number,
+  descripcion: string = ""
+) {
+  // Eliminar premios asociados primero para mantener la integridad referencial
+
+  const actividad = await prisma.actividad.findUnique({
+    where: { id_actividad },
+  });
+
+  const id_usuario = (await checkIdUsuario()) ?? 0;
+  const alumno = await prisma.usuario.findUnique({
+    where: { id_usuario: id_usuario },
+  });
+
+  await prisma.ganadorActividad.deleteMany({
+    where: {
+      actividadId_actividad: id_actividad,
+      alumnoId: id_alumno,
+    },
+  });
+  await prisma.alumnoActividad.deleteMany({
+    where: {
+      id_actividad,
+      id_alumno,
+    },
+  });
+
+  await prisma.registroCambios.create({
+    data: {
+      id_usuario: id_usuario,
+      accion: `Eliminó la actividad ${actividad?.nombre} para el alumno ${alumno?.num_cuenta} | ${alumno?.nombre}`,
+      descripcion,
+      fecha: new Date(),
+      modulo: "Gestión de Actividades",
+    },
+  });
+
+  return { ok: true };
+}
+
+export async function getFutureActivitiesAction(): Promise<Activity[]> {
+  const today = new Date();
+  const activities = await prisma.actividad.findMany({
+    where: {
+      fecha: {
+        gte: today,
+      },
+    },
+    orderBy: { fecha: "desc" },
+    include: {
+      departamento: { select: { nombre: true } },
+      premios: true,
+    },
+  });
+  return activities.map(mapPrismaActivityToFrontend);
+}

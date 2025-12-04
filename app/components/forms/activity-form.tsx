@@ -1,6 +1,9 @@
 "use client";
 
-import { createActivityAction } from "@/app/actions/activity-actions";
+import {
+  createActivityAction,
+  updateActivityAction,
+} from "@/app/actions/activity-actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,11 +22,20 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { activitySchema, type ActivitySchema } from "@/schemas/activity-schema";
+import { useActivityStore } from "@/store/use-activity-store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trophy, X } from "lucide-react";
-import { useState } from "react";
+import { Select } from "@radix-ui/react-select";
+import { Plus, Save, Trash2, Trophy, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 
 // import { useForm } from "react-hook-form";
@@ -164,37 +176,76 @@ interface Award {
   points: number;
 }
 export const ActivityForm = ({
-  defaultValues,
-  onSuccess,
+  initialData,
+  isEditing,
 }: {
-  defaultValues?: Partial<ActivitySchema>;
-  onSuccess?: (activity: any) => void;
+  initialData?: ActivitySchema;
+  isEditing?: boolean;
 }) => {
+  const router = useRouter();
+  const { departaments, loadDepartaments, activitySelected } =
+    useActivityStore();
+  useEffect(() => {
+    if (departaments?.length === 0) {
+      loadDepartaments();
+    }
+  }, [departaments]);
   const form = useForm<ActivitySchema>({
     resolver: zodResolver(activitySchema),
-    defaultValues: defaultValues || {
+    defaultValues: initialData || {
       nombre: "",
       descripcion: "",
       fecha_realizacion: "",
       puntos_otorgados: 0,
-      premios: [], // Inicializamos el array vacío
+      premio: [], // Inicializamos el array vacío
     },
   });
 
   // USAMOS useFieldArray EN LUGAR DE useState
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "premios",
+    name: "premio",
   });
 
+  useEffect(() => {
+    console.log("Initial Data recibida en ActivityForm:", initialData);
+    if (initialData) {
+      // Aseguramos que premios sea un array para evitar errores de map
+      const datosLimpios = {
+        ...initialData,
+        premio: initialData.premio || [],
+      };
+      form.reset(datosLimpios);
+    }
+  }, [initialData, form]);
+
   const onSubmit = async (data: ActivitySchema) => {
-    await createActivityAction(data);
+    console.log("Formulario enviado con datos:", data);
+    if (isEditing) {
+      // Lógica para actualizar la actividad
+      await updateActivityAction(data, activitySelected?.id_actividad ?? 0);
+    } else {
+      // Lógica para crear una nueva actividad
+      await createActivityAction(data);
+    }
+    router.push("/coordinador/actividades");
   };
 
   // Esta función captura los errores de validación si onSubmit no corre
   const onError = (errors: any) => {
     console.log("❌ ERRORES DE VALIDACIÓN:", errors);
   };
+
+  useEffect(() => {
+    if (initialData) {
+      // Aseguramos que premios sea un array para evitar errores de map
+      const datosLimpios = {
+        ...initialData,
+        premio: initialData.premio || [],
+      };
+      form.reset(datosLimpios);
+    }
+  }, [initialData, form]);
 
   return (
     <Card className="w-full ">
@@ -249,7 +300,7 @@ export const ActivityForm = ({
             />
 
             {/* --- CAMPOS FALTANTES QUE CAUSABAN EL ERROR --- */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <Controller
                 name="fecha_realizacion"
                 control={form.control}
@@ -279,6 +330,36 @@ export const ActivityForm = ({
                       min="0"
                       onChange={(event) => field.onChange(+event.target.value)}
                     />
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+
+              <Controller
+                name="departamento"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2 w-full">
+                    <Label>Departamento</Label>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecciona un departamento" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {departaments?.map((dept) => (
+                          <SelectItem
+                            key={dept.id_departamento}
+                            value={dept.nombre}
+                          >
+                            {dept.nombre}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     {fieldState.error && (
                       <span className="text-sm text-red-500">
                         {fieldState.error.message}
@@ -321,85 +402,101 @@ export const ActivityForm = ({
                 </p>
               ) : (
                 <div className="space-y-2">
-                  {fields.map((field, index) => (
-                    <div key={field.id} className="flex gap-3 items-start py-2">
-                      {/* LUGAR (readonly + hidden input) */}
-                      <div className="w-20">
-                        <Label className="text-xs mb-1 block">Lugar</Label>
+                  {/* ... dentro de tu map ... */}
+                  {fields.map((field, index) => {
+                    // Calculamos el lugar actual basado en el índice
+                    const currentLugar = index + 1;
+                    console.log("Renderizando premio:", field, "en índice:", index);
+                    return (
+                      <div
+                        key={field.id}
+                        className="flex gap-3 items-start py-2"
+                      >
+                        {/* LUGAR (Visual + Input Oculto) */}
+                        <div className="w-20">
+                          <Label className="text-xs mb-1 block">Lugar</Label>
 
-                        <Input
-                          value={`#${index + 1}`}
-                          disabled
-                          className={
-                            "w-full text-center select-none cursor-default " +
-                            (index === 0
-                              ? "font-bold bg-yellow-400 text-black shadow-md"
-                              : index === 1
-                              ? "font-semibold bg-gray-300 text-black shadow-sm"
-                              : index === 2
-                              ? "font-semibold bg-amber-700 text-white shadow-sm"
-                              : "")
-                          }
-                        />
+                          {/* Input visual (solo lectura) */}
+                          <Input
+                            value={`#${currentLugar}`}
+                            disabled
+                            className={
+                              "w-full text-center select-none cursor-default " +
+                              (index === 0
+                                ? "font-bold bg-yellow-400 text-black shadow-md"
+                                : index === 1
+                                ? "font-semibold bg-gray-300 text-black shadow-sm"
+                                : index === 2
+                                ? "font-semibold bg-amber-700 text-white shadow-sm"
+                                : "")
+                            }
+                          />
 
-                        {/* Input oculto */}
-                        <input
-                          type="hidden"
-                          {...form.register(`premios.${index}.lugar`)}
-                          value={index + 1}
-                        />
-                      </div>
+                          {/* CORRECCIÓN: Input oculto registrado.
+           Usamos un useEffect interno o simplemente dejamos que RHF
+           maneje el valor, PERO lo ideal es que al hacer SUBMIT,
+           reescribas los lugares para asegurar consistencia (1, 2, 3...)
+        */}
+                          <input
+                            type="hidden"
+                            {...form.register(`premio.${index}.lugar`, {
+                              value: currentLugar, // Forzamos el valor inicial
+                              valueAsNumber: true,
+                            })}
+                          />
+                        </div>
 
-                      {/* PUNTOS */}
-                      <div className="flex-1">
-                        <Controller
-                          name={`premios.${index}.puntos_otorgados`}
-                          control={form.control}
-                          render={({ field: subField, fieldState }) => (
-                            <div className="flex flex-col">
-                              <Label className="text-xs mb-1">
-                                Puntos Extra
-                              </Label>
-
-                              <Input
-                                {...subField}
-                                type="number"
-                                onChange={(e) =>
-                                  subField.onChange(+e.target.value)
-                                }
-                                min={0}
-                                placeholder="Puntos"
-                                className={
-                                  fieldState.error ? "border-red-500" : ""
-                                }
-                              />
-
-                              {/* MENSAJE DE ERROR — NO AFECTA EL LAYOUT */}
-                              <div className="h-4 mt-1">
-                                {fieldState.error && (
-                                  <span className="text-xs text-red-500">
-                                    {fieldState.error.message}
-                                  </span>
-                                )}
+                        {/* PUNTOS */}
+                        <div className="flex-1">
+                          <Controller
+                            name={`premio.${index}.puntos_otorgados`}
+                            control={form.control}
+                            render={({ field: subField, fieldState }) => (
+                              <div className="flex flex-col">
+                                <Label className="text-xs mb-1">
+                                  Puntos Extra
+                                </Label>
+                                <Input
+                                  {...subField}
+                                  type="number"
+                                  // Importante: convertir a número al cambiar
+                                  onChange={(e) =>
+                                    subField.onChange(
+                                      e.target.valueAsNumber || 0
+                                    )
+                                  }
+                                  min={0}
+                                  placeholder="Puntos"
+                                  className={
+                                    fieldState.error ? "border-red-500" : ""
+                                  }
+                                />
+                                <div className="h-4 mt-1">
+                                  {fieldState.error && (
+                                    <span className="text-xs text-red-500">
+                                      {fieldState.error.message}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          )}
-                        />
-                      </div>
+                            )}
+                          />
+                        </div>
 
-                      {/* BOTÓN ELIMINAR */}
-                      <div className="flex items-center pt-6">
+                        {/* RECOMENDACIÓN: Botón para eliminar premio si te equivocaste */}
                         <Button
                           type="button"
                           variant="ghost"
                           size="icon"
+                          className="mt-6 text-red-500 hover:text-red-700 hover:bg-red-50"
                           onClick={() => remove(index)}
                         >
-                          <X className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4" />{" "}
+                          {/* Icono de lucide-react */}
                         </Button>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -408,8 +505,17 @@ export const ActivityForm = ({
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button type="submit" form="form-rhf-demo" className="cursor-pointer">
-          <Plus className="mr-2 h-4 w-4" />
-          Crear Actividad
+          {isEditing ? (
+            <>
+              <Save className="mr-2 h-4 w-4" />
+              Guardar Cambios
+            </>
+          ) : (
+            <>
+              <Plus className="mr-2 h-4 w-4" />
+              Crear Actividad
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>

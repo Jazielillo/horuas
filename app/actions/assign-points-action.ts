@@ -1,7 +1,11 @@
 "use server";
 
-import { assignPointsFullSchema, AssignPointsForm } from "@/schemas/assign-points-schema";
+import {
+  assignPointsFullSchema,
+  AssignPointsForm,
+} from "@/schemas/assign-points-schema";
 import { prisma } from "@/lib/prisma";
+import { ActivityPrize } from "../models/activity";
 
 /**
  * Helper que obtiene info del usuario desde cookies/session.
@@ -10,8 +14,8 @@ import { prisma } from "@/lib/prisma";
 function getCurrentUserFromCookies() {
   // Ejemplo: token en cookie y parser; aquí retornamos un objeto simulado
   // Reemplaza por tu lógica real.
-//   const token = cookies().get("token")?.value;
-//   if (!token) return null;
+  //   const token = cookies().get("token")?.value;
+  //   if (!token) return null;
   // decodificar token, obtener user id y rol...
   // Por simplicidad: assume coordinator id = 1
   return { id: 47, role: "COORDINADOR" };
@@ -97,4 +101,100 @@ export async function assignPointsAction(form: AssignPointsForm) {
   });
 
   return { ok: true, count: created.length, created };
+}
+
+export async function bulkAssignPointsAction(data: {
+  id_actividad: number;
+  estudiantes: number[];
+  points: number;
+  date: string | Date;
+  id_coordinador: number;
+  id_ciclo: number;
+  awards: Record<number, ActivityPrize>;
+}) {
+  try {
+    const { id_actividad, estudiantes, date, id_coordinador, id_ciclo } = data;
+
+    if (
+      !id_actividad ||
+      !Array.isArray(estudiantes) ||
+      estudiantes.length === 0
+    ) {
+      return { ok: false, error: "id_actividad y estudiantes son requeridos" };
+    }
+
+    // Buscar cuales ya están registrados para esa actividad
+    const existentes = await prisma.alumnoActividad.findMany({
+      where: {
+        id_actividad,
+        id_alumno: { in: estudiantes },
+      },
+      select: { id_alumno: true },
+    });
+    const existentesSet = new Set(existentes.map((e) => e.id_alumno));
+
+    // Preparar los registros a crear (salteando los existentes)
+    const toCreate = estudiantes
+      .filter((id) => !existentesSet.has(id))
+      .map((id_alumno) => ({
+        id_alumno,
+        id_actividad,
+        fecha_registro: new Date(date),
+        id_coordinador,
+        id_ciclo,
+      }));
+
+    if (toCreate.length === 0) {
+      return {
+        ok: false,
+        error: "Todos los estudiantes ya están registrados en esa actividad",
+        skipped: existentes.map((e) => e.id_alumno),
+      };
+    }
+
+    // Crear los nuevos registros en bloque
+    await prisma.alumnoActividad.createMany({ data: toCreate });
+
+    // Recuperar los registros creados para devolver información completa
+    const createdAlumnos = toCreate.map((t) => t.id_alumno);
+    const registros = await prisma.alumnoActividad.findMany({
+      where: {
+        id_actividad,
+        id_alumno: { in: createdAlumnos },
+      },
+      include: {
+        alumno: true,
+        actividad: true,
+        coordinador: true,
+      },
+    });
+
+    if (data.awards && Object.keys(data.awards).length > 0) {
+      const winnersData = Object.entries(data.awards)
+        // Filtrar premios vacíos donde id === 0 (no hubo premio)
+        .filter(([, prize]) => prize && Number(prize.id) > 0)
+        .map(([studentId, prize]) => ({
+          actividadPremioId: Number(prize?.id),
+          alumnoId: Number(studentId),
+          actividadId_actividad: id_actividad,
+        }));
+
+      if (winnersData.length > 0) {
+        // Insertar ganadores ignorando duplicados (gracias a @@unique([actividadPremioId, alumnoId]))
+        await prisma.ganadorActividad.createMany({
+          data: winnersData,
+          skipDuplicates: true,
+        });
+      }
+    }
+
+    return {
+      ok: true,
+      created: registros,
+      skipped: existentes.map((e) => e.id_alumno),
+    };
+  } catch (error) {
+    console.error(error);
+    return { ok: false, error: "Error del servidor" };
+  }
 }

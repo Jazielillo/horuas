@@ -14,14 +14,38 @@ export async function encrypt(payload: SessionPayload) {
     .sign(encodedKey);
 }
 
-export async function decrypt(session: string | undefined = "") {
+export async function decrypt(session: string | undefined = ""): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
     });
-    return payload;
+
+    if (!payload) return null;
+
+    const { id_usuario, num_cuenta, role, expiresAt } = payload as Record<string, unknown>;
+
+    if (typeof id_usuario !== "number" || typeof num_cuenta !== "string" || typeof role !== "string") {
+      return null;
+    }
+
+    const date =
+      typeof expiresAt === "string" || typeof expiresAt === "number"
+        ? new Date(expiresAt)
+        : null;
+
+    if (!date || isNaN(date.getTime())) {
+      return null;
+    }
+
+    return {
+      id_usuario,
+      num_cuenta,
+      role,
+      expiresAt: date,
+    } as SessionPayload;
   } catch (error) {
     console.log("Failed to verify session");
+    return null;
   }
 }
 
@@ -41,6 +65,21 @@ export async function createSession(
     sameSite: "lax",
     path: "/",
   });
+}
+
+export async function getSession(): Promise<{
+  id_usuario: number;
+  num_cuenta: string;
+  role: string;
+  expiresAt: Date;
+} | null> {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("session");
+
+  if (!sessionCookie?.value) return null;
+
+  // Desciframos la cookie (necesitas implementar `decrypt`)
+  return await decrypt(sessionCookie.value);
 }
 
 export async function updateSession() {

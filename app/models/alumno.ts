@@ -4,4 +4,5 @@ export type Alumno = {
   num_cuenta: string;
   puntos?: number;
   grupo?: string;
+  
 };

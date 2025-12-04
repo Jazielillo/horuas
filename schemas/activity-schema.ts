@@ -26,13 +26,16 @@ export const activitySchema = z.object({
   puntos_otorgados: z
     .number({ error: "Los puntos otorgados son obligatorios" })
     .min(0, { message: "Los puntos deben ser al menos 0" }),
+  departamento: z
+    .string()
+    .min(3, { message: "El departamento es obligatorio" }),
   // Aquí está la magia para tu array opcional de premios
-  premios: z
+  premio: z
     .array(
       z.object({
+        id: z.number().optional(), // Para actualizaciones, puede venir con ID
         lugar: z.number(),
-        puntos_otorgados: z.number()
-          .min(1, { message: "Mínimo 1 punto" }),
+        puntos_otorgados: z.number().min(1, { message: "Mínimo 1 punto" }),
       })
     )
     .max(5, { message: "Máximo 5 lugares" }) // Limitamos el array a 5

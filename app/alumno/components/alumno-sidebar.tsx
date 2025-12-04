@@ -35,11 +35,11 @@ const navigationItems = [
 export function AlumnoSidebar({ id_usuario }: { id_usuario?: number }) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
-  const { loadAlumno } = useAlumnoStore();
+  const { loadAlumnoCompleto } = useAlumnoStore();
 
   useEffect(() => {
     // Fetch or update alumno data if needed
-    loadAlumno(id_usuario || 0);
+    loadAlumnoCompleto(id_usuario || 0);
   }, []);
 
   return (
