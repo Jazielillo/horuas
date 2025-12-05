@@ -129,12 +129,14 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
         const data = await getStudents({
           groupId: group,
         });
+        console.log("Students with activitiessss:", data);
         set({ studentsOfGroup: data, loading: false });
       } else {
         const data = await getStudentsWithoutActivity({
           groupId: group,
           actividadId: activityId,
         });
+        console.log("Students without activityaaaaaaaaaa:", data);
         set({ studentsOfGroup: data, loading: false });
       }
     },

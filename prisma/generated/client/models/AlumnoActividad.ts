@@ -32,6 +32,7 @@ export type AlumnoActividadAvgAggregateOutputType = {
   id_actividad: number | null
   id_coordinador: number | null
   id_ciclo: number | null
+  puntos_otorgados: number | null
 }
 
 export type AlumnoActividadSumAggregateOutputType = {
@@ -40,6 +41,7 @@ export type AlumnoActividadSumAggregateOutputType = {
   id_actividad: number | null
   id_coordinador: number | null
   id_ciclo: number | null
+  puntos_otorgados: number | null
 }
 
 export type AlumnoActividadMinAggregateOutputType = {
@@ -49,6 +51,7 @@ export type AlumnoActividadMinAggregateOutputType = {
   fecha_registro: Date | null
   id_coordinador: number | null
   id_ciclo: number | null
+  puntos_otorgados: number | null
 }
 
 export type AlumnoActividadMaxAggregateOutputType = {
@@ -58,6 +61,7 @@ export type AlumnoActividadMaxAggregateOutputType = {
   fecha_registro: Date | null
   id_coordinador: number | null
   id_ciclo: number | null
+  puntos_otorgados: number | null
 }
 
 export type AlumnoActividadCountAggregateOutputType = {
@@ -67,6 +71,7 @@ export type AlumnoActividadCountAggregateOutputType = {
   fecha_registro: number
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados: number
   _all: number
 }
 
@@ -77,6 +82,7 @@ export type AlumnoActividadAvgAggregateInputType = {
   id_actividad?: true
   id_coordinador?: true
   id_ciclo?: true
+  puntos_otorgados?: true
 }
 
 export type AlumnoActividadSumAggregateInputType = {
@@ -85,6 +91,7 @@ export type AlumnoActividadSumAggregateInputType = {
   id_actividad?: true
   id_coordinador?: true
   id_ciclo?: true
+  puntos_otorgados?: true
 }
 
 export type AlumnoActividadMinAggregateInputType = {
@@ -94,6 +101,7 @@ export type AlumnoActividadMinAggregateInputType = {
   fecha_registro?: true
   id_coordinador?: true
   id_ciclo?: true
+  puntos_otorgados?: true
 }
 
 export type AlumnoActividadMaxAggregateInputType = {
@@ -103,6 +111,7 @@ export type AlumnoActividadMaxAggregateInputType = {
   fecha_registro?: true
   id_coordinador?: true
   id_ciclo?: true
+  puntos_otorgados?: true
 }
 
 export type AlumnoActividadCountAggregateInputType = {
@@ -112,6 +121,7 @@ export type AlumnoActividadCountAggregateInputType = {
   fecha_registro?: true
   id_coordinador?: true
   id_ciclo?: true
+  puntos_otorgados?: true
   _all?: true
 }
 
@@ -208,6 +218,7 @@ export type AlumnoActividadGroupByOutputType = {
   fecha_registro: Date
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados: number | null
   _count: AlumnoActividadCountAggregateOutputType | null
   _avg: AlumnoActividadAvgAggregateOutputType | null
   _sum: AlumnoActividadSumAggregateOutputType | null
@@ -240,6 +251,7 @@ export type AlumnoActividadWhereInput = {
   fecha_registro?: Prisma.DateTimeFilter<"AlumnoActividad"> | Date | string
   id_coordinador?: Prisma.IntFilter<"AlumnoActividad"> | number
   id_ciclo?: Prisma.IntFilter<"AlumnoActividad"> | number
+  puntos_otorgados?: Prisma.IntNullableFilter<"AlumnoActividad"> | number | null
   alumno?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   actividad?: Prisma.XOR<Prisma.ActividadScalarRelationFilter, Prisma.ActividadWhereInput>
   coordinador?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
@@ -253,6 +265,7 @@ export type AlumnoActividadOrderByWithRelationInput = {
   fecha_registro?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrderInput | Prisma.SortOrder
   alumno?: Prisma.UsuarioOrderByWithRelationInput
   actividad?: Prisma.ActividadOrderByWithRelationInput
   coordinador?: Prisma.UsuarioOrderByWithRelationInput
@@ -269,6 +282,7 @@ export type AlumnoActividadWhereUniqueInput = Prisma.AtLeast<{
   fecha_registro?: Prisma.DateTimeFilter<"AlumnoActividad"> | Date | string
   id_coordinador?: Prisma.IntFilter<"AlumnoActividad"> | number
   id_ciclo?: Prisma.IntFilter<"AlumnoActividad"> | number
+  puntos_otorgados?: Prisma.IntNullableFilter<"AlumnoActividad"> | number | null
   alumno?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   actividad?: Prisma.XOR<Prisma.ActividadScalarRelationFilter, Prisma.ActividadWhereInput>
   coordinador?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
@@ -282,6 +296,7 @@ export type AlumnoActividadOrderByWithAggregationInput = {
   fecha_registro?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AlumnoActividadCountOrderByAggregateInput
   _avg?: Prisma.AlumnoActividadAvgOrderByAggregateInput
   _max?: Prisma.AlumnoActividadMaxOrderByAggregateInput
@@ -299,10 +314,12 @@ export type AlumnoActividadScalarWhereWithAggregatesInput = {
   fecha_registro?: Prisma.DateTimeWithAggregatesFilter<"AlumnoActividad"> | Date | string
   id_coordinador?: Prisma.IntWithAggregatesFilter<"AlumnoActividad"> | number
   id_ciclo?: Prisma.IntWithAggregatesFilter<"AlumnoActividad"> | number
+  puntos_otorgados?: Prisma.IntNullableWithAggregatesFilter<"AlumnoActividad"> | number | null
 }
 
 export type AlumnoActividadCreateInput = {
   fecha_registro: Date | string
+  puntos_otorgados?: number | null
   alumno: Prisma.UsuarioCreateNestedOneWithoutRegistros_actInput
   actividad: Prisma.ActividadCreateNestedOneWithoutAlumnoActsInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutRegistros_puntosInput
@@ -316,10 +333,12 @@ export type AlumnoActividadUncheckedCreateInput = {
   fecha_registro: Date | string
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadUpdateInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   alumno?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_actNestedInput
   actividad?: Prisma.ActividadUpdateOneRequiredWithoutAlumnoActsNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_puntosNestedInput
@@ -333,6 +352,7 @@ export type AlumnoActividadUncheckedUpdateInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadCreateManyInput = {
@@ -342,10 +362,12 @@ export type AlumnoActividadCreateManyInput = {
   fecha_registro: Date | string
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadUpdateManyMutationInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadUncheckedUpdateManyInput = {
@@ -355,6 +377,7 @@ export type AlumnoActividadUncheckedUpdateManyInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadListRelationFilter = {
@@ -374,6 +397,7 @@ export type AlumnoActividadCountOrderByAggregateInput = {
   fecha_registro?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrder
 }
 
 export type AlumnoActividadAvgOrderByAggregateInput = {
@@ -382,6 +406,7 @@ export type AlumnoActividadAvgOrderByAggregateInput = {
   id_actividad?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrder
 }
 
 export type AlumnoActividadMaxOrderByAggregateInput = {
@@ -391,6 +416,7 @@ export type AlumnoActividadMaxOrderByAggregateInput = {
   fecha_registro?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrder
 }
 
 export type AlumnoActividadMinOrderByAggregateInput = {
@@ -400,6 +426,7 @@ export type AlumnoActividadMinOrderByAggregateInput = {
   fecha_registro?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrder
 }
 
 export type AlumnoActividadSumOrderByAggregateInput = {
@@ -408,6 +435,7 @@ export type AlumnoActividadSumOrderByAggregateInput = {
   id_actividad?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  puntos_otorgados?: Prisma.SortOrder
 }
 
 export type AlumnoActividadCreateNestedManyWithoutCicloInput = {
@@ -580,6 +608,7 @@ export type AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput = {
 
 export type AlumnoActividadCreateWithoutCicloInput = {
   fecha_registro: Date | string
+  puntos_otorgados?: number | null
   alumno: Prisma.UsuarioCreateNestedOneWithoutRegistros_actInput
   actividad: Prisma.ActividadCreateNestedOneWithoutAlumnoActsInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutRegistros_puntosInput
@@ -591,6 +620,7 @@ export type AlumnoActividadUncheckedCreateWithoutCicloInput = {
   id_actividad: number
   fecha_registro: Date | string
   id_coordinador: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadCreateOrConnectWithoutCicloInput = {
@@ -629,10 +659,12 @@ export type AlumnoActividadScalarWhereInput = {
   fecha_registro?: Prisma.DateTimeFilter<"AlumnoActividad"> | Date | string
   id_coordinador?: Prisma.IntFilter<"AlumnoActividad"> | number
   id_ciclo?: Prisma.IntFilter<"AlumnoActividad"> | number
+  puntos_otorgados?: Prisma.IntNullableFilter<"AlumnoActividad"> | number | null
 }
 
 export type AlumnoActividadCreateWithoutAlumnoInput = {
   fecha_registro: Date | string
+  puntos_otorgados?: number | null
   actividad: Prisma.ActividadCreateNestedOneWithoutAlumnoActsInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutRegistros_puntosInput
   ciclo: Prisma.CicloCreateNestedOneWithoutAlumnoActsInput
@@ -644,6 +676,7 @@ export type AlumnoActividadUncheckedCreateWithoutAlumnoInput = {
   fecha_registro: Date | string
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadCreateOrConnectWithoutAlumnoInput = {
@@ -658,6 +691,7 @@ export type AlumnoActividadCreateManyAlumnoInputEnvelope = {
 
 export type AlumnoActividadCreateWithoutCoordinadorInput = {
   fecha_registro: Date | string
+  puntos_otorgados?: number | null
   alumno: Prisma.UsuarioCreateNestedOneWithoutRegistros_actInput
   actividad: Prisma.ActividadCreateNestedOneWithoutAlumnoActsInput
   ciclo: Prisma.CicloCreateNestedOneWithoutAlumnoActsInput
@@ -669,6 +703,7 @@ export type AlumnoActividadUncheckedCreateWithoutCoordinadorInput = {
   id_actividad: number
   fecha_registro: Date | string
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadCreateOrConnectWithoutCoordinadorInput = {
@@ -715,6 +750,7 @@ export type AlumnoActividadUpdateManyWithWhereWithoutCoordinadorInput = {
 
 export type AlumnoActividadCreateWithoutActividadInput = {
   fecha_registro: Date | string
+  puntos_otorgados?: number | null
   alumno: Prisma.UsuarioCreateNestedOneWithoutRegistros_actInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutRegistros_puntosInput
   ciclo: Prisma.CicloCreateNestedOneWithoutAlumnoActsInput
@@ -726,6 +762,7 @@ export type AlumnoActividadUncheckedCreateWithoutActividadInput = {
   fecha_registro: Date | string
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadCreateOrConnectWithoutActividadInput = {
@@ -760,10 +797,12 @@ export type AlumnoActividadCreateManyCicloInput = {
   id_actividad: number
   fecha_registro: Date | string
   id_coordinador: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadUpdateWithoutCicloInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   alumno?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_actNestedInput
   actividad?: Prisma.ActividadUpdateOneRequiredWithoutAlumnoActsNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_puntosNestedInput
@@ -775,6 +814,7 @@ export type AlumnoActividadUncheckedUpdateWithoutCicloInput = {
   id_actividad?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadUncheckedUpdateManyWithoutCicloInput = {
@@ -783,6 +823,7 @@ export type AlumnoActividadUncheckedUpdateManyWithoutCicloInput = {
   id_actividad?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadCreateManyAlumnoInput = {
@@ -791,6 +832,7 @@ export type AlumnoActividadCreateManyAlumnoInput = {
   fecha_registro: Date | string
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadCreateManyCoordinadorInput = {
@@ -799,10 +841,12 @@ export type AlumnoActividadCreateManyCoordinadorInput = {
   id_actividad: number
   fecha_registro: Date | string
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadUpdateWithoutAlumnoInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   actividad?: Prisma.ActividadUpdateOneRequiredWithoutAlumnoActsNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_puntosNestedInput
   ciclo?: Prisma.CicloUpdateOneRequiredWithoutAlumnoActsNestedInput
@@ -814,6 +858,7 @@ export type AlumnoActividadUncheckedUpdateWithoutAlumnoInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadUncheckedUpdateManyWithoutAlumnoInput = {
@@ -822,10 +867,12 @@ export type AlumnoActividadUncheckedUpdateManyWithoutAlumnoInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadUpdateWithoutCoordinadorInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   alumno?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_actNestedInput
   actividad?: Prisma.ActividadUpdateOneRequiredWithoutAlumnoActsNestedInput
   ciclo?: Prisma.CicloUpdateOneRequiredWithoutAlumnoActsNestedInput
@@ -837,6 +884,7 @@ export type AlumnoActividadUncheckedUpdateWithoutCoordinadorInput = {
   id_actividad?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadUncheckedUpdateManyWithoutCoordinadorInput = {
@@ -845,6 +893,7 @@ export type AlumnoActividadUncheckedUpdateManyWithoutCoordinadorInput = {
   id_actividad?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadCreateManyActividadInput = {
@@ -853,10 +902,12 @@ export type AlumnoActividadCreateManyActividadInput = {
   fecha_registro: Date | string
   id_coordinador: number
   id_ciclo: number
+  puntos_otorgados?: number | null
 }
 
 export type AlumnoActividadUpdateWithoutActividadInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   alumno?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_actNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutRegistros_puntosNestedInput
   ciclo?: Prisma.CicloUpdateOneRequiredWithoutAlumnoActsNestedInput
@@ -868,6 +919,7 @@ export type AlumnoActividadUncheckedUpdateWithoutActividadInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AlumnoActividadUncheckedUpdateManyWithoutActividadInput = {
@@ -876,6 +928,7 @@ export type AlumnoActividadUncheckedUpdateManyWithoutActividadInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  puntos_otorgados?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -887,6 +940,7 @@ export type AlumnoActividadSelect<ExtArgs extends runtime.Types.Extensions.Inter
   fecha_registro?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  puntos_otorgados?: boolean
   alumno?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   actividad?: boolean | Prisma.ActividadDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -900,6 +954,7 @@ export type AlumnoActividadSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   fecha_registro?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  puntos_otorgados?: boolean
   alumno?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   actividad?: boolean | Prisma.ActividadDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -913,6 +968,7 @@ export type AlumnoActividadSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   fecha_registro?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  puntos_otorgados?: boolean
   alumno?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   actividad?: boolean | Prisma.ActividadDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -926,9 +982,10 @@ export type AlumnoActividadSelectScalar = {
   fecha_registro?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  puntos_otorgados?: boolean
 }
 
-export type AlumnoActividadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_alumno_actividad" | "id_alumno" | "id_actividad" | "fecha_registro" | "id_coordinador" | "id_ciclo", ExtArgs["result"]["alumnoActividad"]>
+export type AlumnoActividadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_alumno_actividad" | "id_alumno" | "id_actividad" | "fecha_registro" | "id_coordinador" | "id_ciclo" | "puntos_otorgados", ExtArgs["result"]["alumnoActividad"]>
 export type AlumnoActividadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   alumno?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   actividad?: boolean | Prisma.ActividadDefaultArgs<ExtArgs>
@@ -963,6 +1020,7 @@ export type $AlumnoActividadPayload<ExtArgs extends runtime.Types.Extensions.Int
     fecha_registro: Date
     id_coordinador: number
     id_ciclo: number
+    puntos_otorgados: number | null
   }, ExtArgs["result"]["alumnoActividad"]>
   composites: {}
 }
@@ -1396,6 +1454,7 @@ export interface AlumnoActividadFieldRefs {
   readonly fecha_registro: Prisma.FieldRef<"AlumnoActividad", 'DateTime'>
   readonly id_coordinador: Prisma.FieldRef<"AlumnoActividad", 'Int'>
   readonly id_ciclo: Prisma.FieldRef<"AlumnoActividad", 'Int'>
+  readonly puntos_otorgados: Prisma.FieldRef<"AlumnoActividad", 'Int'>
 }
     
 

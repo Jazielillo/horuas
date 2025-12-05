@@ -11,7 +11,8 @@
 
 export const ActividadTipo = {
   NORMAL: 'NORMAL',
-  CLUB: 'CLUB'
+  CLUB: 'CLUB',
+  MIGRACION: 'MIGRACION'
 } as const
 
 export type ActividadTipo = (typeof ActividadTipo)[keyof typeof ActividadTipo]

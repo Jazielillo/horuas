@@ -59,7 +59,7 @@ const CoordinatorReports = () => {
     loadStudentsByGroup,
   } = usePointsAssignmentStore();
 
-  const {reset} = useAlumnoStore();
+  const { reset } = useAlumnoStore();
 
   useEffect(() => {
     reset();
@@ -336,6 +336,8 @@ const CoordinatorReports = () => {
                       {selectedGroup != null ? null : (
                         <TableHead>Grupo</TableHead>
                       )}
+                      <TableHead>Puntos Deportes</TableHead>
+                      <TableHead>Puntos Cultura</TableHead>
                       <TableHead className="text-center">
                         Puntos Totales
                       </TableHead>
@@ -354,7 +356,13 @@ const CoordinatorReports = () => {
                         </TableCell>
                         <TableCell>{selectedStudent?.grupo ?? "N/A"}</TableCell>
                         <TableCell className="text-center">
-                          {selectedStudent.puntos ?? 0}
+                          {selectedStudent.puntos?.deportes ?? 0}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {selectedStudent.puntos?.cultura ?? 0}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {selectedStudent.puntos?.total ?? 0}
                         </TableCell>
                         <TableCell className="font-semibold text-center">
                           <Button
@@ -400,7 +408,13 @@ const CoordinatorReports = () => {
                             {student.num_cuenta}
                           </TableCell>
                           <TableCell className="text-center">
-                            {student.puntos ?? 0}
+                            {student.puntos?.deportes ?? 0}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {student.puntos?.cultura ?? 0}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {student.puntos?.total ?? 0}
                           </TableCell>
                           <TableCell className="font-semibold text-center">
                             <Button

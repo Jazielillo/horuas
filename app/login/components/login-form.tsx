@@ -12,6 +12,7 @@ export const LoginForm = () => {
 
   return (
     <form className="space-y-4" action={action}>
+      {/* Input Número de Cuenta */}
       <div className="space-y-2">
         <Label htmlFor="num_cuenta">Número de Cuenta</Label>
         <Input
@@ -22,11 +23,12 @@ export const LoginForm = () => {
           className="h-11"
         />
       </div>
+
+      {/* Input NIP */}
       <div className="space-y-2">
         <Label htmlFor="nip">NIP</Label>
         <Input
-          id="nip
-          "
+          id="nip"
           name="nip"
           type="password"
           placeholder="••••"
@@ -34,6 +36,14 @@ export const LoginForm = () => {
           className="h-11"
         />
       </div>
+
+      {/* CORRECCIÓN: Mostrar Mensaje Global (Credenciales incorrectas) */}
+      {state?.message && (
+        <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
+          {state.message}
+        </div>
+      )}
+
       <Button
         type="submit"
         className="w-full h-11 text-base font-medium cursor-pointer"
@@ -43,7 +53,7 @@ export const LoginForm = () => {
           <Spinner />
         ) : (
           <>
-            <LogIn className="w-5 h-5" />
+            <LogIn className="w-5 h-5 mr-2" /> {/* Agregué margen */}
             Acceder al Sistema
           </>
         )}

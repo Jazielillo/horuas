@@ -2,7 +2,10 @@ export type Alumno = {
   id_usuario: number;
   nombre: string;
   num_cuenta: string;
-  puntos?: number;
+  puntos?: {
+    total: number;
+    deportes: number;
+    cultura: number;
+  };
   grupo?: string;
-  
 };

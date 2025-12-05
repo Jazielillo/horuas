@@ -18,7 +18,7 @@ export default async function LoginPage() {
           <Card className="shadow-2xl border rounded-3xl overflow-hidden p-0 ">
             <div className="grid md:grid-cols-2">
               {/* Columna Izquierda - Formulario */}
-              <div className="p-8 md:p-12 flex flex-col justify-center">
+              <div className="p-8 max-sm:py-15 md:p-12 flex flex-col justify-center">
                 <CardHeader className="space-y-1">
                   <CardTitle className="text-2xl text-center">
                     Iniciar Sesión

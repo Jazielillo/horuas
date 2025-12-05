@@ -30,7 +30,7 @@ export async function GET(req: Request) {
   );
 
   const alumnosConGrupo = await Promise.all(
-    alumnosConPuntos.map(async (alumno: { id_usuario: number; puntos: number }) => {
+    alumnosConPuntos.map(async (alumno: { id_usuario: number; puntos: { total: number; deportes: number; cultura: number } }) => {
       const grupo = await getGroup(alumno.id_usuario);
       console.log("Grupo for alumno", alumno.id_usuario, "is", grupo);
       return { ...alumno, grupo };

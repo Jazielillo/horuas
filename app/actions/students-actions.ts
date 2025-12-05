@@ -25,6 +25,8 @@ export async function getStudentsWithoutActivity({
       ? parseInt(actividadId, 10)
       : Number(actividadId);
 
+  console.log("Actividad ID", actividadNum);
+
   // IDs de alumnos que ya tienen la actividad (si se especificó)
   const alumnosConActividad = await prisma.alumnoActividad.findMany({
     where: {
@@ -32,9 +34,9 @@ export async function getStudentsWithoutActivity({
     },
     select: { id_alumno: true },
   });
-
+  console.log("Alumnos con actividad:", alumnosConActividad);
   const idsAlumnosExcluir = alumnosConActividad.map((a) => a.id_alumno);
-
+  console.log("IDs a excluir:", idsAlumnosExcluir);
   // Alumnos del grupo que NO están en la lista
   const alumnos = await prisma.usuario.findMany({
     where: {
@@ -62,10 +64,7 @@ export async function getStudentsWithoutActivity({
   // Añadimos los puntos de cada alumno
   const alumnosConPuntos = await Promise.all(
     alumnos.map(async (alumno) => {
-      const puntos = await getStudentPoints(
-        alumno.id_usuario,
-        id_departament?.id_departamento
-      );
+      const puntos = await getStudentPoints(alumno.id_usuario);
       return { ...alumno, puntos };
     })
   );
@@ -114,6 +113,7 @@ export async function getAlumnoInfo(
       },
       registros_act: {
         select: {
+          puntos_otorgados: true,
           fecha_registro: true,
           actividad: {
             select: {
@@ -124,6 +124,7 @@ export async function getAlumnoInfo(
                 select: { nombre: true },
               },
               fecha: true,
+              tipo: true,
               departamento: {
                 select: {
                   id_departamento: true, // <-- importante
@@ -156,60 +157,74 @@ export async function getAlumnoInfo(
   let puntosCultura = 0;
 
   const actividadesProcesadas = alumno.registros_act.map((registro) => {
-    const actividad = registro.actividad;
+  const actividad = registro.actividad;
 
-    // Detectar si este alumno ganó premio
-    const premioGanado = actividad.premios
-      .map((p) => ({
-        id: p.id,
-        lugar: p.lugar,
-        puntos_otorgados: p.puntos,
-        gano: p.ganadores.some(
-          (g) => Number(g.alumnoId) === Number(alumno.id_usuario)
-        ),
-      }))
-      .find((p) => p.gano);
+  // Detectar si este alumno ganó premio (para actividades normales)
+  const premioGanado = actividad.premios
+    .map((p) => ({
+      id: p.id,
+      lugar: p.lugar,
+      puntos_otorgados: p.puntos,
+      gano: p.ganadores.some(
+        (g) => Number(g.alumnoId) === Number(alumno.id_usuario)
+      ),
+    }))
+    .find((p) => p.gano);
 
-    // Clasificar por departamentos usando el ID (más seguro)
-    const idDept = actividad.departamento.id_departamento;
-    console.log("ID Departamento:", idDept);
+  // Departamento
+  const idDept = actividad.departamento.id_departamento;
+
+  let puntosActividad = 0;
+
+  // ---------------------------------------------------
+  // ✔️ NUEVA LÓGICA: Si es MIGRACION usar puntos_otorgados
+  // ---------------------------------------------------
+  if (actividad.tipo === "MIGRACION") {
+    puntosActividad = registro.puntos_otorgados ?? 0;
+  } else {
+    // ---------------------------------------------------
+    // ❌ LÓGICA NORMAL (sin cambios)
+    // ---------------------------------------------------
+    const puntosParticipacion = actividad.puntos_participacion ?? 0;
 
     if (premioGanado?.puntos_otorgados) {
-      if (idDept === 1) {
-        puntosDeportes +=
-          premioGanado.puntos_otorgados +
-          registro.actividad.puntos_participacion;
-      } else if (idDept === 2) {
-        puntosCultura +=
-          premioGanado.puntos_otorgados +
-          registro.actividad.puntos_participacion;
-      }
+      puntosActividad =
+        puntosParticipacion + premioGanado.puntos_otorgados;
     } else {
-      // Solo puntos de participación
-      if (idDept === 1) {
-        puntosDeportes += registro.actividad.puntos_participacion;
-      } else if (idDept === 2) {
-        puntosCultura += registro.actividad.puntos_participacion;
-      }
+      puntosActividad = puntosParticipacion;
     }
+  }
 
-    return {
-      id_actividad: actividad.id_actividad,
-      ciclo: actividad.ciclo.nombre,
-      nombre: actividad.nombre,
-      fecha: actividad.fecha,
-      departamento: actividad.departamento.nombre,
-      participacion: !premioGanado,
-      premio: premioGanado
+  // Asignar puntos según departamento
+  if (idDept === 1) puntosDeportes += puntosActividad;
+  else if (idDept === 2) puntosCultura += puntosActividad;
+
+  // Retorno individual de actividad (también corregido para migración)
+  return {
+    id_actividad: actividad.id_actividad,
+    ciclo: actividad.ciclo.nombre,
+    nombre: actividad.nombre,
+    fecha: actividad.fecha,
+    departamento: actividad.departamento.nombre,
+
+    participacion: actividad.tipo !== "MIGRACION" && !premioGanado,
+
+    premio:
+      actividad.tipo !== "MIGRACION" && premioGanado
         ? {
             id: premioGanado.id,
             lugar: premioGanado.lugar,
             puntos_otorgados: premioGanado.puntos_otorgados,
           }
         : null,
-      puntos_participacion: actividad.puntos_participacion,
-    };
-  });
+
+    puntos_participacion:
+      actividad.tipo === "MIGRACION"
+        ? (registro.puntos_otorgados ?? 0)
+        : actividad.puntos_participacion,
+  };
+});
+
 
   console.log("Puntos Deportes:", puntosDeportes);
   console.log("Puntos Cultura:", puntosCultura);

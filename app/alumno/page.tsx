@@ -1,6 +1,6 @@
 "use client";
 import { Spinner } from "@/components/ui/spinner";
-import ProgressChart from "../components/progress-chart";
+import { ProgressChart } from "../components/progress-chart";
 import { useAlumnoStore } from "@/store/use-alumno-store";
 import { useEffect } from "react";
 import {

@@ -22,6 +22,7 @@ datasource db {
 enum ActividadTipo {
   NORMAL
   CLUB
+  MIGRACION
 }
 
 enum Rol {
@@ -258,6 +259,7 @@ model AlumnoActividad {
   fecha_registro      DateTime
   id_coordinador      Int
   id_ciclo            Int
+  puntos_otorgados   Int?
 
   // Relaciones
   alumno      Usuario   @relation("AlumnoParticipacion", fields: [id_alumno], references: [id_usuario])

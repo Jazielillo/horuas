@@ -244,7 +244,7 @@ const CoordinatorAssign = () => {
                     onClick={() => setConfirmDialogOpen(true)}
                     disabled={
                       (loadingStudents || selectedStudents?.length === 0) &&
-                      (!check)
+                      !check
                     }
                   >
                     {loadingStudents ? (
@@ -391,12 +391,20 @@ const CoordinatorAssign = () => {
                         </TableCell>
                       )}
                       <TableCell className="text-right">
-                        {selectedStudent.puntos ?? 0}
+                        {activitySelected?.departamento === "Deportes"
+                          ? selectedStudent.puntos?.deportes ?? 0
+                          : activitySelected?.departamento === "Cultura"
+                          ? selectedStudent.puntos?.cultura ?? 0
+                          : selectedStudent.puntos?.total ?? 0}
                       </TableCell>
                       <TableCell className="text-right font-semibold">
                         <span className="text-success ml-2">
                           {(activitySelected?.puntos_participacion ?? 0) +
-                            (selectedStudent.puntos ?? 0)}
+                            (activitySelected?.departamento === "Deportes"
+                              ? selectedStudent.puntos?.deportes ?? 0
+                              : activitySelected?.departamento === "Cultura"
+                              ? selectedStudent.puntos?.cultura ?? 0
+                              : selectedStudent.puntos?.total ?? 0)}
                           {check &&
                             (() => {
                               const selectedAwardId =
@@ -516,12 +524,20 @@ const CoordinatorAssign = () => {
                             </TableCell>
                           )}
                           <TableCell className="text-right">
-                            {student.puntos ?? 0}
+                            {activitySelected?.departamento === "Deportes"
+                              ? student.puntos?.deportes ?? 0
+                              : activitySelected?.departamento === "Cultura"
+                              ? student.puntos?.cultura ?? 0
+                              : student.puntos?.total ?? 0}
                           </TableCell>
                           <TableCell className="text-right font-semibold">
                             <span className="text-success ml-2">
                               {(activitySelected?.puntos_participacion ?? 0) +
-                                (student.puntos ?? 0)}
+                                (activitySelected?.departamento === "Deportes"
+                                  ? student.puntos?.deportes ?? 0
+                                  : activitySelected?.departamento === "Cultura"
+                                  ? student.puntos?.cultura ?? 0
+                                  : student.puntos?.total ?? 0)}
                               {isSelected &&
                                 (() => {
                                   const selectedAwardId =

@@ -30,13 +30,13 @@ export async function GET(req: Request) {
       (item: {
         actividad: { nombre: string; descripcion: string | null };
         fecha_registro: Date;
-        puntos_otorgados: number;
+        puntos_otorgados: number | null;
         id_actividad: number;
       }) => ({
         nombre: item.actividad.nombre,
         descripcion: item.actividad.descripcion,
         fecha: item.fecha_registro,
-        puntos: item.puntos_otorgados,
+        puntos: item.puntos_otorgados ?? 0,
         id_actividad: item.id_actividad,
         departamento: "Deportes",
       })

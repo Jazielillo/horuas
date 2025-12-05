@@ -75,6 +75,7 @@ export default function AssignPointsForm() {
   };
 
   const fetchLastStudents = async () => {
+    console.log("Activity selected in fetchLastStudents:", activitySelected);
     let id = activitySelected?.departamento === "Deportes" ? 1 : 2;
     const res = await fetch(`/api/alumnos/ten/${id}`);
     return await res.json();

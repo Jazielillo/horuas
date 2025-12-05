@@ -14,9 +14,9 @@ export async function login(state: FormState, formData: FormData) {
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    console.log(validatedFields.error.flatten().fieldErrors);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
+      message: "Faltan campos por llenar o son inválidos" // Agregamos un mensaje fallback
     };
   }
   // Call the provider or db to create a user...
@@ -30,9 +30,10 @@ export async function login(state: FormState, formData: FormData) {
   const user = data;
 
   if (!user) {
-    console.log("Número de cuenta o NIP incorrectos.");
+    // Aquí es donde fallaba antes:
     return {
       message: "Número de cuenta o NIP incorrectos.",
+      errors: undefined // Explícitamente no hay errores de campo
     };
   }
   

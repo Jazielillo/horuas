@@ -212,7 +212,8 @@ export const AlumnoActividadScalarFieldEnum = {
   id_actividad: 'id_actividad',
   fecha_registro: 'fecha_registro',
   id_coordinador: 'id_coordinador',
-  id_ciclo: 'id_ciclo'
+  id_ciclo: 'id_ciclo',
+  puntos_otorgados: 'puntos_otorgados'
 } as const
 
 export type AlumnoActividadScalarFieldEnum = (typeof AlumnoActividadScalarFieldEnum)[keyof typeof AlumnoActividadScalarFieldEnum]
