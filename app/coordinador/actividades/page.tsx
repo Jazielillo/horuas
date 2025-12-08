@@ -22,8 +22,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { getUserRole } from "@/app/actions/auth";
 
 const CoordinatorActivities = () => {
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    getUserRole().then(setRole);
+    console.log("User role in activities page:", role);
+  }, []);
   const {
     activityList,
     setActivitySelected,
@@ -33,6 +41,8 @@ const CoordinatorActivities = () => {
     cicloSelected,
     ciclos,
     departamentSelected,
+    setOnlyClubs,
+    onlyClubs,
     departaments,
     loadDepartaments,
     setDepartamentSelected,
@@ -41,7 +51,7 @@ const CoordinatorActivities = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [loadingActivities, setLoadingActivities] = useState(false);
-  
+
   useEffect(() => {
     setLoadingActivities(true);
     if (ciclos === undefined || ciclos.length === 0) {
@@ -60,6 +70,7 @@ const CoordinatorActivities = () => {
     loadDepartaments,
     departaments,
     departamentSelected,
+    onlyClubs,
   ]);
 
   const handleEditActivity = (activity: any) => {
@@ -96,19 +107,21 @@ const CoordinatorActivities = () => {
             Crear y administrar actividades extracurriculares
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button
-            asChild
-            size="lg"
-            className="bg-blue-900 hover:bg-primary text-white"
-            onClick={() => setActivitySelected(null)}
-          >
-            <Link href="/coordinador/actividades/nuevo">
-              <Plus className="w-4 h-4 mr-2" />
-              Crear actividad
-            </Link>
-          </Button>
-        </div>
+        {role === "COORDINADOR" && (
+          <div className="flex gap-2">
+            <Button
+              asChild
+              size="lg"
+              className="bg-blue-900 hover:bg-primary text-white"
+              onClick={() => setActivitySelected(null)}
+            >
+              <Link href="/coordinador/actividades/nuevo">
+                <Plus className="w-4 h-4 mr-2" />
+                Crear actividad
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Activities List */}
@@ -121,17 +134,22 @@ const CoordinatorActivities = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="relative mb-5">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground " />
+          {/* Contenedor general */}
+          <div className="grid grid-cols-1 gap-4 mb-3">
+            {/* Buscador full width */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Buscar por nombre"
                 value={activitieSearch}
                 onChange={(e) => setActivitieSearch(e.target.value)}
-                className="pl-10"
+                className="pl-10 w-full"
               />
             </div>
-            <div className="flex gap-2">
+
+            {/* Filtros */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Departamento */}
               <Select
                 value={departamentSelected?.id_departamento.toString() || ""}
                 onValueChange={(dept) => {
@@ -150,7 +168,6 @@ const CoordinatorActivities = () => {
                     <SelectItem
                       key={departament.id_departamento}
                       value={departament.id_departamento.toString()}
-                      className="cursor-pointer"
                     >
                       {departament.nombre}
                     </SelectItem>
@@ -158,6 +175,7 @@ const CoordinatorActivities = () => {
                 </SelectContent>
               </Select>
 
+              {/* Ciclo */}
               <Select
                 value={cicloSelected?.id_ciclo.toString() || ""}
                 onValueChange={(cicloId) => {
@@ -174,7 +192,6 @@ const CoordinatorActivities = () => {
                   {ciclos?.map((ciclo) => (
                     <SelectItem
                       key={ciclo.id_ciclo}
-                      className="cursor-pointer"
                       value={ciclo.id_ciclo.toString()}
                     >
                       {ciclo.nombre}
@@ -182,8 +199,23 @@ const CoordinatorActivities = () => {
                   ))}
                 </SelectContent>
               </Select>
+
+              {/* Checkbox club */}
+              <div className="flex items-center border border-input rounded-md px-3 py-2 bg-background space-x-2">
+                <input
+                  type="checkbox"
+                  onChange={() => {
+                    setOnlyClubs(!onlyClubs);
+                  }}
+                  className="w-4 h-4 cursor-pointer"
+                />
+                <Label className="text-sm text-muted-foreground">
+                  ¿Es un club?
+                </Label>
+              </div>
             </div>
           </div>
+
           {(cicloSelected || departamentSelected) && (
             <div className="flex items-center gap-2 p-3 bg-muted rounded-lg mb-2">
               {cicloSelected && (

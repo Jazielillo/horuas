@@ -29,6 +29,7 @@ enum Rol {
   ADMINISTRADOR
   COORDINADOR
   ALUMNO
+  COORDINADOR_AUXILIAR
 }
 
 enum Turno {
@@ -237,6 +238,9 @@ model Actividad {
   id_departamento      Int
   id_coordinador       Int
   id_ciclo             Int
+  enlace_participacion String?
+  foto_url             String?
+  actividad_grupal     Boolean       @default(false)
   tipo                 ActividadTipo @default(NORMAL)
 
   // Relaciones
@@ -259,7 +263,7 @@ model AlumnoActividad {
   fecha_registro      DateTime
   id_coordinador      Int
   id_ciclo            Int
-  puntos_otorgados   Int?
+  puntos_otorgados    Int?
 
   // Relaciones
   alumno      Usuario   @relation("AlumnoParticipacion", fields: [id_alumno], references: [id_usuario])

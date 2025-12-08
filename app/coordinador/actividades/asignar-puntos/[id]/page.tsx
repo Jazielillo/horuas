@@ -7,6 +7,12 @@ import {
   Search,
   ChevronsUpDown,
   ArrowLeft,
+  Trophy,
+  Award,
+  Users,
+  Volleyball,
+  Guitar,
+  Calendar,
 } from "lucide-react";
 import {
   Card,
@@ -41,6 +47,7 @@ import {
 } from "@/components/ui/select";
 import { ActivityPrize } from "@/app/models/activity";
 import { SummaryDetailsPoints } from "@/app/coordinador/components/assign-points/summary-details-points";
+import { Badge } from "@/components/ui/badge";
 
 const CoordinatorAssign = () => {
   const {
@@ -104,7 +111,8 @@ const CoordinatorAssign = () => {
     activitySelected,
     setActivitySelected,
   } = useActivityStore();
-
+  const isSports = activitySelected?.departamento === "Deportes";
+  const isClub = activitySelected?.actividad_grupal;
   useEffect(() => {
     if (!id) return;
 
@@ -183,21 +191,88 @@ const CoordinatorAssign = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleCancel}
-          className="bg-primary/90 hover:bg-primary/80 cursor-pointer"
-        >
-          <ArrowLeft className="w-5 h-5 text-white" />
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Asignar Puntos</h1>
-          <p className="text-muted-foreground">
-            Asignar puntos de actividades a alumnos
-          </p>
+      <div className="flex flex-col gap-6 mb-8 bg-card p-4 rounded-lg shadow">
+        {/* Header Superior con Navegación y Título Principal */}
+        <div className="flex items-start gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleCancel}
+            className="mt-1 bg-secondary/50 hover:bg-secondary/80 shrink-0"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+
+          <div className="flex-1 space-y-1">
+            {/* Título de la Acción (Pequeño, como 'breadcrumb') */}
+            <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+              Asignar Puntos
+              {/* Si es Club, lo recordamos aquí discretamente */}
+              {isClub && (
+                <span className="flex items-center gap-1 text-primary text-xs border border-primary/30 px-1.5 rounded-full">
+                  <Users className="w-3 h-3" /> Club
+                </span>
+              )}
+            </p>
+
+            {/* Título de la Actividad (El Héroe) */}
+            <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+              {/* Icono decorativo según departamento */}
+              {isSports ? (
+                <Volleyball className="w-8 h-8 text-info opacity-80 hidden sm:block" />
+              ) : (
+                <Guitar className="w-8 h-8 text-chart-5 opacity-80 hidden sm:block" />
+              )}
+              {activitySelected?.nombre || "Cargando actividad..."}
+            </h1>
+
+            {/* Barra de metadatos relevantes para la asignación */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* 1. FECHA: Para confirmar que no es el evento del año pasado */}
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground border-r pr-3">
+                <Calendar className="w-4 h-4" />
+                {activitySelected?.fecha
+                  ? new Date(activitySelected.fecha).toLocaleDateString(
+                      "es-MX",
+                      { dateStyle: "long" }
+                    )
+                  : "Fecha pendiente"}
+              </div>
+
+              {/* 2. PUNTOS BASE: La info más importante en esta pantalla */}
+              <Badge
+                variant="secondary"
+                className="bg-success/15 text-success hover:bg-success/25 gap-1.5 px-3 py-1 text-sm"
+              >
+                <Award className="w-4 h-4" />
+                <span className="font-bold">
+                  {activitySelected?.puntos_participacion || 0}
+                </span>
+                Puntos base
+              </Badge>
+
+              {/* 3. PREMIOS: Si hay premios, avisa visualmente */}
+              {activitySelected?.premio &&
+                activitySelected.premio.length > 0 && (
+                  <Badge
+                    variant="outline"
+                    className="border-yellow-500/50 text-yellow-600 gap-1.5 px-3 py-1"
+                  >
+                    <Trophy className="w-3 h-3" />
+                    {activitySelected.premio.length} Premios disponibles
+                  </Badge>
+                )}
+
+              {/* 4. DEPARTAMENTO */}
+              <Badge variant="outline" className="text-muted-foreground">
+                {activitySelected?.departamento}
+              </Badge>
+            </div>
+          </div>
         </div>
+
+        {/* Opcional: Una línea separadora si sientes que se mezcla con el contenido */}
+        {/* <Separator /> */}
       </div>
 
       {/* Selection Form */}

@@ -41,6 +41,9 @@ export async function createActivityAction(formData: ActivitySchema) {
       id_departamento: parsedFull.id_departamento,
       id_coordinador: parsedFull.id_coordinador,
       id_ciclo: parsedFull.id_ciclo,
+      actividad_grupal: parsedFull.actividad_grupal || false,
+      enlace_participacion: parsedFull.enlace_participacion || "",
+      foto_url: parsedFull.foto_url || "",
     },
   });
 
@@ -71,6 +74,9 @@ export async function updateActivityAction(
       descripcion: activity.descripcion,
       fecha: new Date(activity.fecha_realizacion),
       puntos_participacion: activity.puntos_otorgados,
+      actividad_grupal: activity.actividad_grupal || false,
+      enlace_participacion: activity.enlace_participacion || "",
+      foto_url: activity.foto_url || "",
     },
   });
   console.log(
@@ -157,12 +163,16 @@ function mapPrismaActivityToFrontend(item: any): Activity {
     // Aplanamiento: Sacamos el nombre del objeto departamento
     departamento: item.departamento?.nombre || "Sin departamento",
     // Mapeo de array anidado
+
     premio:
       item.premios?.map((p: any) => ({
         id: p.id,
         lugar: p.lugar,
         puntos_otorgados: p.puntos, // Renombramos 'puntos' a 'puntos_otorgados'
       })) || [],
+    enlace_participacion: item.enlace_participacion || undefined,
+    foto_url: item.foto_url || undefined,
+    actividad_grupal: item.actividad_grupal || false,
   };
 }
 
@@ -171,13 +181,16 @@ function mapPrismaActivityToFrontend(item: any): Activity {
 export async function getAllActivitiesAction({
   ciclo_id,
   departamento_id,
+  onlyClubs
 }: {
+  onlyClubs?: boolean;
   ciclo_id?: number;
   departamento_id?: number;
 }): Promise<Activity[]> {
   const where: any = {};
   if (ciclo_id != null) where.id_ciclo = ciclo_id;
   if (departamento_id != null) where.id_departamento = departamento_id;
+  if (onlyClubs) where.actividad_grupal = true;
 
   const activities = await prisma.actividad.findMany({
     where,
@@ -202,6 +215,7 @@ export async function getActivityByIdAction(
         select: { nombre: true },
       },
       premios: true,
+      
     },
   });
 

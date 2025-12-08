@@ -1,8 +1,9 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { FormState, LoginFormSchema } from "@/lib/definitions";
-import { createSession, deleteSession } from "@/lib/session";
+import { createSession, deleteSession, getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function login(state: FormState, formData: FormData) {
   console.log("Login action called");
@@ -16,7 +17,7 @@ export async function login(state: FormState, formData: FormData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Faltan campos por llenar o son inválidos" // Agregamos un mensaje fallback
+      message: "Faltan campos por llenar o son inválidos", // Agregamos un mensaje fallback
     };
   }
   // Call the provider or db to create a user...
@@ -33,16 +34,19 @@ export async function login(state: FormState, formData: FormData) {
     // Aquí es donde fallaba antes:
     return {
       message: "Número de cuenta o NIP incorrectos.",
-      errors: undefined // Explícitamente no hay errores de campo
+      errors: undefined, // Explícitamente no hay errores de campo
     };
   }
-  
-  console.log(user.rol);
 
   await createSession(user.id_usuario, user.num_cuenta, user.rol);
 
   // 🔥 Redirigir desde el server action
-  if (user.rol === "COORDINADOR") redirect("/coordinador/actividades");
+  if (
+    user.rol === "COORDINADOR" ||
+    user.rol === "ADMINISTRADOR" ||
+    user.rol === "COORDINADOR_AUXILIAR"
+  )
+    redirect("/coordinador/actividades");
   if (user.rol === "ALUMNO") redirect("/alumno");
   return;
 }
@@ -50,4 +54,15 @@ export async function login(state: FormState, formData: FormData) {
 export async function logout() {
   await deleteSession();
   redirect("/login");
+}
+
+export async function getUserRole() {
+  return getSession().then((session) => {
+    return session ? session.role : null;
+  });
+}
+
+export async function getCurrentUserId(): Promise<number | null> {
+  const session = await getSession();
+  return session ? session.id_usuario : null;
 }

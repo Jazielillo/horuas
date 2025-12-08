@@ -81,140 +81,165 @@ export function AllActivities({
   return (
     <>
       <div className="space-y-3">
-        {activities.map((activity) => (
-          // 1. El KEY va en el elemento más externo
-          <div
-            key={activity.id_actividad}
-            className={`${
-              activity.departamento === "Deportes"
-                ? "border-info hover:bg-info/10"
-                : "border-chart-5 hover:bg-chart-5/10"
-            } flex items-start gap-4 p-4 rounded-lg border bg-card transition-colors relative group`}
-          >
-            {/* 2. Enlace condicional */}
-            <Link
-              href={
-                viewOnly
-                  ? "#"
-                  : `/coordinador/actividades/asignar-puntos/${activity.id_actividad}`
-              }
-              onClick={(e) => {
-                // SI ESTAMOS EN MODO SOLO LECTURA, ABRIMOS EL MODAL Y NO NAVEGAMOS
-                if (viewOnly) {
-                  e.preventDefault();
-                  setSelectedActivity(activity);
-                }
-              }}
-              className={`flex items-start gap-4 flex-1 min-w-0 ${
-                viewOnly ? "cursor-pointer" : "cursor-pointer"
-              }`}
+        {activities.map((activity) => {
+          const isSports = activity.departamento === "Deportes";
+          const isClub = activity.actividad_grupal; // Tu nueva propiedad
+
+          // Definimos los colores base dinámicamente
+          const colorClass = isSports ? "info" : "chart-5";
+          const hoverBg = isSports ? "hover:bg-info/10" : "hover:bg-chart-5/10";
+          const borderColor = isSports ? "border-info" : "border-chart-5";
+
+          // Estilo especial para el contenedor si es Club
+          const cardStyle = isClub
+            ? `${borderColor} border-dashed border-2 bg-secondary/5` // Club: Borde punteado y un poco más grueso
+            : `${borderColor} border bg-card`; // Actividad normal: Borde sólido estándar
+          return (
+            <div
+              key={activity.id_actividad}
+              className={`${cardStyle} ${hoverBg} flex items-start gap-4 p-4 rounded-lg transition-colors relative group`}
             >
-              {/* ÍCONO Y FONDO TEMÁTICO */}
-              <div
-                className={`${
-                  activity.departamento === "Deportes"
-                    ? "bg-info/20 text-info"
-                    : "bg-chart-5/20 text-chart-5"
-                } shrink-0 w-12 h-12 rounded-lg flex items-center justify-center`}
+              {/* 2. Enlace condicional */}
+              <Link
+                href={
+                  viewOnly
+                    ? `/alumno/detalle-actividad/${activity.id_actividad}`
+                    : `/coordinador/actividades/asignar-puntos/${activity.id_actividad}`
+                }
+                className={`flex items-start gap-4 flex-1 min-w-0 ${
+                  viewOnly ? "cursor-pointer" : "cursor-pointer"
+                }`}
               >
-                {activity.departamento === "Deportes" ? (
-                  <Volleyball className="w-6 h-6" />
-                ) : (
-                  <Guitar className="w-6 h-6" />
-                )}
-              </div>
+                {/* ÍCONO Y FONDO TEMÁTICO */}
+                <div
+                  className={`shrink-0 w-12 h-12 rounded-lg flex items-center justify-center relative
+          ${isSports ? "bg-info/20 text-info" : "bg-chart-5/20 text-chart-5"}
+        `}
+                >
+                  {/* Si es Club, mostramos el ícono de usuarios pequeño encima o cambiamos el icono principal */}
+                  {isSports ? (
+                    <Volleyball className="w-6 h-6" />
+                  ) : (
+                    <Guitar className="w-6 h-6" />
+                  )}
 
-              <div className="flex-1 min-w-0">
-                <div className="mb-2">
-                  <h4 className="font-semibold mb-1">{activity.nombre}</h4>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {activity.descripcion}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 items-center">
-                  {/* BADGE DEL DEPARTAMENTO */}
-                  <Badge
-                    className={`${
-                      activity.departamento === "Deportes"
-                        ? "bg-info/20 text-info hover:bg-info/30"
-                        : "bg-chart-5/20 text-chart-5 hover:bg-chart-5/30"
-                    }`}
-                  >
-                    {activity.departamento}
-                  </Badge>
-
-                  <span className="text-sm text-muted-foreground flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {new Date(activity?.fecha || new Date()).toLocaleDateString(
-                      "es-MX",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )}
-                  </span>
-
-                  <Badge className="bg-success/20 text-success hover:bg-success/30">
-                    {activity.puntos_participacion} puntos
-                  </Badge>
-
-                  {activity.premio && activity.premio.length > 0 && (
-                    <Badge className="bg-yellow-400/20 text-yellow-600 hover:bg-yellow-400/30 gap-1">
-                      <Trophy className="w-3 h-3" />
-                      {activity.premio.length} Premios
-                    </Badge>
+                  {/* INDICADOR VISUAL DE CLUB EN EL ICONO (Opcional, un puntito o badge mini) */}
+                  {isClub && (
+                    <div className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full p-0.5 border-2 border-background">
+                      <Users className="w-3 h-3" />
+                    </div>
                   )}
                 </div>
-              </div>
-            </Link>
 
-            {/* 3. Botones de acción FUERA del Link (Solo si NO es viewOnly) */}
-            {!viewOnly && (
-              <div className="flex gap-2 shrink-0 z-10">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  asChild
-                  onClick={() => setActivitySelected(activity)}
-                >
-                  <Link
-                    href={`/coordinador/actividades/editar/${activity.id_actividad}`}
+                <div className="flex-1 min-w-0">
+                  <div className="mb-2">
+                    <div className="flex items-center gap-2 mb-1">
+                      {/* BADGE DE CLUB (NUEVO) */}
+                      {isClub && (
+                        <Badge
+                          variant="outline"
+                          className="border-primary text-primary gap-1 px-2 h-5"
+                        >
+                          <Users className="w-3 h-3" />
+                          Club
+                        </Badge>
+                      )}
+                      <h4 className="font-semibold line-clamp-1">
+                        {activity.nombre}
+                      </h4>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {activity.descripcion}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 items-center">
+                    {/* BADGE DEL DEPARTAMENTO */}
+                    <Badge
+                      className={`${
+                        isSports
+                          ? "bg-info/20 text-info hover:bg-info/30"
+                          : "bg-chart-5/20 text-chart-5 hover:bg-chart-5/30"
+                      }`}
+                    >
+                      {activity.departamento}
+                    </Badge>
+
+                    {!activity.actividad_grupal && (
+                      <span className="text-sm text-muted-foreground flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(
+                          activity?.fecha || new Date()
+                        ).toLocaleDateString("es-MX", {
+                          day: "numeric",
+                          month: "short", // Cambié a short para ahorrar espacio si hay muchos badges
+                        })}
+                      </span>
+                    )}
+
+                    <Badge className="bg-success/20 text-success hover:bg-success/30">
+                      {activity.puntos_participacion} pts
+                    </Badge>
+
+                    {activity.premio && activity.premio.length > 0 && (
+                      <Badge className="bg-yellow-400/20 text-yellow-600 hover:bg-yellow-400/30 gap-1">
+                        <Trophy className="w-3 h-3" />
+                        {activity.premio.length}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </Link>
+
+              {/* 3. Botones de acción FUERA del Link */}
+              {!viewOnly && (
+                <div className="flex gap-1 shrink-0 z-10 flex-col sm:flex-row">
+                  {/* Tip: Si el espacio es poco, flex-col ayuda */}
+                  <Button
+                    size="icon" // Cambié a size icon para que sea más compacto
+                    variant="ghost"
+                    className="h-8 w-8"
+                    asChild
+                    onClick={() => setActivitySelected(activity)}
                   >
-                    <Edit className="w-4 h-4" />
-                  </Link>
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteActivity?.(activity.id_actividad);
-                  }}
-                >
-                  <Trash2 className="w-4 h-4 text-destructive" />
-                </Button>
-              </div>
-            )}
-          </div>
-        ))}
+                    <Link
+                      href={`/coordinador/actividades/editar/${activity.id_actividad}`}
+                    >
+                      <Edit className="w-4 h-4" />
+                    </Link>
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteActivity?.(activity.id_actividad);
+                    }}
+                  >
+                    <Trash2 className="w-4 h-4 text-destructive" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
-
       {/* === MODAL DE DETALLES REDISEÑADO === */}
-      <Dialog
+      {/* <Dialog
         open={!!selectedActivity}
         onOpenChange={(open) => !open && setSelectedActivity(null)}
       >
         <DialogContent>
-          
           <DialogHeader className="text-center">
-            <DialogTitle className="text-center">{selectedActivity?.nombre}</DialogTitle>
+            <DialogTitle className="text-center">
+              {selectedActivity?.nombre}
+            </DialogTitle>
           </DialogHeader>
-          
+
           {selectedActivity && (
             <div className="space-y-6">
-              {/* Basic Info */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
@@ -234,7 +259,6 @@ export function AllActivities({
                 </div>
               </div>
 
-              {/* Date, Time, Location */}
               <div className="space-y-3 p-4 rounded-lg bg-muted/50">
                 <div className="flex items-center gap-3">
                   <Calendar className="w-5 h-5 text-primary" />
@@ -254,23 +278,8 @@ export function AllActivities({
                     </p>
                   </div>
                 </div>
-                {/* <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-primary" />
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Hora</p>
-                      <p className="font-medium">{selectedActivity.hora}</p>
-                    </div>
-                  </div> */}
-                {/* <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Ubicación</p>
-                    <p className="font-medium">{selectedEvent.location}</p>
-                  </div>
-                </div> */}
               </div>
 
-              {/* Description */}
               <div className="space-y-2">
                 <h4 className="font-semibold">Descripción</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -278,7 +287,6 @@ export function AllActivities({
                 </p>
               </div>
 
-              {/* Awards Section */}
               {selectedActivity?.premio &&
                 selectedActivity?.premio.length > 0 && (
                   <div className="space-y-3">
@@ -319,7 +327,7 @@ export function AllActivities({
             </div>
           )}
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }

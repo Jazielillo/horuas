@@ -29,6 +29,9 @@ export const activitySchema = z.object({
   departamento: z
     .string()
     .min(3, { message: "El departamento es obligatorio" }),
+  enlace_participacion: z.string().optional(),
+  foto_url: z.string().optional(),
+  actividad_grupal: z.boolean().optional(),
   // Aquí está la magia para tu array opcional de premios
   premio: z
     .array(

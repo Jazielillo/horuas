@@ -3,13 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const {
-      id_actividad,
-      id_coordinador,
-      id_ciclo,
-      fecha_registro,
-      alumnos
-    } = await req.json();
+    const { id_actividad, id_coordinador, id_ciclo, fecha_registro, alumnos } =
+      await req.json();
 
     if (!Array.isArray(alumnos)) {
       return NextResponse.json(
@@ -25,13 +20,13 @@ export async function POST(req: Request) {
 
       // Buscar alumno por nombre exacto
       const user = await prisma.usuario.findFirst({
-        where: { nombre: nombre }
+        where: { nombre: nombre },
       });
 
       if (!user) {
         resultados.push({
           nombre,
-          error: "Usuario no encontrado"
+          error: "Usuario no encontrado",
         });
         continue; // no creamos registro
       }
@@ -44,24 +39,14 @@ export async function POST(req: Request) {
           id_coordinador,
           id_ciclo,
           fecha_registro,
-          puntos_otorgados: puntos
-        }
-      });
-
-      resultados.push({
-        nombre,
-        id_alumno: user.id_usuario,
-        registro
+          puntos_otorgados: puntos,
+        },
       });
     }
 
-    return NextResponse.json(resultados, { status: 201 });
-
+    return NextResponse.json({ status: 201 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: "Error del servidor" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Error del servidor" }, { status: 500 });
   }
 }

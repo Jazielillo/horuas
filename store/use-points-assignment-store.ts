@@ -1,4 +1,5 @@
 import { bulkAssignPointsAction } from "@/app/actions/assign-points-action";
+import { getCurrentUserId } from "@/app/actions/auth";
 import {
   getStudents,
   getStudentsWithoutActivity,
@@ -185,7 +186,7 @@ export const usePointsAssignmentStore = create<AssignmentState>()(
         estudiantes: selectedStudents.map((s) => s.id_usuario),
         points,
         date,
-        id_coordinador,
+        id_coordinador: await getCurrentUserId() ?? 0,
         id_ciclo,
         awards,
       };

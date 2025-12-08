@@ -129,7 +129,7 @@ const CoordinatorReports = () => {
             Visualiza y descarga reportes de progreso de alumnos
           </p>
         </div>
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <Button variant="outline" onClick={handleDownloadExcel}>
             <Download className="w-4 h-4 mr-2" />
             Excel
@@ -138,7 +138,7 @@ const CoordinatorReports = () => {
             <Download className="w-4 h-4 mr-2" />
             PDF
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {/* Filters */}

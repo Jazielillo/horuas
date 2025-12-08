@@ -238,10 +238,10 @@ const CoordinatorStudentDetail = ({
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <Label>Ciclo Escolar</Label>
                   <Select value={filterCycle} onValueChange={setFilterCycle}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Todos" />
                     </SelectTrigger>
                     <SelectContent>
@@ -260,7 +260,7 @@ const CoordinatorStudentDetail = ({
                     value={filterDepartment}
                     onValueChange={setFilterDepartment}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Todos" />
                     </SelectTrigger>
                     <SelectContent>

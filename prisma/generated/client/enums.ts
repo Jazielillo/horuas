@@ -21,7 +21,8 @@ export type ActividadTipo = (typeof ActividadTipo)[keyof typeof ActividadTipo]
 export const Rol = {
   ADMINISTRADOR: 'ADMINISTRADOR',
   COORDINADOR: 'COORDINADOR',
-  ALUMNO: 'ALUMNO'
+  ALUMNO: 'ALUMNO',
+  COORDINADOR_AUXILIAR: 'COORDINADOR_AUXILIAR'
 } as const
 
 export type Rol = (typeof Rol)[keyof typeof Rol]

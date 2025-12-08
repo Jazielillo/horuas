@@ -52,7 +52,7 @@ export async function decrypt(session: string | undefined = ""): Promise<Session
 export async function createSession(
   id_usuario: number,
   num_cuenta: string,
-  role: "ALUMNO" | "ADMINISTRADOR" | "COORDINADOR"
+  role: "ALUMNO" | "ADMINISTRADOR" | "COORDINADOR" | "COORDINADOR_AUXILIAR"
 ) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const session = await encrypt({ id_usuario, num_cuenta, role, expiresAt });

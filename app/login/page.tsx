@@ -35,7 +35,7 @@ export default async function LoginPage() {
               {/* Columna Derecha - Imagen */}
               <div className="hidden md:block relative bg-primary">
                 <Image
-                  src="/cu.svg"
+                  src="/logo.png"
                   alt="Login visual"
                   fill
                   className="object-contain"

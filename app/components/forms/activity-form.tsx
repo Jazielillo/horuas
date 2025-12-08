@@ -196,8 +196,12 @@ export const ActivityForm = ({
       nombre: "",
       descripcion: "",
       fecha_realizacion: "",
+      departamento: "",
       puntos_otorgados: 0,
       premio: [], // Inicializamos el array vacío
+      actividad_grupal: false,
+      enlace_participacion: "",
+      foto_url: "",
     },
   });
 
@@ -369,6 +373,71 @@ export const ActivityForm = ({
                 )}
               />
             </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <Controller
+                name="enlace_participacion"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2">
+                    <Label>Enlace de Participación</Label>
+                    {/* Input type date para que sea fácil validar */}
+                    <Input {...field} type="text"  onChange={(event) => field.onChange(event.target.value)} />
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+
+              <Controller
+                name="foto_url"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2">
+                    <Label>Enlace de Imagen</Label>
+                    <Input
+                      {...field}
+                      type="text"
+                      onChange={(event) => field.onChange(event.target.value)}
+                    />
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+
+              <Controller
+                name="actividad_grupal"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2">
+                    <Label>¿Es un club?</Label>
+                    <div className="flex items-center h-10 px-3 border border-input rounded-md bg-background">
+                      <input
+                        type="checkbox"
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                        className="w-4 h-4 cursor-pointer"
+                      />
+                      <span className="ml-2 text-sm text-muted-foreground">
+                        Sí, es un club
+                      </span>
+                    </div>
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
             {/* --------------------------------------------- */}
 
             {/* SECCIÓN PREMIOS CON USEFIELDARRAY */}
@@ -406,7 +475,12 @@ export const ActivityForm = ({
                   {fields.map((field, index) => {
                     // Calculamos el lugar actual basado en el índice
                     const currentLugar = index + 1;
-                    console.log("Renderizando premio:", field, "en índice:", index);
+                    console.log(
+                      "Renderizando premio:",
+                      field,
+                      "en índice:",
+                      index
+                    );
                     return (
                       <div
                         key={field.id}

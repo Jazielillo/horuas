@@ -51,6 +51,9 @@ export type ActividadMinAggregateOutputType = {
   id_departamento: number | null
   id_coordinador: number | null
   id_ciclo: number | null
+  enlace_participacion: string | null
+  foto_url: string | null
+  actividad_grupal: boolean | null
   tipo: $Enums.ActividadTipo | null
 }
 
@@ -63,6 +66,9 @@ export type ActividadMaxAggregateOutputType = {
   id_departamento: number | null
   id_coordinador: number | null
   id_ciclo: number | null
+  enlace_participacion: string | null
+  foto_url: string | null
+  actividad_grupal: boolean | null
   tipo: $Enums.ActividadTipo | null
 }
 
@@ -75,6 +81,9 @@ export type ActividadCountAggregateOutputType = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion: number
+  foto_url: number
+  actividad_grupal: number
   tipo: number
   _all: number
 }
@@ -105,6 +114,9 @@ export type ActividadMinAggregateInputType = {
   id_departamento?: true
   id_coordinador?: true
   id_ciclo?: true
+  enlace_participacion?: true
+  foto_url?: true
+  actividad_grupal?: true
   tipo?: true
 }
 
@@ -117,6 +129,9 @@ export type ActividadMaxAggregateInputType = {
   id_departamento?: true
   id_coordinador?: true
   id_ciclo?: true
+  enlace_participacion?: true
+  foto_url?: true
+  actividad_grupal?: true
   tipo?: true
 }
 
@@ -129,6 +144,9 @@ export type ActividadCountAggregateInputType = {
   id_departamento?: true
   id_coordinador?: true
   id_ciclo?: true
+  enlace_participacion?: true
+  foto_url?: true
+  actividad_grupal?: true
   tipo?: true
   _all?: true
 }
@@ -228,6 +246,9 @@ export type ActividadGroupByOutputType = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion: string | null
+  foto_url: string | null
+  actividad_grupal: boolean
   tipo: $Enums.ActividadTipo
   _count: ActividadCountAggregateOutputType | null
   _avg: ActividadAvgAggregateOutputType | null
@@ -263,6 +284,9 @@ export type ActividadWhereInput = {
   id_departamento?: Prisma.IntFilter<"Actividad"> | number
   id_coordinador?: Prisma.IntFilter<"Actividad"> | number
   id_ciclo?: Prisma.IntFilter<"Actividad"> | number
+  enlace_participacion?: Prisma.StringNullableFilter<"Actividad"> | string | null
+  foto_url?: Prisma.StringNullableFilter<"Actividad"> | string | null
+  actividad_grupal?: Prisma.BoolFilter<"Actividad"> | boolean
   tipo?: Prisma.EnumActividadTipoFilter<"Actividad"> | $Enums.ActividadTipo
   departamento?: Prisma.XOR<Prisma.DepartamentoScalarRelationFilter, Prisma.DepartamentoWhereInput>
   coordinador?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
@@ -281,6 +305,9 @@ export type ActividadOrderByWithRelationInput = {
   id_departamento?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  enlace_participacion?: Prisma.SortOrderInput | Prisma.SortOrder
+  foto_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  actividad_grupal?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   departamento?: Prisma.DepartamentoOrderByWithRelationInput
   coordinador?: Prisma.UsuarioOrderByWithRelationInput
@@ -302,6 +329,9 @@ export type ActividadWhereUniqueInput = Prisma.AtLeast<{
   id_departamento?: Prisma.IntFilter<"Actividad"> | number
   id_coordinador?: Prisma.IntFilter<"Actividad"> | number
   id_ciclo?: Prisma.IntFilter<"Actividad"> | number
+  enlace_participacion?: Prisma.StringNullableFilter<"Actividad"> | string | null
+  foto_url?: Prisma.StringNullableFilter<"Actividad"> | string | null
+  actividad_grupal?: Prisma.BoolFilter<"Actividad"> | boolean
   tipo?: Prisma.EnumActividadTipoFilter<"Actividad"> | $Enums.ActividadTipo
   departamento?: Prisma.XOR<Prisma.DepartamentoScalarRelationFilter, Prisma.DepartamentoWhereInput>
   coordinador?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
@@ -320,6 +350,9 @@ export type ActividadOrderByWithAggregationInput = {
   id_departamento?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  enlace_participacion?: Prisma.SortOrderInput | Prisma.SortOrder
+  foto_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  actividad_grupal?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   _count?: Prisma.ActividadCountOrderByAggregateInput
   _avg?: Prisma.ActividadAvgOrderByAggregateInput
@@ -340,6 +373,9 @@ export type ActividadScalarWhereWithAggregatesInput = {
   id_departamento?: Prisma.IntWithAggregatesFilter<"Actividad"> | number
   id_coordinador?: Prisma.IntWithAggregatesFilter<"Actividad"> | number
   id_ciclo?: Prisma.IntWithAggregatesFilter<"Actividad"> | number
+  enlace_participacion?: Prisma.StringNullableWithAggregatesFilter<"Actividad"> | string | null
+  foto_url?: Prisma.StringNullableWithAggregatesFilter<"Actividad"> | string | null
+  actividad_grupal?: Prisma.BoolWithAggregatesFilter<"Actividad"> | boolean
   tipo?: Prisma.EnumActividadTipoWithAggregatesFilter<"Actividad"> | $Enums.ActividadTipo
 }
 
@@ -348,6 +384,9 @@ export type ActividadCreateInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   departamento: Prisma.DepartamentoCreateNestedOneWithoutActividadesInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutActividades_creadasInput
@@ -366,6 +405,9 @@ export type ActividadUncheckedCreateInput = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutActividadInput
   premios?: Prisma.ActividadPremioUncheckedCreateNestedManyWithoutActividadInput
@@ -377,6 +419,9 @@ export type ActividadUpdateInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   departamento?: Prisma.DepartamentoUpdateOneRequiredWithoutActividadesNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutActividades_creadasNestedInput
@@ -395,6 +440,9 @@ export type ActividadUncheckedUpdateInput = {
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput
   premios?: Prisma.ActividadPremioUncheckedUpdateManyWithoutActividadNestedInput
@@ -410,6 +458,9 @@ export type ActividadCreateManyInput = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
 }
 
@@ -418,6 +469,9 @@ export type ActividadUpdateManyMutationInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
 }
 
@@ -430,6 +484,9 @@ export type ActividadUncheckedUpdateManyInput = {
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
 }
 
@@ -452,6 +509,9 @@ export type ActividadCountOrderByAggregateInput = {
   id_departamento?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  enlace_participacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrder
+  actividad_grupal?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
 }
 
@@ -472,6 +532,9 @@ export type ActividadMaxOrderByAggregateInput = {
   id_departamento?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  enlace_participacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrder
+  actividad_grupal?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
 }
 
@@ -484,6 +547,9 @@ export type ActividadMinOrderByAggregateInput = {
   id_departamento?: Prisma.SortOrder
   id_coordinador?: Prisma.SortOrder
   id_ciclo?: Prisma.SortOrder
+  enlace_participacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrder
+  actividad_grupal?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
 }
 
@@ -684,6 +750,9 @@ export type ActividadCreateWithoutCicloInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   departamento: Prisma.DepartamentoCreateNestedOneWithoutActividadesInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutActividades_creadasInput
@@ -700,6 +769,9 @@ export type ActividadUncheckedCreateWithoutCicloInput = {
   puntos_participacion: number
   id_departamento: number
   id_coordinador: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutActividadInput
   premios?: Prisma.ActividadPremioUncheckedCreateNestedManyWithoutActividadInput
@@ -744,6 +816,9 @@ export type ActividadScalarWhereInput = {
   id_departamento?: Prisma.IntFilter<"Actividad"> | number
   id_coordinador?: Prisma.IntFilter<"Actividad"> | number
   id_ciclo?: Prisma.IntFilter<"Actividad"> | number
+  enlace_participacion?: Prisma.StringNullableFilter<"Actividad"> | string | null
+  foto_url?: Prisma.StringNullableFilter<"Actividad"> | string | null
+  actividad_grupal?: Prisma.BoolFilter<"Actividad"> | boolean
   tipo?: Prisma.EnumActividadTipoFilter<"Actividad"> | $Enums.ActividadTipo
 }
 
@@ -752,6 +827,9 @@ export type ActividadCreateWithoutDepartamentoInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   coordinador: Prisma.UsuarioCreateNestedOneWithoutActividades_creadasInput
   ciclo: Prisma.CicloCreateNestedOneWithoutActividadesInput
@@ -768,6 +846,9 @@ export type ActividadUncheckedCreateWithoutDepartamentoInput = {
   puntos_participacion: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutActividadInput
   premios?: Prisma.ActividadPremioUncheckedCreateNestedManyWithoutActividadInput
@@ -805,6 +886,9 @@ export type ActividadCreateWithoutCoordinadorInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   departamento: Prisma.DepartamentoCreateNestedOneWithoutActividadesInput
   ciclo: Prisma.CicloCreateNestedOneWithoutActividadesInput
@@ -821,6 +905,9 @@ export type ActividadUncheckedCreateWithoutCoordinadorInput = {
   puntos_participacion: number
   id_departamento: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutActividadInput
   premios?: Prisma.ActividadPremioUncheckedCreateNestedManyWithoutActividadInput
@@ -858,6 +945,9 @@ export type ActividadCreateWithoutAlumnoActsInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   departamento: Prisma.DepartamentoCreateNestedOneWithoutActividadesInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutActividades_creadasInput
@@ -875,6 +965,9 @@ export type ActividadUncheckedCreateWithoutAlumnoActsInput = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   premios?: Prisma.ActividadPremioUncheckedCreateNestedManyWithoutActividadInput
   ganadores?: Prisma.GanadorActividadUncheckedCreateNestedManyWithoutActividadInput
@@ -901,6 +994,9 @@ export type ActividadUpdateWithoutAlumnoActsInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   departamento?: Prisma.DepartamentoUpdateOneRequiredWithoutActividadesNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutActividades_creadasNestedInput
@@ -918,6 +1014,9 @@ export type ActividadUncheckedUpdateWithoutAlumnoActsInput = {
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   premios?: Prisma.ActividadPremioUncheckedUpdateManyWithoutActividadNestedInput
   ganadores?: Prisma.GanadorActividadUncheckedUpdateManyWithoutActividadNestedInput
@@ -928,6 +1027,9 @@ export type ActividadCreateWithoutPremiosInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   departamento: Prisma.DepartamentoCreateNestedOneWithoutActividadesInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutActividades_creadasInput
@@ -945,6 +1047,9 @@ export type ActividadUncheckedCreateWithoutPremiosInput = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutActividadInput
   ganadores?: Prisma.GanadorActividadUncheckedCreateNestedManyWithoutActividadInput
@@ -971,6 +1076,9 @@ export type ActividadUpdateWithoutPremiosInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   departamento?: Prisma.DepartamentoUpdateOneRequiredWithoutActividadesNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutActividades_creadasNestedInput
@@ -988,6 +1096,9 @@ export type ActividadUncheckedUpdateWithoutPremiosInput = {
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput
   ganadores?: Prisma.GanadorActividadUncheckedUpdateManyWithoutActividadNestedInput
@@ -998,6 +1109,9 @@ export type ActividadCreateWithoutGanadoresInput = {
   descripcion?: string | null
   fecha: Date | string
   puntos_participacion: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   departamento: Prisma.DepartamentoCreateNestedOneWithoutActividadesInput
   coordinador: Prisma.UsuarioCreateNestedOneWithoutActividades_creadasInput
@@ -1015,6 +1129,9 @@ export type ActividadUncheckedCreateWithoutGanadoresInput = {
   id_departamento: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutActividadInput
   premios?: Prisma.ActividadPremioUncheckedCreateNestedManyWithoutActividadInput
@@ -1041,6 +1158,9 @@ export type ActividadUpdateWithoutGanadoresInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   departamento?: Prisma.DepartamentoUpdateOneRequiredWithoutActividadesNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutActividades_creadasNestedInput
@@ -1058,6 +1178,9 @@ export type ActividadUncheckedUpdateWithoutGanadoresInput = {
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput
   premios?: Prisma.ActividadPremioUncheckedUpdateManyWithoutActividadNestedInput
@@ -1071,6 +1194,9 @@ export type ActividadCreateManyCicloInput = {
   puntos_participacion: number
   id_departamento: number
   id_coordinador: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
 }
 
@@ -1079,6 +1205,9 @@ export type ActividadUpdateWithoutCicloInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   departamento?: Prisma.DepartamentoUpdateOneRequiredWithoutActividadesNestedInput
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutActividades_creadasNestedInput
@@ -1095,6 +1224,9 @@ export type ActividadUncheckedUpdateWithoutCicloInput = {
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput
   premios?: Prisma.ActividadPremioUncheckedUpdateManyWithoutActividadNestedInput
@@ -1109,6 +1241,9 @@ export type ActividadUncheckedUpdateManyWithoutCicloInput = {
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
 }
 
@@ -1120,6 +1255,9 @@ export type ActividadCreateManyDepartamentoInput = {
   puntos_participacion: number
   id_coordinador: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
 }
 
@@ -1128,6 +1266,9 @@ export type ActividadUpdateWithoutDepartamentoInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   coordinador?: Prisma.UsuarioUpdateOneRequiredWithoutActividades_creadasNestedInput
   ciclo?: Prisma.CicloUpdateOneRequiredWithoutActividadesNestedInput
@@ -1144,6 +1285,9 @@ export type ActividadUncheckedUpdateWithoutDepartamentoInput = {
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput
   premios?: Prisma.ActividadPremioUncheckedUpdateManyWithoutActividadNestedInput
@@ -1158,6 +1302,9 @@ export type ActividadUncheckedUpdateManyWithoutDepartamentoInput = {
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
   id_coordinador?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
 }
 
@@ -1169,6 +1316,9 @@ export type ActividadCreateManyCoordinadorInput = {
   puntos_participacion: number
   id_departamento: number
   id_ciclo: number
+  enlace_participacion?: string | null
+  foto_url?: string | null
+  actividad_grupal?: boolean
   tipo?: $Enums.ActividadTipo
 }
 
@@ -1177,6 +1327,9 @@ export type ActividadUpdateWithoutCoordinadorInput = {
   descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   departamento?: Prisma.DepartamentoUpdateOneRequiredWithoutActividadesNestedInput
   ciclo?: Prisma.CicloUpdateOneRequiredWithoutActividadesNestedInput
@@ -1193,6 +1346,9 @@ export type ActividadUncheckedUpdateWithoutCoordinadorInput = {
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
   alumnoActs?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutActividadNestedInput
   premios?: Prisma.ActividadPremioUncheckedUpdateManyWithoutActividadNestedInput
@@ -1207,6 +1363,9 @@ export type ActividadUncheckedUpdateManyWithoutCoordinadorInput = {
   puntos_participacion?: Prisma.IntFieldUpdateOperationsInput | number
   id_departamento?: Prisma.IntFieldUpdateOperationsInput | number
   id_ciclo?: Prisma.IntFieldUpdateOperationsInput | number
+  enlace_participacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actividad_grupal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tipo?: Prisma.EnumActividadTipoFieldUpdateOperationsInput | $Enums.ActividadTipo
 }
 
@@ -1268,6 +1427,9 @@ export type ActividadSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id_departamento?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  enlace_participacion?: boolean
+  foto_url?: boolean
+  actividad_grupal?: boolean
   tipo?: boolean
   departamento?: boolean | Prisma.DepartamentoDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -1287,6 +1449,9 @@ export type ActividadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id_departamento?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  enlace_participacion?: boolean
+  foto_url?: boolean
+  actividad_grupal?: boolean
   tipo?: boolean
   departamento?: boolean | Prisma.DepartamentoDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -1302,6 +1467,9 @@ export type ActividadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id_departamento?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  enlace_participacion?: boolean
+  foto_url?: boolean
+  actividad_grupal?: boolean
   tipo?: boolean
   departamento?: boolean | Prisma.DepartamentoDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -1317,10 +1485,13 @@ export type ActividadSelectScalar = {
   id_departamento?: boolean
   id_coordinador?: boolean
   id_ciclo?: boolean
+  enlace_participacion?: boolean
+  foto_url?: boolean
+  actividad_grupal?: boolean
   tipo?: boolean
 }
 
-export type ActividadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_actividad" | "nombre" | "descripcion" | "fecha" | "puntos_participacion" | "id_departamento" | "id_coordinador" | "id_ciclo" | "tipo", ExtArgs["result"]["actividad"]>
+export type ActividadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_actividad" | "nombre" | "descripcion" | "fecha" | "puntos_participacion" | "id_departamento" | "id_coordinador" | "id_ciclo" | "enlace_participacion" | "foto_url" | "actividad_grupal" | "tipo", ExtArgs["result"]["actividad"]>
 export type ActividadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   departamento?: boolean | Prisma.DepartamentoDefaultArgs<ExtArgs>
   coordinador?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -1360,6 +1531,9 @@ export type $ActividadPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id_departamento: number
     id_coordinador: number
     id_ciclo: number
+    enlace_participacion: string | null
+    foto_url: string | null
+    actividad_grupal: boolean
     tipo: $Enums.ActividadTipo
   }, ExtArgs["result"]["actividad"]>
   composites: {}
@@ -1798,6 +1972,9 @@ export interface ActividadFieldRefs {
   readonly id_departamento: Prisma.FieldRef<"Actividad", 'Int'>
   readonly id_coordinador: Prisma.FieldRef<"Actividad", 'Int'>
   readonly id_ciclo: Prisma.FieldRef<"Actividad", 'Int'>
+  readonly enlace_participacion: Prisma.FieldRef<"Actividad", 'String'>
+  readonly foto_url: Prisma.FieldRef<"Actividad", 'String'>
+  readonly actividad_grupal: Prisma.FieldRef<"Actividad", 'Boolean'>
   readonly tipo: Prisma.FieldRef<"Actividad", 'ActividadTipo'>
 }
     

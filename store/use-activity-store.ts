@@ -27,8 +27,10 @@ interface ActivityStore {
   activitiesPrizes: ActivityPrize[];
   newActivity: Activity | null;
   loading: boolean;
+  onlyClubs: boolean;
 
   // Actions
+  setOnlyClubs: (onlyClubs: boolean) => void;
   setActivityList: (activities: Activity[]) => void;
   setNextActivities: (activities: Activity[]) => void;
   setActivitySelected: (activity: Activity | null) => void;
@@ -67,6 +69,8 @@ export const useActivityStore = create<ActivityStore>()(
     setActivityList: (activities) => set({ activityList: activities }),
     setNextActivities: (activities) => set({ nextActivities: activities }),
     setActivitySelected: (activity) => set({ activitySelected: activity }),
+    onlyClubs: false,
+    setOnlyClubs: (onlyClubs) => set({ onlyClubs }),
 
     loadActivities: async () => {
       // ¡MIRA QUÉ LIMPIO QUEDÓ ESTO!
@@ -79,6 +83,7 @@ export const useActivityStore = create<ActivityStore>()(
       const response = await getAllActivitiesAction({
         ciclo_id: get().cicloSelected?.id_ciclo,
         departamento_id: get().departamentSelected?.id_departamento,
+        onlyClubs: get().onlyClubs,
       });
       set({ activityList: response });
     },

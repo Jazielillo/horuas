@@ -37,6 +37,9 @@ const CoordinatorActivityForm = ({
       lugar: p.lugar ?? 0,
       puntos_otorgados: p.puntos_otorgados,
     })),
+      enlace_participacion: initialData?.enlace_participacion || "",
+    foto_url: initialData?.foto_url || "",
+    actividad_grupal: initialData?.actividad_grupal || false,
   };
 
   return (

@@ -27,13 +27,21 @@ export const DeleteActivityDialog = ({
         placeholder="Escribe la razón aquí..."
         value={reason}
         onChange={(e) => setReason(e.target.value)}
+        required={true}
         className="w-full resize-none h-24"
       />
       <DialogFooter>
         <Button variant="outline" onClick={() => onOpenChange(false)}>
           Cancelar
         </Button>
-        <Button variant="destructive" onClick={onConfirm}>
+        <Button variant="destructive" onClick={() => {
+          if(reason.trim() === "") {
+            alert("Por favor, proporciona una razón para eliminar la actividad.");
+            return;
+          }
+          onConfirm(reason);
+          onOpenChange(false);
+        }}>
           Confirmar Eliminación
         </Button>
       </DialogFooter>

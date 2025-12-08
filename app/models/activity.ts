@@ -17,5 +17,8 @@ export type Activity = {
   departamento: string;
   descripcion?: string; // Usamos '?' para que sea undefined en lugar de null
   fecha: Date;
+  enlace_participacion?: string;
+  foto_url?: string;
+  actividad_grupal?: boolean;
   premio: ActivityPrize[] ;
 };

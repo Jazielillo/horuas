@@ -16,7 +16,7 @@ export const verifySession = cache(async (): Promise<VerifiedSession> => {
   const cookie = (await cookies()).get("session")?.value;
   const session = await decrypt(cookie);
 
-  if (!session?.userId) {
+  if (!session?.id_usuario) {
     redirect("/login");
     return null; // unreachable but satisfies the type checker
   }
