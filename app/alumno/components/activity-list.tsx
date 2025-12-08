@@ -30,7 +30,7 @@ const ActivityList = ({ activities }: ActivityListProps) => {
             <div className="flex items-start justify-between gap-2 mb-1">
               <h4 className="font-medium leading-tight">{activity.nombre}</h4>
               <Badge variant="secondary" className="shrink-0">
-                +{activity.puntos} pts
+                +{activity.puntos_participacion} pts
               </Badge>
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">

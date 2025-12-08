@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     select: {
       id_actividad: true,
       nombre: true,
-      puntos: true,
+      puntos_participacion: true,
     },
   });
 
