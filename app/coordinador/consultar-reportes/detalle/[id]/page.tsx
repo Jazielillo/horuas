@@ -307,6 +307,7 @@ const CoordinatorStudentDetail = ({
               <ActivitiesTable
                 activities={(filteredActivities || []).map((a) => ({
                   ...a,
+                  fecha: a.fecha instanceof Date ? a.fecha.toISOString() : a.fecha,
                   premio: a.premio ? [a.premio] : [],
                 }))}
                 onEdit={openEditDialog}

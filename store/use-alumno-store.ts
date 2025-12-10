@@ -90,6 +90,7 @@ export const useAlumnoStore = create<AlumnoState>()(
             ? {
                 ...activity,
                 ...editActivity,
+                fecha: typeof editActivity.fecha === 'string' ? new Date(editActivity.fecha) : editActivity.fecha,
                 premio: Array.isArray(editActivity.premio)
                   ? editActivity.premio.length
                     ? editActivity.premio[0]
