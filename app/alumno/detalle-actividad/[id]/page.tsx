@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { act, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -186,7 +186,7 @@ export default function ActivityDetailPage() {
                   <Calendar className="w-5 h-5 text-primary" />
                   <div>
                     <p className="font-medium text-sm">Fecha</p>
-                    <p className="text-muted-foreground">{formattedDate}</p>
+                    <p className="text-muted-foreground">{formatFechaLarga(activitySelected?.fecha)}</p>
                   </div>
                 </div>
               </div>
@@ -304,4 +304,21 @@ export default function ActivityDetailPage() {
       </div>
     </div>
   );
+}
+
+export function formatFechaLarga(fechaStr: string): string {
+  const date = new Date(fechaStr + "T00:00:00"); // evita desfases por timezone
+  const opciones: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  // "12 de diciembre de 2025"
+  let formateada = date.toLocaleDateString("es-MX", opciones);
+
+  // Reemplazar "de 2025" por "del 2025"
+  formateada = formateada.replace(" de ", " de ").replace(" del ", " del ");
+
+  return formateada;
 }
