@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -52,6 +53,11 @@ export default async function LoginPage() {
                 />
               </div>
             </div>
+            <CardFooter>
+              <p className="text-center text-sm text-muted-foreground w-full">
+                © Vesion Beta 1.0 .
+              </p>
+            </CardFooter>
           </Card>
         </div>
       </div>
