@@ -31,21 +31,34 @@ export const Student = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Mi Progreso</h1>
+      <div className="space-y-3">
+        <h1 className="text-3xl font-bold">Mi Progreso</h1>
+
         {loading ? (
-          <div className="flex gap-2">
-            <div className="flex justify-center items-center">
-              <Spinner></Spinner>
-            </div>
-            <p>Cargando información del alumno...</p>
+          <div className="flex items-center gap-3 bg-muted/30 p-4 rounded-xl border">
+            <Spinner className="text-primary" />
+            <p className="text-muted-foreground">
+              Cargando información del alumno...
+            </p>
           </div>
         ) : (
-          <div>
-            <p className="text-lg">
-              Bienvenido, {selectedAlumnoCompleto?.alumno.nombre}! | Grupo:{" "}
-              {selectedAlumnoCompleto?.alumno.grupo}
-            </p>
+          <div className="p-4 rounded-xl border bg-card shadow-sm flex items-center gap-4">
+            {/* Avatar del alumno (iniciales) */}
+            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">
+              {selectedAlumnoCompleto?.alumno.nombre?.charAt(0).toUpperCase()}
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xl font-semibold">
+                {selectedAlumnoCompleto?.alumno.nombre}
+              </p>
+              <p className="text-muted-foreground">
+                Grupo:{" "}
+                <span className="font-medium text-foreground">
+                  {selectedAlumnoCompleto?.alumno.grupo}
+                </span>
+              </p>
+            </div>
           </div>
         )}
       </div>

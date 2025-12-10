@@ -24,6 +24,8 @@ import {
   ChevronsUp,
   Clock,
   Award,
+  ArrowUp,
+  Plus,
 } from "lucide-react";
 import Link from "next/link";
 import { DialogDescription } from "@radix-ui/react-dialog";
@@ -82,6 +84,11 @@ export function AllActivities({
     <>
       <div className="space-y-3">
         {activities.map((activity) => {
+          const date = new Date(activity.fecha);
+          const localMidnight = new Date(
+            Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+          );
+
           const isSports = activity.departamento === "Deportes";
           const isClub = activity.actividad_grupal; // Tu nueva propiedad
 
@@ -166,27 +173,30 @@ export function AllActivities({
                       {activity.departamento}
                     </Badge>
 
-                    {!activity.actividad_grupal && (
-                      <span className="text-sm text-muted-foreground flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(
-                          activity?.fecha || new Date()
-                        ).toLocaleDateString("es-MX", {
-                          day: "numeric",
-                          month: "short", // Cambié a short para ahorrar espacio si hay muchos badges
-                        })}
-                      </span>
-                    )}
-
                     <Badge className="bg-success/20 text-success hover:bg-success/30">
+                      <Plus className="w-3 h-3" />
                       {activity.puntos_participacion} pts
                     </Badge>
+
+                    {activity.hora_actividad != undefined && (
+                        <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-200 gap-1">
+                        <Clock className="w-3 h-3" />
+                        {new Date(`2000-01-01 ${activity.hora_actividad}`).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit", hour12: true })}
+                        </Badge>
+                    )}
 
                     {activity.premio && activity.premio.length > 0 && (
                       <Badge className="bg-yellow-400/20 text-yellow-600 hover:bg-yellow-400/30 gap-1">
                         <Trophy className="w-3 h-3" />
                         {activity.premio.length}
                       </Badge>
+                    )}
+
+                    {!activity.actividad_grupal && (
+                      <span className="text-sm text-muted-foreground flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {formatFechaLarga(activity.fecha)}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -330,4 +340,21 @@ export function AllActivities({
       </Dialog> */}
     </>
   );
+}
+
+export function formatFechaLarga(fechaStr: string): string {
+  const date = new Date(fechaStr + "T00:00:00"); // evita desfases por timezone
+  const opciones: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  // "12 de diciembre de 2025"
+  let formateada = date.toLocaleDateString("es-MX", opciones);
+
+  // Reemplazar "de 2025" por "del 2025"
+  formateada = formateada.replace(" de ", " de ").replace(" del ", " del ");
+
+  return formateada;
 }

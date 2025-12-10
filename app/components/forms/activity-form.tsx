@@ -202,6 +202,9 @@ export const ActivityForm = ({
       actividad_grupal: false,
       enlace_participacion: "",
       foto_url: "",
+      hora_actividad: "",
+      ubicacion: "",
+      descripcion_promocion_alumnos: "",
     },
   });
 
@@ -282,26 +285,50 @@ export const ActivityForm = ({
             />
 
             {/* CAMPO DESCRIPCION */}
-            <Controller
-              name="descripcion"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <div className="space-y-2 w-full ">
-                  <Label htmlFor="descripcion">Descripción</Label>
-                  <Textarea
-                    {...field}
-                    id="descripcion"
-                    placeholder="Detalles..."
-                    className="max-h-[100px] resize-none wrap-break-word min-w-[700px] max-w-[1000px] max-sm:min-w-full"
-                  />
-                  {fieldState.error && (
-                    <span className="text-sm text-red-500">
-                      {fieldState.error.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <Controller
+                name="descripcion"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2 w-full ">
+                    <Label htmlFor="descripcion">Descripción</Label>
+                    <Textarea
+                      {...field}
+                      id="descripcion"
+                      placeholder="Detalles..."
+                      className="max-h-[100px] resize-none wrap-break-word w-full"
+                    />
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+              <Controller
+                name="descripcion_promocion_alumnos"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2 w-full ">
+                    <Label htmlFor="descripcion_promocion_alumnos">
+                      Promoción para la publicación del alumno
+                    </Label>
+                    <Textarea
+                      {...field}
+                      id="descripcion_promocion_alumnos"
+                      placeholder="Detalles..."
+                      className="max-h-[100px] resize-none wrap-break-word w-full"
+                    />
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
 
             {/* --- CAMPOS FALTANTES QUE CAUSABAN EL ERROR --- */}
             <div className="grid grid-cols-3 gap-4">
@@ -376,13 +403,17 @@ export const ActivityForm = ({
 
             <div className="grid grid-cols-3 gap-4">
               <Controller
-                name="enlace_participacion"
+                name="ubicacion"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <div className="space-y-2">
-                    <Label>Enlace de Participación</Label>
+                    <Label>Ubicación</Label>
                     {/* Input type date para que sea fácil validar */}
-                    <Input {...field} type="text"  onChange={(event) => field.onChange(event.target.value)} />
+                    <Input
+                      {...field}
+                      type="text"
+                      onChange={(event) => field.onChange(event.target.value)}
+                    />
                     {fieldState.error && (
                       <span className="text-sm text-red-500">
                         {fieldState.error.message}
@@ -393,14 +424,14 @@ export const ActivityForm = ({
               />
 
               <Controller
-                name="foto_url"
+                name="hora_actividad"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <div className="space-y-2">
-                    <Label>Enlace de Imagen</Label>
+                    <Label>Hora de Actividad</Label>
                     <Input
                       {...field}
-                      type="text"
+                      type="time"
                       onChange={(event) => field.onChange(event.target.value)}
                     />
                     {fieldState.error && (
@@ -429,6 +460,49 @@ export const ActivityForm = ({
                         Sí, es un club
                       </span>
                     </div>
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <Controller
+                name="enlace_participacion"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2">
+                    <Label>Enlace de Participación</Label>
+                    {/* Input type date para que sea fácil validar */}
+                    <Input
+                      {...field}
+                      type="text"
+                      onChange={(event) => field.onChange(event.target.value)}
+                    />
+                    {fieldState.error && (
+                      <span className="text-sm text-red-500">
+                        {fieldState.error.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
+
+              <Controller
+                name="foto_url"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="space-y-2">
+                    <Label>Enlace de Imagen</Label>
+                    <Input
+                      {...field}
+                      type="text"
+                      onChange={(event) => field.onChange(event.target.value)}
+                    />
                     {fieldState.error && (
                       <span className="text-sm text-red-500">
                         {fieldState.error.message}

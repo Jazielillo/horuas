@@ -240,6 +240,9 @@ model Actividad {
   id_ciclo             Int
   enlace_participacion String?
   foto_url             String?
+  hora_actividad      String?
+  ubicacion          String?
+  descripcion_promocion_alumnos String?
   actividad_grupal     Boolean       @default(false)
   tipo                 ActividadTipo @default(NORMAL)
 

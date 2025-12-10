@@ -32,6 +32,9 @@ export const activitySchema = z.object({
   enlace_participacion: z.string().optional(),
   foto_url: z.string().optional(),
   actividad_grupal: z.boolean().optional(),
+  hora_actividad: z.string().optional(),
+  ubicacion: z.string().optional(),
+  descripcion_promocion_alumnos: z.string().optional(),
   // Aquí está la magia para tu array opcional de premios
   premio: z
     .array(

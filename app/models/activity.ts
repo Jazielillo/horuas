@@ -16,9 +16,12 @@ export type Activity = {
   // Aquí está el truco: En DB es un objeto, aquí lo queremos plano (string)
   departamento: string;
   descripcion?: string; // Usamos '?' para que sea undefined en lugar de null
-  fecha: Date;
+  fecha: string;
   enlace_participacion?: string;
   foto_url?: string;
   actividad_grupal?: boolean;
+  hora_actividad?: string;
+  ubicacion?: string;
+  descripcion_promocion_alumnos?: string;
   premio: ActivityPrize[] ;
 };

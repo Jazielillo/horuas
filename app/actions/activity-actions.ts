@@ -29,6 +29,7 @@ export async function createActivityAction(formData: ActivitySchema) {
   };
 
   // 3. Validar nuevamente COMPLETO (opcional pero recomendado)
+  console.log(formData.fecha_realizacion, "FECHA REALIZACION");
   const parsedFull = activityFullSchema.parse(fullData);
 
   // 4. Guardar en la BD
@@ -44,6 +45,10 @@ export async function createActivityAction(formData: ActivitySchema) {
       actividad_grupal: parsedFull.actividad_grupal || false,
       enlace_participacion: parsedFull.enlace_participacion || "",
       foto_url: parsedFull.foto_url || "",
+      hora_actividad: parsedFull.hora_actividad || "",
+      ubicacion: parsedFull.ubicacion || "",
+      descripcion_promocion_alumnos:
+        parsedFull.descripcion_promocion_alumnos || "",
     },
   });
 
@@ -77,6 +82,10 @@ export async function updateActivityAction(
       actividad_grupal: activity.actividad_grupal || false,
       enlace_participacion: activity.enlace_participacion || "",
       foto_url: activity.foto_url || "",
+      hora_actividad: activity.hora_actividad || "",
+      ubicacion: activity.ubicacion || "",
+      descripcion_promocion_alumnos:
+        activity.descripcion_promocion_alumnos || "",
     },
   });
   console.log(
@@ -157,13 +166,16 @@ function mapPrismaActivityToFrontend(item: any): Activity {
     id_actividad: item.id_actividad,
     nombre: item.nombre,
     puntos_participacion: item.puntos_participacion,
-    fecha: item.fecha,
+    fecha: item.fecha.toISOString().split("T")[0],
     // Manejo de nulos: Si es null, lo pasamos a undefined
     descripcion: item.descripcion || undefined,
     // Aplanamiento: Sacamos el nombre del objeto departamento
     departamento: item.departamento?.nombre || "Sin departamento",
     // Mapeo de array anidado
-
+    hora_actividad: item.hora_actividad || undefined,
+    ubicacion: item.ubicacion || undefined,
+    descripcion_promocion_alumnos:
+      item.descripcion_promocion_alumnos || undefined,
     premio:
       item.premios?.map((p: any) => ({
         id: p.id,
@@ -176,12 +188,16 @@ function mapPrismaActivityToFrontend(item: any): Activity {
   };
 }
 
+function normalizeToLocalDate(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
 // --- 2. TUS ACTIONS OPTIMIZADOS ---
 
 export async function getAllActivitiesAction({
   ciclo_id,
   departamento_id,
-  onlyClubs
+  onlyClubs,
 }: {
   onlyClubs?: boolean;
   ciclo_id?: number;
@@ -215,7 +231,6 @@ export async function getActivityByIdAction(
         select: { nombre: true },
       },
       premios: true,
-      
     },
   });
 

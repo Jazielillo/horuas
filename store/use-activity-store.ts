@@ -85,6 +85,7 @@ export const useActivityStore = create<ActivityStore>()(
         departamento_id: get().departamentSelected?.id_departamento,
         onlyClubs: get().onlyClubs,
       });
+      console.log("Actividades cargadas:", response);
       set({ activityList: response });
     },
 
@@ -110,7 +111,7 @@ export const useActivityStore = create<ActivityStore>()(
     loadActivityById: async (id) => {
       try {
         const activity = await getActivityByIdAction(Number(id));
-
+        console.log("Actividad cargada:", activity);
         if (!activity) return;
 
         // Ya no necesitamos normalizar nada aquí

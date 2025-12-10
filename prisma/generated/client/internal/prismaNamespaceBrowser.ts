@@ -202,6 +202,9 @@ export const ActividadScalarFieldEnum = {
   id_ciclo: 'id_ciclo',
   enlace_participacion: 'enlace_participacion',
   foto_url: 'foto_url',
+  hora_actividad: 'hora_actividad',
+  ubicacion: 'ubicacion',
+  descripcion_promocion_alumnos: 'descripcion_promocion_alumnos',
   actividad_grupal: 'actividad_grupal',
   tipo: 'tipo'
 } as const
