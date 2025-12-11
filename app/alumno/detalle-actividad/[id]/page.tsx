@@ -186,37 +186,46 @@ export default function ActivityDetailPage() {
                   <Calendar className="w-5 h-5 text-primary" />
                   <div>
                     <p className="font-medium text-sm">Fecha</p>
-                    <p className="text-muted-foreground">{formatFechaLarga(activitySelected?.fecha)}</p>
+                    <p className="text-muted-foreground">
+                      {formatFechaLarga(activitySelected?.fecha)}
+                    </p>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-5 flex gap-5">
-                <div className="flex items-start gap-3 w-full">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <div>
-                    <p className="font-medium text-sm">Ubicación</p>
-                    <p className="text-muted-foreground">
-                      {activitySelected?.ubicacion}
-                    </p>
+              {activitySelected?.hora_actividad ||
+                (activitySelected?.ubicacion && (
+                  <div className="space-y-5 flex gap-5">
+                    {activitySelected?.ubicacion && (
+                      <div className="flex items-start gap-3 w-full">
+                        <MapPin className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="font-medium text-sm">Ubicación</p>
+                          <p className="text-muted-foreground">
+                            {activitySelected?.ubicacion}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    {activitySelected?.hora_actividad && (
+                      <div className="flex items-start gap-3 w-full">
+                        <Clock className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="font-medium text-sm">Hora</p>
+                          <p className="text-muted-foreground">
+                            {new Date(
+                              `2000-01-01 ${activitySelected?.hora_actividad}`
+                            ).toLocaleTimeString("es-MX", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="flex items-start gap-3 w-full">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <div>
-                    <p className="font-medium text-sm">Hora</p>
-                    <p className="text-muted-foreground">
-                      {new Date(
-                        `2000-01-01 ${activitySelected?.hora_actividad}`
-                      ).toLocaleTimeString("es-MX", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                ))}
 
               <Separator />
 
@@ -237,13 +246,7 @@ export default function ActivityDetailPage() {
                   </a>
                 </Button>
               ) : (
-                <Button
-                  variant="secondary"
-                  className="w-full cursor-not-allowed opacity-70 rounded-xl"
-                  disabled
-                >
-                  Registro presencial
-                </Button>
+                <></>
               )}
             </CardContent>
           </Card>

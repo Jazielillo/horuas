@@ -19,12 +19,16 @@ export const Student = () => {
   // Mock data - in production, this would come from API
   const { selectedAlumnoCompleto, loading } = useAlumnoStore();
   const {
+      setActivitySelected,
+    } = useActivityStore();
+  const {
     nextActivities,
     loadFutureActivities,
     loading: loadingActivities,
   } = useActivityStore();
 
   useEffect(() => {
+    setActivitySelected(null);
     loadFutureActivities();
   }, [loadFutureActivities]);
 
