@@ -3,7 +3,7 @@ import CoordinatorStudentDetail from "@/app/coordinador/consultar-reportes/detal
 
 const StudentHistory = () => {
   return (
-    <CoordinatorStudentDetail seeDataInfo={false}></CoordinatorStudentDetail>
+    <CoordinatorStudentDetail></CoordinatorStudentDetail>
   );
 };
 

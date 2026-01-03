@@ -15,7 +15,7 @@ import { useActivityStore } from "@/store/use-activity-store";
 import { Badge } from "@/components/ui/badge";
 import { AllActivities } from "../coordinador/components/all-activities";
 
-export const Student = () => {
+function Student() {
   // Mock data - in production, this would come from API
   const { selectedAlumnoCompleto, loading } = useAlumnoStore();
   const {

@@ -20,6 +20,20 @@ import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
 import { useActivityStore } from "@/store/use-activity-store";
 
+function formatFechaLarga(fechaStr: string): string {
+  const date = new Date(fechaStr + "T00:00:00");
+  const opciones: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  let formateada = date.toLocaleDateString("es-MX", opciones);
+  formateada = formateada.replace(" de ", " de ").replace(" del ", " del ");
+
+  return formateada;
+}
+
 export default function ActivityDetailPage() {
   const { id } = useParams();
   const {
@@ -307,21 +321,4 @@ export default function ActivityDetailPage() {
       </div>
     </div>
   );
-}
-
-export function formatFechaLarga(fechaStr: string): string {
-  const date = new Date(fechaStr + "T00:00:00"); // evita desfases por timezone
-  const opciones: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  };
-
-  // "12 de diciembre de 2025"
-  let formateada = date.toLocaleDateString("es-MX", opciones);
-
-  // Reemplazar "de 2025" por "del 2025"
-  formateada = formateada.replace(" de ", " de ").replace(" del ", " del ");
-
-  return formateada;
 }

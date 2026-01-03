@@ -30,11 +30,7 @@ import {
   StudentInfoCard,
 } from "@/app/coordinador/components/student-detail";
 
-const CoordinatorStudentDetail = ({
-  seeDataInfo = true,
-}: {
-  seeDataInfo: boolean;
-}) => {
+export default function CoordinatorStudentDetail() {
   const { id } = useParams();
 
   // --- Stores ---
@@ -68,18 +64,11 @@ const CoordinatorStudentDetail = ({
 
   // --- Effects ---
   useEffect(() => {
-    if (seeDataInfo) {
-      const init = async () => {
-        await loadAlumnoCompleto(Number(id));
-        await loadCiclos();
-      };
-      init();
-    } else {
-      const init = async () => {
-        await loadCiclos();
-      };
-      init();
-    }
+    const init = async () => {
+      await loadAlumnoCompleto(Number(id));
+      await loadCiclos();
+    };
+    init();
   }, [id, loadAlumnoCompleto, loadCiclos]);
 
   useEffect(() => {
@@ -177,50 +166,37 @@ const CoordinatorStudentDetail = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      {seeDataInfo ? (
-        <>
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => window.history.back()}
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-1">Detalle del Alumno</h1>
-              <p className="text-muted-foreground">
-                Información completa y historial
-              </p>
-            </div>
-          </div>
-
-          <StudentInfoCard
-            alumno={selectedAlumnoCompleto.alumno}
-            puntos={{
-              deportes:
-                selectedAlumnoCompleto.puntos.deportes +
-                getPrizePoints({ departamento: "Deportes" }),
-              cultura:
-                selectedAlumnoCompleto.puntos.cultura +
-                getPrizePoints({ departamento: "Cultura" }),
-              total:
-                selectedAlumnoCompleto.puntos.total +
-                getPrizePoints({ departamento: "Deportes" }) +
-                getPrizePoints({ departamento: "Cultura" }),
-            }}
-          />
-        </>
-      ) : (
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-1">Detalle del Alumno</h1>
-            <p className="text-muted-foreground">
-              Información completa y historial
-            </p>
-          </div>
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => window.history.back()}
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Button>
+        <div className="flex-1">
+          <h1 className="text-3xl font-bold mb-1">Detalle del Alumno</h1>
+          <p className="text-muted-foreground">
+            Información completa y historial
+          </p>
         </div>
-      )}
+      </div>
+
+      <StudentInfoCard
+        alumno={selectedAlumnoCompleto.alumno}
+        puntos={{
+          deportes:
+            selectedAlumnoCompleto.puntos.deportes +
+            getPrizePoints({ departamento: "Deportes" }),
+          cultura:
+            selectedAlumnoCompleto.puntos.cultura +
+            getPrizePoints({ departamento: "Cultura" }),
+          total:
+            selectedAlumnoCompleto.puntos.total +
+            getPrizePoints({ departamento: "Deportes" }) +
+            getPrizePoints({ departamento: "Cultura" }),
+        }}
+      />
 
       <Tabs defaultValue="activities" className="space-y-4">
         <TabsList>
@@ -275,26 +251,24 @@ const CoordinatorStudentDetail = ({
           </Card>
 
           {/* Resumen rápido */}
-          {seeDataInfo && (
-            <div className="grid gap-4 md:grid-cols-3">
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardDescription>Total de Actividades</CardDescription>
-                  <CardTitle className="text-3xl">
-                    {filteredActivities?.length}
-                  </CardTitle>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardDescription>Puntos Totales (Filtrados)</CardDescription>
-                  <CardTitle className="text-3xl text-primary">
-                    {totalPointsFiltered}
-                  </CardTitle>
-                </CardHeader>
-              </Card>
-            </div>
-          )}
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardDescription>Total de Actividades</CardDescription>
+                <CardTitle className="text-3xl">
+                  {filteredActivities?.length}
+                </CardTitle>
+              </CardHeader>
+            </Card>
+            <Card>
+              <CardHeader className="pb-3">
+                <CardDescription>Puntos Totales (Filtrados)</CardDescription>
+                <CardTitle className="text-3xl text-primary">
+                  {totalPointsFiltered}
+                </CardTitle>
+              </CardHeader>
+            </Card>
+          </div>
 
           <Card>
             <CardHeader>
@@ -315,7 +289,7 @@ const CoordinatorStudentDetail = ({
                   setEditActivityId(id);
                   setRemoveDialogOpen(true);
                 }}
-                seeOnly={seeDataInfo}
+                seeOnly={false}
               />
             </CardContent>
           </Card>
@@ -352,6 +326,4 @@ const CoordinatorStudentDetail = ({
       />
     </div>
   );
-};
-
-export default CoordinatorStudentDetail;
+}

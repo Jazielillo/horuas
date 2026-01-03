@@ -3,7 +3,7 @@ import CoordinatorActivityForm from "@/app/coordinador/components/coordinator-ac
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: { id_actividad: string };
+  params: Promise<{ id_actividad: string }>;
 }
 
 export default async function EditActivityPage({ params }: PageProps) {
