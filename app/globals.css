@@ -158,7 +158,7 @@
 
   --sidebar-background: oklch(0.177 0.034 258.7);
   --sidebar-foreground: oklch(0.985 0.002 236.6);
-  --sidebar-primary: oklch(0.63 0.16 259.5);
+  --sidebar-primary:  oklch(0.28 0.07 259);
   --sidebar-primary-foreground: oklch(0.985 0.002 236.6);
   --sidebar-accent: oklch(0.203 0.022 258.1);
   --sidebar-accent-foreground: oklch(0.985 0.002 236.6);
@@ -183,5 +183,41 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Ocultar scrollbar pero mantener funcionalidad */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+
+  /* Scrollbar personalizado delgado */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted));
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 4px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground) / 0.5);
   }
 }

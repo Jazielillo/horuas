@@ -1,12 +1,6 @@
-"use client";
-
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  assignPointsFormRefined,
-  type AssignPointsForm,
-} from "@/schemas/assign-points-schema";
+import { getStudents } from "@/app/actions/students-actions";
+import { Alumno } from "@/app/models";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,7 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SmartComboBox } from "@/components/ui/searchable-combobox";
-import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
 import {
   Select,
   SelectContent,
@@ -23,9 +16,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Alumno } from "@/app/models";
-import { Button } from "@/components/ui/button";
-import { useActivityStore } from "@/store/use-activity-store";
+import {
+  type AssignPointsForm,
+  assignPointsFormRefined,
+} from "@/schemas/assign-points-schema";
+import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 export default function AssignPointsForm({
   onValueChange,
@@ -38,53 +36,31 @@ export default function AssignPointsForm({
     groups,
     students,
     selectedStudentId,
-    activityId,
-
-    setYear,
-    setGroup,
-
-    loadGroupsByYear,
-    loadStudentsByGroup,
     loadSingleStudent,
+    setYear,
+    setLoadingStudents,
+    setGroup,
+    setStudents,
+    loadGroupsByYear,
     reset,
   } = usePointsAssignmentStore();
 
-  const { activitySelected } = useActivityStore();
-
-  const selectedStudent = students.find(
-    (s) => s.id_usuario === selectedStudentId
-  );
-
-  const handleSelectStudent = async (student: Alumno | null) => {
-    if (student) {
-      loadSingleStudent(student);
-      try {
-        const res = await fetch(
-          `/api/alumno-actividad/check?alumno=${student.id_usuario}&actividad=${activityId}`
-        );
-        const hasActivity = await res.json();
-
-        onValueChange?.(!!hasActivity);
-      } catch {
-        onValueChange?.(false);
-      }
-    }
-  };
-
   useEffect(() => {
     const load = async () => {
+      setLoadingStudents(true);
       if (selectedGroup) {
-        await loadStudentsByGroup(selectedGroup.id_grupo.toString());
-        console.log("Students loaded for group:", selectedGroup.nombre);
-        console.log("Students:", students);
+        let students = await getStudents({
+          groupId: selectedGroup?.id_grupo ?? 0,
+        });
+        setStudents(students);
       }
+      setLoadingStudents(false);
     };
     load();
   }, [selectedGroup]);
 
   const fetchLastStudents = async () => {
-    let id = activitySelected?.departamento === "Deportes" ? 1 : 2;
-    const res = await fetch(`/api/alumnos/ten/${id}`);
+    const res = await fetch(`/api/alumnos/ten/orientacion`);
     return await res.json();
   };
 
@@ -93,17 +69,26 @@ export default function AssignPointsForm({
     return await res.json();
   };
 
+  const selectedStudent = students.find(
+    (s) => s.id_usuario === selectedStudentId
+  );
   const form = useForm<AssignPointsForm>({
     resolver: zodResolver(assignPointsFormRefined),
     defaultValues: {
-      activityId: "",
+      activityId: "0",
       studentId: null,
       year: null,
       groupId: null,
     } as any,
   });
 
-  async function onSubmit(values: any) {}
+  const handleSelectStudent = async (student: Alumno | null) => {
+    if (student) {
+      loadSingleStudent(student);
+    }
+  };
+
+  const onSubmit = (data: AssignPointsForm) => {};
 
   return (
     <>
@@ -132,7 +117,7 @@ export default function AssignPointsForm({
                     setYear(year);
                     loadGroupsByYear(year);
                   }}
-                  disabled={!!selectedStudent}
+                  disabled={!!selectedStudentId}
                 >
                   <SelectTrigger className="w-full cursor-pointer">
                     <SelectValue placeholder="Seleccionar año" />

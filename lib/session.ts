@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { SignJWT, jwtVerify } from "jose";
 import { SessionPayload } from "@/lib/definitions";
 import { cookies } from "next/headers";
@@ -14,7 +14,9 @@ export async function encrypt(payload: SessionPayload) {
     .sign(encodedKey);
 }
 
-export async function decrypt(session: string | undefined = ""): Promise<SessionPayload | null> {
+export async function decrypt(
+  session: string | undefined = ""
+): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
@@ -22,9 +24,16 @@ export async function decrypt(session: string | undefined = ""): Promise<Session
 
     if (!payload) return null;
 
-    const { id_usuario, num_cuenta, role, expiresAt } = payload as Record<string, unknown>;
+    const { id_usuario, num_cuenta, role, expiresAt } = payload as Record<
+      string,
+      unknown
+    >;
 
-    if (typeof id_usuario !== "number" || typeof num_cuenta !== "string" || typeof role !== "string") {
+    if (
+      typeof id_usuario !== "number" ||
+      typeof num_cuenta !== "string" ||
+      typeof role !== "string"
+    ) {
       return null;
     }
 
@@ -52,7 +61,15 @@ export async function decrypt(session: string | undefined = ""): Promise<Session
 export async function createSession(
   id_usuario: number,
   num_cuenta: string,
-  role: "ALUMNO" | "ADMINISTRADOR" | "COORDINADOR" | "COORDINADOR_AUXILIAR"
+  role:
+    | "ALUMNO"
+    | "ADMINISTRADOR"
+    | "COORDINADOR"
+    | "COORDINADOR_AUXILIAR"
+    | "COORDINADOR_ORIENTACION"
+    | "COORDINADOR_SERVICIO_SOCIAL"
+    | "COORDINADOR_DEPORTES"
+    | "COORDINADOR_CULTURA"
 ) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const session = await encrypt({ id_usuario, num_cuenta, role, expiresAt });

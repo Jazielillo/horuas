@@ -16,6 +16,8 @@ const protectedCoordinadorRoutes = [
   "/coordinador/actividades",
   "/coordinador/asignar-puntos",
   "/coordinador/consultar-reportes",
+  "/coordinador/orientacion-educativa",
+  "/coordinador/servicio-social"
 ];
 const protectedAlumnoRoutes = ["/alumno", "/alumno/historial"];
 const publicRoutes = ["/login", "/signup", "/"];

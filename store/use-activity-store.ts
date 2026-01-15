@@ -5,6 +5,8 @@ import {
   getActivityByIdAction,
   getAllActivitiesAction,
   getFutureActivitiesAction,
+  getOrientacionActivitiesAction,
+  getServicioSocialActivitiesAction,
   updatePrizeAction,
 } from "@/app/actions/activity-actions";
 import { getCiclosAction } from "@/app/actions/ciclos-actions";
@@ -13,6 +15,7 @@ import { Activity } from "@/app/models";
 import { ActivityPrize } from "@/app/models/activity";
 import { Ciclo } from "@/app/models/ciclo";
 import { Departamento } from "@/app/models/departamento";
+import { getSession } from "@/lib/session";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -58,6 +61,8 @@ interface ActivityStore {
   ) => Promise<void>;
   loadFutureActivities: () => Promise<void>;
   cleanStore: () => void;
+  getOrientacionActivities: () => Activity[];
+  getServicioSocialActivities: () => Activity[];
 }
 
 export const useActivityStore = create<ActivityStore>()(
@@ -73,19 +78,30 @@ export const useActivityStore = create<ActivityStore>()(
     setOnlyClubs: (onlyClubs) => set({ onlyClubs }),
 
     loadActivities: async () => {
-      // ¡MIRA QUÉ LIMPIO QUEDÓ ESTO!
-      // Como el action ya devuelve Promise<Activity[]>, TS está feliz.
-      console.log(
-        "Ciclo seleccionado en store:",
-        get().cicloSelected,
-        get().departamentSelected
-      );
+      let departamento_id = await getSession().then((session) => {
+        if (session?.role === "COORDINADOR_DEPORTES") {
+          return 1;
+        }
+        if (session?.role === "COORDINADOR_CULTURA") {
+          return 2;
+        }
+        return undefined;
+      });
       const response = await getAllActivitiesAction({
         ciclo_id: get().cicloSelected?.id_ciclo,
-        departamento_id: get().departamentSelected?.id_departamento,
+        departamento_id: departamento_id,
         onlyClubs: get().onlyClubs,
       });
-      console.log("Actividades cargadas:", response);
+      set({ activityList: response });
+    },
+
+    getOrientacionActivities: async () => {
+      const response = await getOrientacionActivitiesAction();
+      set({ activityList: response });
+    },
+
+    getServicioSocialActivities: async () => {
+      const response = await getServicioSocialActivitiesAction();
       set({ activityList: response });
     },
 
@@ -111,7 +127,6 @@ export const useActivityStore = create<ActivityStore>()(
     loadActivityById: async (id) => {
       try {
         const activity = await getActivityByIdAction(Number(id));
-        console.log("Actividad cargada:", activity);
         if (!activity) return;
 
         // Ya no necesitamos normalizar nada aquí

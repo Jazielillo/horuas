@@ -7,14 +7,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import { getSession } from "@/lib/session";
 
 interface StudentInfoCardProps {
   alumno: any; // Puedes tipar esto con tu interfaz Alumno
   puntos: { deportes: number; cultura: number; total: number };
+  userRole: string;
 }
 
-export const StudentInfoCard = ({ alumno, puntos }: StudentInfoCardProps) => {
+export const StudentInfoCard = ({ alumno, puntos, userRole }: StudentInfoCardProps) => {
   if (!alumno) return null;
+
+
+  
 
   return (
     <Card>
@@ -35,27 +41,32 @@ export const StudentInfoCard = ({ alumno, puntos }: StudentInfoCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 md:grid-cols-3">
-          <StatItem
-            icon={<Trophy className="w-8 h-8 text-info" />}
-            label="Deportes"
-            value={puntos.deportes}
-            colorClass="text-info"
-            bgClass="bg-info/10"
-          />
-          <StatItem
-            icon={<Award className="w-8 h-8 text-accent" />}
-            label="Cultura"
-            value={puntos.cultura}
-            colorClass="text-accent"
-            bgClass="bg-accent/10"
-          />
-          <StatItem
+          {userRole === "COORDINADOR_CULTURA" && (
+            <StatItem
+              icon={<Award className="w-8 h-8 text-accent" />}
+              label="Cultura"
+              value={puntos.cultura}
+              colorClass="text-accent"
+              bgClass="bg-accent/10"
+            />
+          )}
+          {userRole === "COORDINADOR_DEPORTES" && (
+            <StatItem
+              icon={<Trophy className="w-8 h-8 text-info" />}
+              label="Deportes"
+              value={puntos.deportes}
+              colorClass="text-info"
+              bgClass="bg-info/10"
+            />
+          )}
+
+          {/* <StatItem
             icon={<TrendingUp className="w-8 h-8 text-primary" />}
             label="Total"
             value={puntos.total}
             colorClass="text-primary"
             bgClass="bg-primary/10"
-          />
+          /> */}
         </div>
       </CardContent>
     </Card>

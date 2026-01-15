@@ -11,18 +11,9 @@ interface AlumnoLayoutProps {
 }
 
 const AlumnoLayout = async ({ children }: AlumnoLayoutProps) => {
-  // const session = await verifySession();
-  // const userRole = session?.role; // Assuming 'role' is part of the session object
-
-  // useEffect(() => {
-  //   if (userRole !== "ALUMNO") {
-  //     redirect("/login");
-  //   }
-  // }, [userRole]);
   const cookie = (await cookies()).get("session")?.value;
   const session = await decrypt(cookie);
   const id_usuario = Number((session as any)?.id_usuario) || 0;
-  console.log(id_usuario)
 
   return (
     <SidebarProvider>

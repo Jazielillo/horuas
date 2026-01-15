@@ -28,6 +28,14 @@ export type FormState =
 export interface SessionPayload {
   id_usuario: number;
   num_cuenta: string;
-  role: "ALUMNO" | "ADMINISTRADOR" | "COORDINADOR" | "COORDINADOR_AUXILIAR";
+  role:
+    | "ALUMNO"
+    | "ADMINISTRADOR"
+    | "COORDINADOR"
+    | "COORDINADOR_AUXILIAR"
+    | "COORDINADOR_ORIENTACION"
+    | "COORDINADOR_SERVICIO_SOCIAL"
+    | "COORDINADOR_DEPORTES"
+    | "COORDINADOR_CULTURA";
   expiresAt: Date;
 }

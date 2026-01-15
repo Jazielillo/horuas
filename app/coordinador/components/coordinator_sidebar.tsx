@@ -8,6 +8,9 @@ import {
   FileText,
   LogOut,
   Award,
+  Heart,
+  Briefcase,
+  Users,
 } from "lucide-react";
 import {
   Sidebar,
@@ -21,28 +24,84 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { LogOutButton } from "./log-out-button";
-import { title } from "process";
-const navigationItems = [
-  { title: "Actividades", url: "/coordinador/actividades", icon: Calendar },
+import { useState, useEffect } from "react";
+import { getSession } from "@/lib/session";
+
+type NavigationItem = {
+  title: string;
+  url: string;
+  icon: React.ElementType;
+  roles: string[];
+};
+
+const allNavigationItems: NavigationItem[] = [
+  {
+    title: "Actividades",
+    url: "/coordinador/actividades",
+    icon: Calendar,
+    roles: [
+      "COORDINADOR",
+      "COORDINADOR_AUXILIAR",
+      "COORDINADOR_DEPORTES",
+      "COORDINADOR_CULTURA",
+    ],
+  },
   {
     title: "Consultas y Reportes",
     url: "/coordinador/consultar-reportes",
     icon: FileText,
+    roles: [
+      "COORDINADOR",
+      "COORDINADOR_AUXILIAR",
+      "COORDINADOR_DEPORTES",
+      "COORDINADOR_CULTURA",
+    ],
   },
-  // { title: "Gestión de Alumnos", url: "/coordinador/gestion-alumnos", icon: Users },
+  {
+    title: "Orientación Educativa",
+    url: "/coordinador/orientacion-educativa",
+    icon: Heart,
+    roles: ["COORDINADOR_ORIENTACION"],
+  },
+  {
+    title: "Servicio Social",
+    url: "/coordinador/servicio-social",
+    icon: Briefcase,
+    roles: ["COORDINADOR_SERVICIO_SOCIAL"],
+  },
+  // { title: "Gestión de Alumnos", url: "/coordinador/gestion-alumnos", icon: Users, roles: ["COORDINADOR"] },
 ];
 
 export function CoordinatorSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const [navigationItems, setNavigationItems] = useState<NavigationItem[]>([]);
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadUserRole() {
+      const session = await getSession();
+      const role = session?.role || null;
+      setUserRole(role);
+
+      if (role) {
+        const filteredItems = allNavigationItems.filter((item) =>
+          item.roles.includes(role)
+        );
+        setNavigationItems(filteredItems);
+      }
+    }
+
+    loadUserRole();
+  }, []);
 
   return (
     <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
-      <SidebarContent>
+      <SidebarContent className="dark:bg-card">
         <div className="p-4 border-b border-sidebar-border h-16">
           {!isCollapsed && (
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-sidebar-primary  flex items-center justify-center">
                 <Award className="w-5 h-5 text-sidebar-primary-foreground" />
               </div>
               <div className="flex-1 min-w-0">
@@ -50,7 +109,14 @@ export function CoordinatorSidebar() {
                   Coordinador
                 </p>
                 <p className="text-xs text-sidebar-foreground/70 truncate">
-                  Deportes
+                  {userRole === "COORDINADOR_DEPORTES" && "Deportes"}
+                  {userRole === "COORDINADOR_CULTURA" && "Cultura"}
+                  {userRole === "COORDINADOR_ORIENTACION" && "Orientación"}
+                  {userRole === "COORDINADOR_SERVICIO_SOCIAL" &&
+                    "Servicio Social"}
+                  {(userRole === "COORDINADOR" ||
+                    userRole === "COORDINADOR_AUXILIAR") &&
+                    "General"}
                 </p>
               </div>
             </div>

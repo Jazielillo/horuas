@@ -203,7 +203,11 @@ export async function getAllActivitiesAction({
   ciclo_id?: number;
   departamento_id?: number;
 }): Promise<Activity[]> {
-  const where: any = {};
+  const where: any = {
+    id_departamento: {
+      not: 4, // Excluir departamento 4
+    },
+  };
   if (ciclo_id != null) where.id_ciclo = ciclo_id;
   if (departamento_id != null) where.id_departamento = departamento_id;
   if (onlyClubs) where.actividad_grupal = true;
@@ -217,6 +221,42 @@ export async function getAllActivitiesAction({
     },
   });
 
+  // Convertimos los datos "sucios" de DB a datos "limpios" de Frontend
+  return activities.map(mapPrismaActivityToFrontend);
+}
+
+export async function getOrientacionActivitiesAction(): Promise<Activity[]> {
+  const activities = await prisma.actividad.findMany({
+    where: {
+      departamento: {
+        nombre: "Orientación Educativa",
+      },
+    },
+    orderBy: { id_actividad: "asc" },
+    include: {
+      departamento: { select: { nombre: true } },
+      premios: true,
+    },
+  });
+  // Convertimos los datos "sucios" de DB a datos "limpios" de Frontend
+  return activities.map(mapPrismaActivityToFrontend);
+}
+
+export async function getServicioSocialActivitiesAction(): Promise<Activity[]> {
+  const activities = await prisma.actividad.findMany({
+    where: {
+      departamento: {
+        nombre: "Servicio Social",
+      },
+    },
+    orderBy: { id_actividad: "asc" },
+    include: {
+      departamento: { select: { nombre: true } },
+      premios: true,
+    },
+  });
+
+  console.log(activities);
   // Convertimos los datos "sucios" de DB a datos "limpios" de Frontend
   return activities.map(mapPrismaActivityToFrontend);
 }
@@ -370,4 +410,25 @@ export async function getFutureActivitiesAction(): Promise<Activity[]> {
     },
   });
   return activities.map(mapPrismaActivityToFrontend);
+}
+
+export async function fetchActivitiesModule({
+  studentIds,
+  activityIds,
+}: {
+  studentIds: number[];
+  activityIds: number[];
+}) {
+  const alumnoActividades = await prisma.alumnoActividad.findMany({
+    where: {
+      id_alumno: { in: studentIds },
+      id_actividad: { in: activityIds },
+    },
+    select: {
+      id_alumno: true,
+      id_actividad: true,
+    },
+  });
+
+  return alumnoActividades;
 }

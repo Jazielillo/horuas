@@ -29,6 +29,7 @@ import {
   StatsView,
   StudentInfoCard,
 } from "@/app/coordinador/components/student-detail";
+import { getSession } from "@/lib/session";
 
 const CoordinatorStudentDetail = ({
   seeDataInfo = true,
@@ -45,6 +46,18 @@ const CoordinatorStudentDetail = ({
     deleteActivityInAlumnoCompleto,
     changePrizeInActivity,
   } = useAlumnoStore();
+
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadUserRole() {
+      const session = await getSession();
+      const role = session?.role || null;
+      setUserRole(role);
+    }
+    loadUserRole();
+  }, []);
+
   const {
     ciclos,
     loadCiclos,
@@ -87,10 +100,7 @@ const CoordinatorStudentDetail = ({
   }, [editActivityId, loadPrizesActivities]);
 
   useEffect(() => {
-    console.log("Antes", selectedAlumnoCompleto?.actividades);
-
     if (newActivity) changeActivityInAlumnoCompleto(newActivity);
-    console.log("Después", selectedAlumnoCompleto?.actividades);
   }, [newActivity]);
 
   // --- Logic & Handlers ---
@@ -99,8 +109,11 @@ const CoordinatorStudentDetail = ({
       const matchesCycle =
         filterCycle === "all" || activity.ciclo === filterCycle;
       const matchesDepartment =
-        filterDepartment === "all" ||
-        activity.departamento === filterDepartment;
+        userRole === "COORDINADOR_DEPORTES"
+          ? "Deportes"
+          : userRole === "COORDINADOR_CULTURA"
+          ? "Cultura"
+          : filterDepartment === "all";
       return matchesCycle && matchesDepartment;
     }
   );
@@ -117,6 +130,24 @@ const CoordinatorStudentDetail = ({
       (sum, act) => sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
       0
     ) || 0;
+
+  const orientationPointsFiltered =
+    filteredActivities
+      ?.filter((act) => act.departamento === "Orientación Educativa")
+      .reduce(
+        (sum, act) =>
+          sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
+        0
+      ) || 0;
+
+  const serviceSocialPointsFiltered =
+    filteredActivities
+      ?.filter((act) => act.departamento === "Servicio Social")
+      .reduce(
+        (sum, act) =>
+          sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
+        0
+      ) || 0;
 
   const sportsPointsFiltered =
     filteredActivities
@@ -209,6 +240,7 @@ const CoordinatorStudentDetail = ({
                 getPrizePoints({ departamento: "Deportes" }) +
                 getPrizePoints({ departamento: "Cultura" }),
             }}
+            userRole={userRole || ""}
           />
         </>
       ) : (
@@ -254,22 +286,31 @@ const CoordinatorStudentDetail = ({
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label>Departamento</Label>
-                  <Select
-                    value={filterDepartment}
-                    onValueChange={setFilterDepartment}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Todos" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todos</SelectItem>
-                      <SelectItem value="Deportes">Deportes</SelectItem>
-                      <SelectItem value="Cultura">Cultura</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                {userRole !== "COORDINADOR_CULTURA" &&
+                  userRole !== "COORDINADOR_DEPORTES" && (
+                    <div className="space-y-2">
+                      <Label>Departamento</Label>
+                      <Select
+                        value={filterDepartment}
+                        onValueChange={setFilterDepartment}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Todos" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">Todos</SelectItem>
+                          <SelectItem value="Deportes">Deportes</SelectItem>
+                          <SelectItem value="Cultura">Cultura</SelectItem>
+                          <SelectItem value="Orientación Educativa">
+                            Orientación Educativa
+                          </SelectItem>
+                          <SelectItem value="Servicio Social">
+                            Servicio Social
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
               </div>
             </CardContent>
           </Card>
@@ -307,7 +348,8 @@ const CoordinatorStudentDetail = ({
               <ActivitiesTable
                 activities={(filteredActivities || []).map((a) => ({
                   ...a,
-                  fecha: a.fecha instanceof Date ? a.fecha.toISOString() : a.fecha,
+                  fecha:
+                    a.fecha instanceof Date ? a.fecha.toISOString() : a.fecha,
                   premio: a.premio ? [a.premio] : [],
                 }))}
                 onEdit={openEditDialog}
@@ -326,6 +368,8 @@ const CoordinatorStudentDetail = ({
             totalPoints={totalPointsFiltered}
             sportsPoints={sportsPointsFiltered}
             culturePoints={culturePointsFiltered}
+            orientationPoints={orientationPointsFiltered}
+            serviceSocialPoints={serviceSocialPointsFiltered}
             totalActivities={filteredActivities?.length || 0}
             totalWithPrize={
               filteredActivities?.filter((a) => a.premio).length || 0

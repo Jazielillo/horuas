@@ -41,28 +41,40 @@ import { Spinner } from "@/components/ui/spinner";
 import { useActivityStore } from "@/store/use-activity-store";
 import Link from "next/link";
 import { useAlumnoStore } from "@/store/use-alumno-store";
+import { LoadingStudentState } from "../components/empty-state";
+import { getStudents } from "@/app/actions/students-actions";
+import { useGetRole } from "@/hooks/use-get-session";
+import { getSession } from "@/lib/session";
 
 const CoordinatorReports = () => {
   const {
     selectedYear,
     selectedGroup,
-    selectedStudent,
-    loading,
     groups,
-    studentsOfGroup,
+    students,
+    selectedStudentId,
+    loadingStudents,
+    setStudents,
     setYear,
     setGroup,
-    setStudent,
-    setGroups,
-
+    setLoadingStudents,
     loadGroupsByYear,
-    loadStudentsByGroup,
+    loadSingleStudent,
+    reset,
   } = usePointsAssignmentStore();
 
-  const { reset } = useAlumnoStore();
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
+    async function loadUserRole() {
+      const session = await getSession();
+      const role = session?.role || null;
+      console.log(role);
+      setUserRole(role);
+    }
+    loadUserRole();
     reset();
+    console.log(loadingStudents);
   }, []);
 
   const { toast } = useToast();
@@ -81,24 +93,32 @@ const CoordinatorReports = () => {
   });
 
   useEffect(() => {
-    if (selectedGroup) {
-      console.log("Cargando alumnos del grupo", selectedGroup);
-      loadStudentsByGroup(selectedGroup.id_grupo.toString(), 0, true);
-    }
+    const loadStudentsByGroup = async () => {
+      if (selectedGroup) {
+        setLoadingStudents(true);
+        setStudents(await getStudents({ groupId: selectedGroup.id_grupo }));
+        setLoadingStudents(false);
+      }
+    };
+    loadStudentsByGroup();
   }, [selectedGroup]);
 
   async function onSubmit(values: any) {}
-  const handleDownloadExcel = () => {
-    toast({
-      title: "Descargando reporte",
-      description: "El archivo Excel se está generando...",
-    });
-  };
 
   const [studentSearch, setStudentSearch] = useState("");
 
+  const selectedStudent = students.find(
+    (s) => s.id_usuario === selectedStudentId
+  );
+
+  const handleSelectStudent = async (student: Alumno | null) => {
+    if (student) {
+      loadSingleStudent(student);
+    }
+  };
+
   // 2. Variable que contiene SIEMPRE la lista filtrada
-  const filteredStudents = studentsOfGroup.filter((student) => {
+  const filteredStudents = students.filter((student) => {
     // Convertimos a minúsculas para que la búsqueda no sea sensible a mayúsculas
     const searchLower = studentSearch.toLowerCase();
     const nombreLower = student.nombre.toLowerCase();
@@ -129,16 +149,6 @@ const CoordinatorReports = () => {
             Visualiza y descarga reportes de progreso de alumnos
           </p>
         </div>
-        {/* <div className="flex gap-2">
-          <Button variant="outline" onClick={handleDownloadExcel}>
-            <Download className="w-4 h-4 mr-2" />
-            Excel
-          </Button>
-          <Button variant="outline" onClick={handleDownloadPDF}>
-            <Download className="w-4 h-4 mr-2" />
-            PDF
-          </Button>
-        </div> */}
       </div>
 
       {/* Filters */}
@@ -235,7 +245,7 @@ const CoordinatorReports = () => {
                   labelField="nombre"
                   valueField="id_usuario"
                   value={selectedStudent}
-                  onSelect={setStudent}
+                  onSelect={handleSelectStudent}
                   disabled={!!selectedGroup || !!selectedYear}
                 />
                 {form.formState.errors.id_actividad && (
@@ -246,7 +256,13 @@ const CoordinatorReports = () => {
               </div>
             </div>
           </form>
-          {(selectedStudent || (selectedYear && selectedGroup)) && (
+          {loadingStudents && (selectedGroup || selectedStudent) && (
+            <div className="mt-5">
+              <LoadingStudentState />
+            </div>
+          )}
+          {(selectedStudent ||
+            (selectedYear && selectedGroup && !loadingStudents)) && (
             <div className="flex items-center gap-2 p-3 bg-muted rounded-lg mt-5">
               <div className="text-sm">
                 {selectedStudent ? (
@@ -258,7 +274,7 @@ const CoordinatorReports = () => {
                       size="sm"
                       className="ml-2 h-6 cursor-pointer"
                       onClick={() => {
-                        setStudent(null);
+                        reset();
                       }}
                     >
                       Limpiar
@@ -273,10 +289,7 @@ const CoordinatorReports = () => {
                       size="sm"
                       className="ml-2 h-6 cursor-pointer"
                       onClick={() => {
-                        setYear("");
-                        setGroup(null);
-                        setStudent(null);
-                        setGroups([]);
+                        reset();
                       }}
                     >
                       Limpiar
@@ -288,7 +301,7 @@ const CoordinatorReports = () => {
           )}
         </CardContent>
       </Card>
-      {(selectedGroup || selectedStudent) && (
+      {(selectedGroup || selectedStudent) && !loadingStudents && (
         <Card>
           <CardHeader>
             <div className="flex flex-col gap-4">
@@ -323,7 +336,7 @@ const CoordinatorReports = () => {
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border">
-              {loading ? (
+              {loadingStudents ? (
                 <div className="p-8 flex justify-center">
                   <Spinner />
                 </div>
@@ -336,11 +349,17 @@ const CoordinatorReports = () => {
                       {selectedGroup != null ? null : (
                         <TableHead>Grupo</TableHead>
                       )}
-                      <TableHead>Puntos Deportes</TableHead>
-                      <TableHead>Puntos Cultura</TableHead>
-                      <TableHead className="text-center">
-                        Puntos Totales
-                      </TableHead>
+
+                      {userRole == "COORDINADOR_CULTURA" ? (
+                        <TableHead>Puntos Cultura</TableHead>
+                      ) : userRole == "COORDINADOR_DEPORTES" ? (
+                        <TableHead>Puntos Deportes</TableHead>
+                      ) : (
+                        <>
+                          <TableHead>Puntos Deportes</TableHead>
+                          <TableHead>Puntos Cultura</TableHead>
+                        </>
+                      )}
                       <TableHead className="text-center">Acciones</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -355,15 +374,24 @@ const CoordinatorReports = () => {
                           {selectedStudent.num_cuenta}
                         </TableCell>
                         <TableCell>{selectedStudent?.grupo ?? "N/A"}</TableCell>
-                        <TableCell className="text-center">
-                          {selectedStudent.puntos?.deportes ?? 0}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {selectedStudent.puntos?.cultura ?? 0}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {selectedStudent.puntos?.total ?? 0}
-                        </TableCell>
+                        {userRole == "COORDINADOR_CULTURA" ? (
+                          <TableCell className="text-center">
+                            {selectedStudent.puntos?.cultura}
+                          </TableCell>
+                        ) : userRole == "COORDINADOR_DEPORTES" ? (
+                          <TableCell className="text-center">
+                            {selectedStudent.puntos?.deportes}
+                          </TableCell>
+                        ) : (
+                          <>
+                            <TableCell>
+                              {selectedStudent.puntos?.deportes}
+                            </TableCell>
+                            <TableCell>
+                              {selectedStudent.puntos?.cultura}
+                            </TableCell>
+                          </>
+                        )}
                         <TableCell className="font-semibold text-center">
                           <Button
                             className="bg-primary text-center cursor-pointer"
@@ -377,7 +405,7 @@ const CoordinatorReports = () => {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    ) : studentsOfGroup?.length === 0 ? (
+                    ) : students.length === 0 ? (
                       // CASO 2: El grupo no tiene alumnos cargados (Base de datos vacía)
                       <TableRow>
                         <TableCell
@@ -407,15 +435,20 @@ const CoordinatorReports = () => {
                           <TableCell className="text-muted-foreground">
                             {student.num_cuenta}
                           </TableCell>
-                          <TableCell className="text-center">
-                            {student.puntos?.deportes ?? 0}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {student.puntos?.cultura ?? 0}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {student.puntos?.total ?? 0}
-                          </TableCell>
+                          {userRole == "COORDINADOR_CULTURA" ? (
+                            <TableCell className="text-center">
+                              {student.puntos?.cultura}
+                            </TableCell>
+                          ) : userRole == "COORDINADOR_DEPORTES" ? (
+                            <TableCell className="text-center">
+                              {student.puntos?.deportes}
+                            </TableCell>
+                          ) : (
+                            <>
+                              <TableCell>{student.puntos?.deportes}</TableCell>
+                              <TableCell>{student.puntos?.cultura}</TableCell>
+                            </>
+                          )}
                           <TableCell className="font-semibold text-center">
                             <Button
                               className="bg-primary text-center cursor-pointer"

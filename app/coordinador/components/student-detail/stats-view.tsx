@@ -10,6 +10,8 @@ interface StatsViewProps {
   totalPoints: number;
   sportsPoints: number;
   culturePoints: number;
+  orientationPoints: number;
+  serviceSocialPoints: number;
   totalActivities: number;
   totalWithPrize: number;
 }
@@ -17,12 +19,17 @@ interface StatsViewProps {
 export const StatsView = ({
   totalPoints,
   sportsPoints,
+  orientationPoints,
+  serviceSocialPoints,
   culturePoints,
   totalActivities,
   totalWithPrize,
 }: StatsViewProps) => {
-  const calculatePercentage = (part: number, total: number) =>
-    total > 0 ? (part / total) * 100 : 0;
+  const calculatePercentage = (part: number, total: number) => {
+    if (total <= 0) return 0;
+    const percentage = (part / total) * 100;
+    return Math.min(percentage, 100); // Limitar al 100% máximo
+  };
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
@@ -36,16 +43,30 @@ export const StatsView = ({
             <ProgressBar
               label="Deportes"
               points={sportsPoints}
-              percentage={calculatePercentage(sportsPoints, totalPoints)}
-              colorClass="text-info"
-              bgClass="bg-info"
+              percentage={calculatePercentage(sportsPoints, 100)}
+              colorClass="text-blue-600"
+              bgClass="bg-blue-600"
             />
             <ProgressBar
               label="Cultura"
               points={culturePoints}
-              percentage={calculatePercentage(culturePoints, totalPoints)}
-              colorClass="text-accent"
-              bgClass="bg-accent"
+              percentage={calculatePercentage(culturePoints, 100)}
+              colorClass="text-purple-600"
+              bgClass="bg-purple-600"
+            />
+            <ProgressBar
+              label="Orientación Educativa"
+              points={orientationPoints}
+              percentage={calculatePercentage(orientationPoints, 100)}
+              colorClass="text-amber-600"
+              bgClass="bg-amber-600"
+            />
+            <ProgressBar
+              label="Servicio Social"
+              points={serviceSocialPoints}
+              percentage={calculatePercentage(serviceSocialPoints, 100)}
+              colorClass="text-emerald-600"
+              bgClass="bg-emerald-600"
             />
           </div>
         </CardContent>
@@ -80,7 +101,7 @@ const ProgressBar = ({
       <span className="text-sm font-medium">{label}</span>
       <span className={`text-sm font-bold ${colorClass}`}>{points} pts</span>
     </div>
-    <div className={`h-2 rounded-full ${bgClass}/20`}>
+    <div className={`h-2 rounded-full ${bgClass}/30`}>
       <div
         className={`h-2 rounded-full ${bgClass}`}
         style={{ width: `${percentage}%` }}

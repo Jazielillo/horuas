@@ -18,6 +18,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import { AlertTriangle, Check } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 export const SummaryDetailsPoints = ({
   open,
@@ -26,6 +27,7 @@ export const SummaryDetailsPoints = ({
   selectedActivityData,
   selectedStudents,
   studentsAwards,
+  loading
 }: any) => {
   const whatPrizeIs = (student_id: number) => {
     const award = studentsAwards[student_id];
@@ -129,12 +131,16 @@ export const SummaryDetailsPoints = ({
         </div>
 
         <DialogFooter className="gap-2 ">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
             Cancelar
           </Button>
-          <Button onClick={onConfirm}>
-            <Check className="w-4 h-4 mr-2" />
-            Confirmar Asignación
+          <Button onClick={onConfirm} disabled={loading}>
+            {loading ? (
+              <Spinner className="w-4 h-4 mr-2" />
+            ) : (
+              <Check className="w-4 h-4 mr-2" />
+            )}
+            {loading ? "Asignando..." : "Confirmar Asignación"}
           </Button>
         </DialogFooter>
       </DialogContent>

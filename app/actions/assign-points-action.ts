@@ -103,10 +103,117 @@ export async function assignPointsAction(form: AssignPointsForm) {
   return { ok: true, count: created.length, created };
 }
 
+export async function bulkAssignPointsModuleAction(
+  selectedIds: Record<number, number[]>,
+  activitiesIds: number[],
+  studentsIds: number[]
+) {
+  const id_coordinador = 137; // Obtener del contexto real
+  const id_ciclo = 1; // Obtener ciclo activo real
+  const fecha_registro = new Date();
+  
+  try {
+    await prisma.$transaction(
+      async (tx) => {
+        // 1️⃣ Traer TODOS los registros existentes de una sola vez (batch query)
+        const existentes = await tx.alumnoActividad.findMany({
+          where: {
+            id_alumno: { in: studentsIds },
+            id_ciclo,
+            id_actividad: { in: activitiesIds },
+          },
+          select: {
+            id_alumno: true,
+            id_actividad: true,
+          },
+        });
+
+        // 2️⃣ Organizar existentes por alumno en memoria
+        const existentesPorAlumno = new Map<number, Set<number>>();
+        for (const registro of existentes) {
+          if (!existentesPorAlumno.has(registro.id_alumno)) {
+            existentesPorAlumno.set(registro.id_alumno, new Set());
+          }
+          existentesPorAlumno.get(registro.id_alumno)!.add(registro.id_actividad);
+        }
+
+        // 3️⃣ Calcular todos los inserts y deletes en memoria
+        const todosLosInserts: Array<{
+          id_alumno: number;
+          id_actividad: number;
+          id_ciclo: number;
+          id_coordinador: number;
+          fecha_registro: Date;
+        }> = [];
+        
+        const todosLosDeletes: Array<{
+          id_alumno: number;
+          id_actividad: number;
+        }> = [];
+
+        for (const id_alumno of studentsIds) {
+          const selectedSet = new Set<number>(selectedIds[id_alumno] ?? []);
+          const existentesSet = existentesPorAlumno.get(id_alumno) || new Set<number>();
+
+          // Calcular qué insertar (están seleccionados pero no existen)
+          for (const id_actividad of selectedSet) {
+            if (!existentesSet.has(id_actividad)) {
+              todosLosInserts.push({
+                id_alumno,
+                id_actividad,
+                id_ciclo,
+                id_coordinador,
+                fecha_registro,
+              });
+            }
+          }
+
+          // Calcular qué borrar (existen pero no están seleccionados)
+          for (const id_actividad of existentesSet) {
+            if (!selectedSet.has(id_actividad)) {
+              todosLosDeletes.push({ id_alumno, id_actividad });
+            }
+          }
+        }
+
+        // 4️⃣ Ejecutar inserts en batch (una sola operación)
+        if (todosLosInserts.length > 0) {
+          await tx.alumnoActividad.createMany({
+            data: todosLosInserts,
+            skipDuplicates: true,
+          });
+        }
+
+        // 5️⃣ Ejecutar deletes en batch (una sola operación)
+        if (todosLosDeletes.length > 0) {
+          // Para el deleteMany necesitamos construir las condiciones OR
+          await tx.alumnoActividad.deleteMany({
+            where: {
+              OR: todosLosDeletes.map(({ id_alumno, id_actividad }) => ({
+                id_alumno,
+                id_actividad,
+                id_ciclo,
+              })),
+            },
+          });
+        }
+      },
+      {
+        maxWait: 10000,
+        timeout: 20000,
+      }
+    );
+
+    return { ok: true };
+  } catch (error) {
+    console.error("Error guardando alumno-actividades:", error);
+    throw new Error("No se pudieron guardar las actividades");
+  }
+}
+
 export async function bulkAssignPointsAction(data: {
   id_actividad: number;
   estudiantes: number[];
-  points: number;
   date: string | Date;
   id_coordinador: number;
   id_ciclo: number;
@@ -120,6 +227,7 @@ export async function bulkAssignPointsAction(data: {
       !Array.isArray(estudiantes) ||
       estudiantes.length === 0
     ) {
+      console.log("Invalid input data:", data);
       return { ok: false, error: "id_actividad y estudiantes son requeridos" };
     }
 

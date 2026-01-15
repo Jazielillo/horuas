@@ -3,15 +3,19 @@ import { prisma } from "@/lib/prisma";
 import { FormState, LoginFormSchema } from "@/lib/definitions";
 import { createSession, deleteSession, getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
 export async function login(state: FormState, formData: FormData) {
   console.log("Login action called");
   // Validate form fields
+  console.log("Validating form data:", {
+    num_cuenta: formData.get("num_cuenta"),
+    nip: formData.get("nip"),
+  });
   const validatedFields = LoginFormSchema.safeParse({
     num_cuenta: formData.get("num_cuenta"),
     nip: formData.get("nip"),
   });
+  console.log("Validation result:", validatedFields);
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
@@ -41,10 +45,18 @@ export async function login(state: FormState, formData: FormData) {
   await createSession(user.id_usuario, user.num_cuenta, user.rol);
 
   // 🔥 Redirigir desde el server action
+  if (user.rol === "COORDINADOR_ORIENTACION") {
+    redirect("/coordinador/orientacion-educativa");
+  }
+  if (user.rol === "COORDINADOR_SERVICIO_SOCIAL") {
+    redirect("/coordinador/servicio-social");
+  }
   if (
     user.rol === "COORDINADOR" ||
     user.rol === "ADMINISTRADOR" ||
-    user.rol === "COORDINADOR_AUXILIAR"
+    user.rol === "COORDINADOR_AUXILIAR" ||
+    user.rol === "COORDINADOR_DEPORTES" ||
+    user.rol === "COORDINADOR_CULTURA"
   )
     redirect("/coordinador/actividades");
   if (user.rol === "ALUMNO") redirect("/alumno");

@@ -148,9 +148,9 @@ const CoordinatorActivities = () => {
             </div>
 
             {/* Filtros */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Departamento */}
-              <Select
+              {/* <Select
                 value={departamentSelected?.id_departamento.toString() || ""}
                 onValueChange={(dept) => {
                   setDepartamentSelected(
@@ -173,7 +173,7 @@ const CoordinatorActivities = () => {
                     </SelectItem>
                   ))}
                 </SelectContent>
-              </Select>
+              </Select> */}
 
               {/* Ciclo */}
               <Select

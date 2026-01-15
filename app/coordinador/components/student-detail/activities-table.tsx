@@ -57,7 +57,7 @@ export const ActivitiesTable = ({
         {activities.map((activity) => (
           <div
             key={activity.id_actividad}
-            className="rounded-lg border bg-card text-card-foreground shadow-sm p-4 space-y-3"
+            className="rounded-lg border bg-card text-card-foreground shadow-sm p-4 space-y-3 dark:border-gray-800"
           >
             {/* Encabezado de la tarjeta */}
             <div className="flex justify-between items-start gap-2">
@@ -85,7 +85,7 @@ export const ActivitiesTable = ({
               </div>
             </div>
 
-            <hr className="border-muted" />
+            <hr className="border-muted dark:border-gray-700" />
 
             {/* Detalles */}
             <div className="grid grid-cols-2 gap-y-2 text-sm">

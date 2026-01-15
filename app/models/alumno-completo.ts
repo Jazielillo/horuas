@@ -5,6 +5,8 @@ export type AlumnoCompleto = {
   puntos: {
     total: number;
     deportes: number;
+    orientacion_educativa?: number;
+    servicio_social?: number;
     cultura: number;
   };
   actividades: Array<{

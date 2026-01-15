@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "@radix-ui/react-progress";
 import { Palette, Target, Trophy } from "lucide-react";
 import Image from "next/image";
 // Componente reutilizable para evitar duplicar código SVG y lógica
@@ -14,7 +15,7 @@ const ProgressRing = ({
   label,
   gifSrc,
   colorClass, // Clase para el color del texto y borde (ej: text-blue-500)
-  bgClass,    // Clase para el fondo de la caja de puntos (ej: bg-blue-500/10)
+  bgClass, // Clase para el fondo de la caja de puntos (ej: bg-blue-500/10)
 }: {
   percentage: number;
   points: number;
@@ -36,7 +37,11 @@ const ProgressRing = ({
         className="relative flex items-center justify-center mb-6"
         style={{ width: size, height: size }}
       >
-        <svg width={size} height={size} className={`transform -rotate-90 ${colorClass}`}>
+        <svg
+          width={size}
+          height={size}
+          className={`transform -rotate-90 ${colorClass}`}
+        >
           {/* Círculo de fondo */}
           <circle
             cx={size / 2}
@@ -83,13 +88,20 @@ const ProgressRing = ({
       </div>
 
       {/* Tarjeta de Puntos (Width Full) */}
-      <div className="w-full px-2"> {/* Padding horizontal para seguridad en móviles muy pequeños */}
-        <div className={`w-full text-center p-4 rounded-xl border ${bgClass} transition-colors`}>
+      <div className="w-full px-2">
+        {" "}
+        {/* Padding horizontal para seguridad en móviles muy pequeños */}
+        <div
+          className={`w-full text-center p-4 rounded-xl border ${bgClass} transition-colors`}
+        >
           <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">
             {label}
           </p>
           <p className={`text-3xl font-bold ${colorClass}`}>
-            {points} <span className="text-sm text-muted-foreground font-normal">pts</span>
+            {points}{" "}
+            <span className="text-sm text-muted-foreground font-normal">
+              pts
+            </span>
           </p>
         </div>
       </div>
@@ -100,9 +112,13 @@ const ProgressRing = ({
 export const ProgressChart = ({
   puntos_deportes,
   puntos_cultura,
+  puntos_orientacion_educativa,
+  puntos_servicio_social,
 }: {
   puntos_deportes: number;
   puntos_cultura: number;
+  puntos_orientacion_educativa: number;
+  puntos_servicio_social: number;
 }) => {
   // Normaliza porcentajes
   const clamp = (v: number) => Math.max(0, Math.min(100, v));
@@ -113,10 +129,9 @@ export const ProgressChart = ({
         <CardTitle>Progreso Global</CardTitle>
         <CardDescription>Porcentaje total de cumplimiento</CardDescription>
       </CardHeader>
-      
+
       {/* Grid responsivo: 1 columna en móvil, 2 en pantallas md en adelante */}
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-10 py-6 items-start">
-        
         {/* Cultura */}
         <ProgressRing
           percentage={clamp(puntos_cultura)}
@@ -137,6 +152,23 @@ export const ProgressChart = ({
           bgClass="bg-sky-500/10 border-sky-200 dark:border-sky-900" // Fondo suave
         />
 
+        <ProgressRing
+          percentage={clamp(puntos_orientacion_educativa)}
+          points={puntos_orientacion_educativa}
+          label="Orientación Educativa"
+          gifSrc="/brujula.gif"
+          colorClass="text-green-500" // Puedes cambiar esto a text-success
+          bgClass="bg-green-500/10 border-green-200 dark:border-green-900" // Fondo suave
+        />
+
+        <ProgressRing
+          percentage={clamp(puntos_servicio_social)}
+          points={puntos_servicio_social}
+          label="Servicio Social"
+          gifSrc="/ayuda.gif"
+          colorClass="text-yellow-500" // Puedes cambiar esto a text-warning
+          bgClass="bg-yellow-500/10 border-yellow-200 dark:border-yellow-900" // Fondo suave
+        />
       </CardContent>
     </Card>
   );

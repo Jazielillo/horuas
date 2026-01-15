@@ -21,7 +21,7 @@ const ActivityList = ({ activities }: ActivityListProps) => {
       {activities.map((activity, index) => (
         <div
           key={activity.id_actividad}
-          className="flex items-start gap-4 p-4 rounded-lg border bg-card hover:bg-accent/5 transition-colors"
+          className="flex items-start gap-4 p-4 rounded-lg border bg-card hover:bg-accent/5 transition-colors dark:border-black"
         >
           <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
             <Award className="w-6 h-6 text-primary" />

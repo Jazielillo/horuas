@@ -1,15 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  LayoutDashboard,
-  Calendar,
-  UserPlus,
-  FileText,
-  Users,
-  LogOut,
-  Award,
-} from "lucide-react";
+import { LayoutDashboard, Calendar, Award } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -21,8 +13,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { verifySession } from "@/lib/dal";
-import { redirect } from "next/navigation";
 import { useAlumnoStore } from "@/store/use-alumno-store";
 import { useEffect } from "react";
 import { LogOutButton } from "@/app/coordinador/components/log-out-button";
@@ -44,7 +34,7 @@ export function AlumnoSidebar({ id_usuario }: { id_usuario?: number }) {
 
   return (
     <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
-      <SidebarContent>
+      <SidebarContent className="dark:bg-card">
         <div className="p-4 border-b border-sidebar-border h-16">
           {!isCollapsed && (
             <div className="flex items-center gap-2">
@@ -55,9 +45,6 @@ export function AlumnoSidebar({ id_usuario }: { id_usuario?: number }) {
                 <p className="text-sm font-medium truncate text-sidebar-foreground">
                   Alumno
                 </p>
-                {/* <p className="text-xs text-sidebar-foreground/70 truncate">
-                  Deportes
-                </p> */}
               </div>
             </div>
           )}
@@ -79,7 +66,7 @@ export function AlumnoSidebar({ id_usuario }: { id_usuario?: number }) {
                   <SidebarMenuButton asChild>
                     <Link
                       href={item.url}
-                      className="hover:bg-sidebar-accent"
+                      className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
                       // activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                     >
                       <item.icon className="w-4 h-4" />
