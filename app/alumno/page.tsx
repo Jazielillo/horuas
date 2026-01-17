@@ -16,6 +16,8 @@ import { Badge } from "@/components/ui/badge";
 import { AllActivities } from "../coordinador/components/all-activities";
 import { CategoryProgressCard } from "./components/category-card";
 import { ActivityCard } from "./components/activity-card";
+import { solicitarPermiso } from "../helpers/request-permission";
+import { onMessageListener } from "@/lib/firebase";
 
 // export const Student = () => {
 //   // Mock data - in production, this would come from API
@@ -129,6 +131,16 @@ export const Student = () => {
     setActivitySelected(null);
     loadFutureActivities();
   }, [loadFutureActivities]);
+
+  useEffect(() => {
+    solicitarPermiso();
+    onMessageListener((payload) => {
+      console.log("Mensaje recibido en primer plano:", payload);
+      alert(
+        `Nueva notificación: ${payload.notification?.title || "Sin título"}`,
+      );
+    });
+  }, []);
 
   // Pantalla de carga inicial más elegante
   if (loading) {

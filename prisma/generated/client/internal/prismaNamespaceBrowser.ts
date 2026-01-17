@@ -61,7 +61,8 @@ export const ModelName = {
   Actividad: 'Actividad',
   AlumnoActividad: 'AlumnoActividad',
   ActividadPremio: 'ActividadPremio',
-  GanadorActividad: 'GanadorActividad'
+  GanadorActividad: 'GanadorActividad',
+  FcmToken: 'FcmToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -243,6 +244,17 @@ export const GanadorActividadScalarFieldEnum = {
 } as const
 
 export type GanadorActividadScalarFieldEnum = (typeof GanadorActividadScalarFieldEnum)[keyof typeof GanadorActividadScalarFieldEnum]
+
+
+export const FcmTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  lastUsed: 'lastUsed'
+} as const
+
+export type FcmTokenScalarFieldEnum = (typeof FcmTokenScalarFieldEnum)[keyof typeof FcmTokenScalarFieldEnum]
 
 
 export const SortOrder = {

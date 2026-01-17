@@ -63,12 +63,17 @@ export async function createActivityAction(formData: ActivitySchema) {
     });
   }
 
+  const { sendNewActivityNotification } = NotificationService;
+  await sendNewActivityNotification(
+    "Nueva Actividad Disponible",
+    `Se ha creado la actividad: ${activity.nombre}. ¡Consulta los detalles y participa!`,
+  );
   return { ok: true, activity };
 }
 
 export async function updateActivityAction(
   activity: ActivitySchema,
-  id: number
+  id: number,
 ) {
   console.log("Updating activity in action...", activity);
   await prisma.actividad.update({
@@ -90,7 +95,7 @@ export async function updateActivityAction(
   });
   console.log(
     "Activity updated, now handling prizes...",
-    activity.premio?.length
+    activity.premio?.length,
   );
   if (activity?.premio && activity.premio?.length > 0) {
     // Obtener premios existentes para esta actividad
@@ -115,7 +120,7 @@ export async function updateActivityAction(
               puntos: premio.puntos_otorgados,
               actividadId: id,
             },
-          })
+          }),
         );
       } else {
         // Si no tiene id (o no pertenece), lo creamos como nuevo
@@ -126,7 +131,7 @@ export async function updateActivityAction(
               puntos: premio.puntos_otorgados,
               actividadId: id,
             },
-          })
+          }),
         );
       }
     }
@@ -140,7 +145,7 @@ export async function updateActivityAction(
       ops.push(
         prisma.actividadPremio.deleteMany({
           where: { id: { in: idsToDelete } },
-        })
+        }),
       );
     }
 
@@ -158,6 +163,7 @@ export async function updateActivityAction(
 
 import { revalidatePath } from "next/cache";
 import { checkIdUsuario } from "@/lib/check-id-usuario";
+import { NotificationService } from "../helpers/notification-helper";
 
 // --- 1. FUNCIÓN MAPPER (EL SECRETO) ---
 // Esta función convierte CUALQUIER resultado de Prisma al tipo Activity limpio
@@ -262,7 +268,7 @@ export async function getServicioSocialActivitiesAction(): Promise<Activity[]> {
 }
 
 export async function getActivityByIdAction(
-  id: number
+  id: number,
 ): Promise<Activity | null> {
   const activity = await prisma.actividad.findUnique({
     where: { id_actividad: id },
@@ -295,7 +301,7 @@ export async function getActivitiesPrizesAction(activity_id: number) {
 export async function updatePrizeAction(
   prizeId: number,
   alumnoId: number,
-  actividadId: number
+  actividadId: number,
 ) {
   if (prizeId === 0) {
     // Si prizeId es 0, significa que se está removiendo el premio
@@ -356,7 +362,7 @@ export async function updatePrizeAction(
 export async function deleteActivityStudentAction(
   id_actividad: number,
   id_alumno: number,
-  descripcion: string = ""
+  descripcion: string = "",
 ) {
   // Eliminar premios asociados primero para mantener la integridad referencial
 

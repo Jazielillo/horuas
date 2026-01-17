@@ -6,6 +6,7 @@ import {
 } from "@/schemas/assign-points-schema";
 import { prisma } from "@/lib/prisma";
 import { ActivityPrize } from "../models/activity";
+import { NotificationService } from "../helpers/notification-helper";
 
 /**
  * Helper que obtiene info del usuario desde cookies/session.
@@ -85,7 +86,7 @@ export async function assignPointsAction(form: AssignPointsForm) {
         id_coordinador: coordinatorId,
         id_ciclo: cicloActivo.id_ciclo,
       },
-    })
+    }),
   );
 
   const created = await prisma.$transaction(operations);
@@ -100,18 +101,31 @@ export async function assignPointsAction(form: AssignPointsForm) {
     },
   });
 
+  const { sendPointsAssignedNotification } = NotificationService;
+
+  let tokens = await prisma.fcmToken.findMany({
+    where: {
+      userId: { in: alumnosIds },
+    },
+    select: { token: true },
+  });
+
+  const tokensList = tokens.map((t) => t.token);
+
+  await sendPointsAssignedNotification(tokensList, pointsValue);
+
   return { ok: true, count: created.length, created };
 }
 
 export async function bulkAssignPointsModuleAction(
   selectedIds: Record<number, number[]>,
   activitiesIds: number[],
-  studentsIds: number[]
+  studentsIds: number[],
 ) {
   const id_coordinador = 137; // Obtener del contexto real
   const id_ciclo = 1; // Obtener ciclo activo real
   const fecha_registro = new Date();
-  
+
   try {
     await prisma.$transaction(
       async (tx) => {
@@ -134,7 +148,9 @@ export async function bulkAssignPointsModuleAction(
           if (!existentesPorAlumno.has(registro.id_alumno)) {
             existentesPorAlumno.set(registro.id_alumno, new Set());
           }
-          existentesPorAlumno.get(registro.id_alumno)!.add(registro.id_actividad);
+          existentesPorAlumno
+            .get(registro.id_alumno)!
+            .add(registro.id_actividad);
         }
 
         // 3️⃣ Calcular todos los inserts y deletes en memoria
@@ -145,7 +161,7 @@ export async function bulkAssignPointsModuleAction(
           id_coordinador: number;
           fecha_registro: Date;
         }> = [];
-        
+
         const todosLosDeletes: Array<{
           id_alumno: number;
           id_actividad: number;
@@ -153,7 +169,8 @@ export async function bulkAssignPointsModuleAction(
 
         for (const id_alumno of studentsIds) {
           const selectedSet = new Set<number>(selectedIds[id_alumno] ?? []);
-          const existentesSet = existentesPorAlumno.get(id_alumno) || new Set<number>();
+          const existentesSet =
+            existentesPorAlumno.get(id_alumno) || new Set<number>();
 
           // Calcular qué insertar (están seleccionados pero no existen)
           for (const id_actividad of selectedSet) {
@@ -201,7 +218,7 @@ export async function bulkAssignPointsModuleAction(
       {
         maxWait: 10000,
         timeout: 20000,
-      }
+      },
     );
 
     return { ok: true };
@@ -295,6 +312,22 @@ export async function bulkAssignPointsAction(data: {
         });
       }
     }
+
+    const { sendPointsAssignedNotification } = NotificationService;
+
+    let tokens = await prisma.fcmToken.findMany({
+      where: {
+        userId: { in: estudiantes },
+      },
+      select: { token: true },
+    });
+
+    const tokensList = tokens.map((t) => t.token);
+
+    await sendPointsAssignedNotification(
+      tokensList,
+      registros[0].actividad.puntos_participacion,
+    );
 
     return {
       ok: true,

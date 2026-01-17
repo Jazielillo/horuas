@@ -276,6 +276,7 @@ export type UsuarioWhereInput = {
   registros_puntos?: Prisma.AlumnoActividadListRelationFilter
   logs?: Prisma.RegistroCambiosListRelationFilter
   generacion?: Prisma.XOR<Prisma.GeneracionNullableScalarRelationFilter, Prisma.GeneracionWhereInput> | null
+  fcmTokens?: Prisma.FcmTokenListRelationFilter
 }
 
 export type UsuarioOrderByWithRelationInput = {
@@ -297,6 +298,7 @@ export type UsuarioOrderByWithRelationInput = {
   registros_puntos?: Prisma.AlumnoActividadOrderByRelationAggregateInput
   logs?: Prisma.RegistroCambiosOrderByRelationAggregateInput
   generacion?: Prisma.GeneracionOrderByWithRelationInput
+  fcmTokens?: Prisma.FcmTokenOrderByRelationAggregateInput
 }
 
 export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -321,6 +323,7 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   registros_puntos?: Prisma.AlumnoActividadListRelationFilter
   logs?: Prisma.RegistroCambiosListRelationFilter
   generacion?: Prisma.XOR<Prisma.GeneracionNullableScalarRelationFilter, Prisma.GeneracionWhereInput> | null
+  fcmTokens?: Prisma.FcmTokenListRelationFilter
 }, "id_usuario" | "num_cuenta">
 
 export type UsuarioOrderByWithAggregationInput = {
@@ -372,6 +375,7 @@ export type UsuarioCreateInput = {
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateInput = {
@@ -390,6 +394,7 @@ export type UsuarioUncheckedCreateInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUpdateInput = {
@@ -407,6 +412,7 @@ export type UsuarioUpdateInput = {
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateInput = {
@@ -425,6 +431,7 @@ export type UsuarioUncheckedUpdateInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioCreateManyInput = {
@@ -738,6 +745,20 @@ export type UsuarioUpdateOneRequiredWithoutPremiosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutPremiosInput, Prisma.UsuarioUpdateWithoutPremiosInput>, Prisma.UsuarioUncheckedUpdateWithoutPremiosInput>
 }
 
+export type UsuarioCreateNestedOneWithoutFcmTokensInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutFcmTokensInput, Prisma.UsuarioUncheckedCreateWithoutFcmTokensInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutFcmTokensInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioUpdateOneRequiredWithoutFcmTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutFcmTokensInput, Prisma.UsuarioUncheckedCreateWithoutFcmTokensInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutFcmTokensInput
+  upsert?: Prisma.UsuarioUpsertWithoutFcmTokensInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutFcmTokensInput, Prisma.UsuarioUpdateWithoutFcmTokensInput>, Prisma.UsuarioUncheckedUpdateWithoutFcmTokensInput>
+}
+
 export type UsuarioCreateWithoutEscuelaInput = {
   num_cuenta: string
   nip: string
@@ -752,6 +773,7 @@ export type UsuarioCreateWithoutEscuelaInput = {
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutEscuelaInput = {
@@ -769,6 +791,7 @@ export type UsuarioUncheckedCreateWithoutEscuelaInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutEscuelaInput = {
@@ -827,6 +850,7 @@ export type UsuarioCreateWithoutGeneracionInput = {
   registros_act?: Prisma.AlumnoActividadCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutGeneracionInput = {
@@ -844,6 +868,7 @@ export type UsuarioUncheckedCreateWithoutGeneracionInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutGeneracionInput = {
@@ -886,6 +911,7 @@ export type UsuarioCreateWithoutGrupoInput = {
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutGrupoInput = {
@@ -903,6 +929,7 @@ export type UsuarioUncheckedCreateWithoutGrupoInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutGrupoInput = {
@@ -945,6 +972,7 @@ export type UsuarioCreateWithoutLogsInput = {
   registros_act?: Prisma.AlumnoActividadCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutLogsInput = {
@@ -962,6 +990,7 @@ export type UsuarioUncheckedCreateWithoutLogsInput = {
   actividades_creadas?: Prisma.ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutLogsInput = {
@@ -994,6 +1023,7 @@ export type UsuarioUpdateWithoutLogsInput = {
   registros_act?: Prisma.AlumnoActividadUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutLogsInput = {
@@ -1011,6 +1041,7 @@ export type UsuarioUncheckedUpdateWithoutLogsInput = {
   actividades_creadas?: Prisma.ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioCreateWithoutActividades_creadasInput = {
@@ -1027,6 +1058,7 @@ export type UsuarioCreateWithoutActividades_creadasInput = {
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutActividades_creadasInput = {
@@ -1044,6 +1076,7 @@ export type UsuarioUncheckedCreateWithoutActividades_creadasInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutActividades_creadasInput = {
@@ -1076,6 +1109,7 @@ export type UsuarioUpdateWithoutActividades_creadasInput = {
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutActividades_creadasInput = {
@@ -1093,6 +1127,7 @@ export type UsuarioUncheckedUpdateWithoutActividades_creadasInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioCreateWithoutRegistros_actInput = {
@@ -1109,6 +1144,7 @@ export type UsuarioCreateWithoutRegistros_actInput = {
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutRegistros_actInput = {
@@ -1126,6 +1162,7 @@ export type UsuarioUncheckedCreateWithoutRegistros_actInput = {
   actividades_creadas?: Prisma.ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutRegistros_actInput = {
@@ -1147,6 +1184,7 @@ export type UsuarioCreateWithoutRegistros_puntosInput = {
   registros_act?: Prisma.AlumnoActividadCreateNestedManyWithoutAlumnoInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutRegistros_puntosInput = {
@@ -1164,6 +1202,7 @@ export type UsuarioUncheckedCreateWithoutRegistros_puntosInput = {
   actividades_creadas?: Prisma.ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutRegistros_puntosInput = {
@@ -1196,6 +1235,7 @@ export type UsuarioUpdateWithoutRegistros_actInput = {
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutRegistros_actInput = {
@@ -1213,6 +1253,7 @@ export type UsuarioUncheckedUpdateWithoutRegistros_actInput = {
   actividades_creadas?: Prisma.ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUpsertWithoutRegistros_puntosInput = {
@@ -1240,6 +1281,7 @@ export type UsuarioUpdateWithoutRegistros_puntosInput = {
   registros_act?: Prisma.AlumnoActividadUpdateManyWithoutAlumnoNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutRegistros_puntosInput = {
@@ -1257,6 +1299,7 @@ export type UsuarioUncheckedUpdateWithoutRegistros_puntosInput = {
   actividades_creadas?: Prisma.ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioCreateWithoutPremiosInput = {
@@ -1273,6 +1316,7 @@ export type UsuarioCreateWithoutPremiosInput = {
   registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
   generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+  fcmTokens?: Prisma.FcmTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioUncheckedCreateWithoutPremiosInput = {
@@ -1290,6 +1334,7 @@ export type UsuarioUncheckedCreateWithoutPremiosInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
   logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+  fcmTokens?: Prisma.FcmTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsuarioCreateOrConnectWithoutPremiosInput = {
@@ -1322,6 +1367,7 @@ export type UsuarioUpdateWithoutPremiosInput = {
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutPremiosInput = {
@@ -1335,6 +1381,93 @@ export type UsuarioUncheckedUpdateWithoutPremiosInput = {
   id_grupo?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   generacionId_generacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  actividades_creadas?: Prisma.ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+  registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
+  registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
+  logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UsuarioCreateWithoutFcmTokensInput = {
+  num_cuenta: string
+  nip: string
+  nombre: string
+  correo?: string | null
+  rol: $Enums.Rol
+  activo?: boolean
+  premios?: Prisma.GanadorActividadCreateNestedManyWithoutAlumnoInput
+  escuela: Prisma.EscuelaCreateNestedOneWithoutUsuariosInput
+  grupo?: Prisma.GrupoCreateNestedOneWithoutAlumnosInput
+  actividades_creadas?: Prisma.ActividadCreateNestedManyWithoutCoordinadorInput
+  registros_act?: Prisma.AlumnoActividadCreateNestedManyWithoutAlumnoInput
+  registros_puntos?: Prisma.AlumnoActividadCreateNestedManyWithoutCoordinadorInput
+  logs?: Prisma.RegistroCambiosCreateNestedManyWithoutUsuarioInput
+  generacion?: Prisma.GeneracionCreateNestedOneWithoutAlumnosInput
+}
+
+export type UsuarioUncheckedCreateWithoutFcmTokensInput = {
+  id_usuario?: number
+  num_cuenta: string
+  nip: string
+  nombre: string
+  correo?: string | null
+  rol: $Enums.Rol
+  id_escuela: number
+  id_grupo?: number | null
+  activo?: boolean
+  generacionId_generacion?: number | null
+  premios?: Prisma.GanadorActividadUncheckedCreateNestedManyWithoutAlumnoInput
+  actividades_creadas?: Prisma.ActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+  registros_act?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutAlumnoInput
+  registros_puntos?: Prisma.AlumnoActividadUncheckedCreateNestedManyWithoutCoordinadorInput
+  logs?: Prisma.RegistroCambiosUncheckedCreateNestedManyWithoutUsuarioInput
+}
+
+export type UsuarioCreateOrConnectWithoutFcmTokensInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutFcmTokensInput, Prisma.UsuarioUncheckedCreateWithoutFcmTokensInput>
+}
+
+export type UsuarioUpsertWithoutFcmTokensInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutFcmTokensInput, Prisma.UsuarioUncheckedUpdateWithoutFcmTokensInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutFcmTokensInput, Prisma.UsuarioUncheckedCreateWithoutFcmTokensInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutFcmTokensInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutFcmTokensInput, Prisma.UsuarioUncheckedUpdateWithoutFcmTokensInput>
+}
+
+export type UsuarioUpdateWithoutFcmTokensInput = {
+  num_cuenta?: Prisma.StringFieldUpdateOperationsInput | string
+  nip?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  premios?: Prisma.GanadorActividadUpdateManyWithoutAlumnoNestedInput
+  escuela?: Prisma.EscuelaUpdateOneRequiredWithoutUsuariosNestedInput
+  grupo?: Prisma.GrupoUpdateOneWithoutAlumnosNestedInput
+  actividades_creadas?: Prisma.ActividadUpdateManyWithoutCoordinadorNestedInput
+  registros_act?: Prisma.AlumnoActividadUpdateManyWithoutAlumnoNestedInput
+  registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
+  logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
+  generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutFcmTokensInput = {
+  id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
+  num_cuenta?: Prisma.StringFieldUpdateOperationsInput | string
+  nip?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rol?: Prisma.EnumRolFieldUpdateOperationsInput | $Enums.Rol
+  id_escuela?: Prisma.IntFieldUpdateOperationsInput | number
+  id_grupo?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  generacionId_generacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  premios?: Prisma.GanadorActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   actividades_creadas?: Prisma.ActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
@@ -1367,6 +1500,7 @@ export type UsuarioUpdateWithoutEscuelaInput = {
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutEscuelaInput = {
@@ -1384,6 +1518,7 @@ export type UsuarioUncheckedUpdateWithoutEscuelaInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateManyWithoutEscuelaInput = {
@@ -1424,6 +1559,7 @@ export type UsuarioUpdateWithoutGeneracionInput = {
   registros_act?: Prisma.AlumnoActividadUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutGeneracionInput = {
@@ -1441,6 +1577,7 @@ export type UsuarioUncheckedUpdateWithoutGeneracionInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateManyWithoutGeneracionInput = {
@@ -1481,6 +1618,7 @@ export type UsuarioUpdateWithoutGrupoInput = {
   registros_puntos?: Prisma.AlumnoActividadUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUpdateManyWithoutUsuarioNestedInput
   generacion?: Prisma.GeneracionUpdateOneWithoutAlumnosNestedInput
+  fcmTokens?: Prisma.FcmTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutGrupoInput = {
@@ -1498,6 +1636,7 @@ export type UsuarioUncheckedUpdateWithoutGrupoInput = {
   registros_act?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutAlumnoNestedInput
   registros_puntos?: Prisma.AlumnoActividadUncheckedUpdateManyWithoutCoordinadorNestedInput
   logs?: Prisma.RegistroCambiosUncheckedUpdateManyWithoutUsuarioNestedInput
+  fcmTokens?: Prisma.FcmTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsuarioUncheckedUpdateManyWithoutGrupoInput = {
@@ -1523,6 +1662,7 @@ export type UsuarioCountOutputType = {
   registros_act: number
   registros_puntos: number
   logs: number
+  fcmTokens: number
 }
 
 export type UsuarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1531,6 +1671,7 @@ export type UsuarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   registros_act?: boolean | UsuarioCountOutputTypeCountRegistros_actArgs
   registros_puntos?: boolean | UsuarioCountOutputTypeCountRegistros_puntosArgs
   logs?: boolean | UsuarioCountOutputTypeCountLogsArgs
+  fcmTokens?: boolean | UsuarioCountOutputTypeCountFcmTokensArgs
 }
 
 /**
@@ -1578,6 +1719,13 @@ export type UsuarioCountOutputTypeCountLogsArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.RegistroCambiosWhereInput
 }
 
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeCountFcmTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FcmTokenWhereInput
+}
+
 
 export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_usuario?: boolean
@@ -1598,6 +1746,7 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   registros_puntos?: boolean | Prisma.Usuario$registros_puntosArgs<ExtArgs>
   logs?: boolean | Prisma.Usuario$logsArgs<ExtArgs>
   generacion?: boolean | Prisma.Usuario$generacionArgs<ExtArgs>
+  fcmTokens?: boolean | Prisma.Usuario$fcmTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
@@ -1656,6 +1805,7 @@ export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   registros_puntos?: boolean | Prisma.Usuario$registros_puntosArgs<ExtArgs>
   logs?: boolean | Prisma.Usuario$logsArgs<ExtArgs>
   generacion?: boolean | Prisma.Usuario$generacionArgs<ExtArgs>
+  fcmTokens?: boolean | Prisma.Usuario$fcmTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1680,6 +1830,7 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     registros_puntos: Prisma.$AlumnoActividadPayload<ExtArgs>[]
     logs: Prisma.$RegistroCambiosPayload<ExtArgs>[]
     generacion: Prisma.$GeneracionPayload<ExtArgs> | null
+    fcmTokens: Prisma.$FcmTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_usuario: number
@@ -2094,6 +2245,7 @@ export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends runtime.
   registros_puntos<T extends Prisma.Usuario$registros_puntosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$registros_puntosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AlumnoActividadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   logs<T extends Prisma.Usuario$logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegistroCambiosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   generacion<T extends Prisma.Usuario$generacionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$generacionArgs<ExtArgs>>): Prisma.Prisma__GeneracionClient<runtime.Types.Result.GetResult<Prisma.$GeneracionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  fcmTokens<T extends Prisma.Usuario$fcmTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$fcmTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FcmTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2684,6 +2836,30 @@ export type Usuario$generacionArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.GeneracionInclude<ExtArgs> | null
   where?: Prisma.GeneracionWhereInput
+}
+
+/**
+ * Usuario.fcmTokens
+ */
+export type Usuario$fcmTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FcmToken
+   */
+  select?: Prisma.FcmTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FcmToken
+   */
+  omit?: Prisma.FcmTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FcmTokenInclude<ExtArgs> | null
+  where?: Prisma.FcmTokenWhereInput
+  orderBy?: Prisma.FcmTokenOrderByWithRelationInput | Prisma.FcmTokenOrderByWithRelationInput[]
+  cursor?: Prisma.FcmTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FcmTokenScalarFieldEnum | Prisma.FcmTokenScalarFieldEnum[]
 }
 
 /**

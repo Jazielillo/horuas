@@ -82,3 +82,8 @@ export type ActividadPremio = Prisma.ActividadPremioModel
  * 
  */
 export type GanadorActividad = Prisma.GanadorActividadModel
+/**
+ * Model FcmToken
+ * 
+ */
+export type FcmToken = Prisma.FcmTokenModel

@@ -172,6 +172,7 @@ model Usuario {
   generacion              Generacion?        @relation(fields: [generacionId_generacion], references: [id_generacion])
   generacionId_generacion Int?
 
+  fcmTokens  FcmToken[] // Relación uno a muchos
   @@map("usuario")
 }
 
@@ -312,4 +313,15 @@ model GanadorActividad {
   @@unique([actividadPremioId, alumnoId])
   @@index([actividadPremioId])
   @@index([alumnoId])
+}
+
+model FcmToken {
+  id        String   @id @default(cuid())
+  token     String   @unique // El token de Firebase es único por dispositivo
+  userId    Int
+  user      Usuario     @relation(fields: [userId], references: [id_usuario], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  lastUsed  DateTime @updatedAt
+
+  @@index([userId])
 }
