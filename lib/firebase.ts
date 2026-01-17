@@ -10,13 +10,14 @@ import {
 
 // 1. Pega aquí tu configuración del Paso 1
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
+  apiKey: "AIzaSyBPw5OKeXgskxW7j83KoWRjt2vYdQ55r-M",
+  authDomain: "puntos-uas.firebaseapp.com",
+  projectId: "puntos-uas",
+  storageBucket: "puntos-uas.firebasestorage.app",
+  messagingSenderId: "536411777813",
+  appId: "1:536411777813:web:c15bf526d58a3a7de4971c"
 };
+
 
 // Inicializamos la app (evita reinicializar)
 const app =

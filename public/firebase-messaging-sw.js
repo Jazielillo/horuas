@@ -5,13 +5,14 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 // Aquí repites tu config (SÍ, es redundante, pero el Service Worker
 // vive aislado del resto de tu app y necesita saber quién es).
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID
+  apiKey: "AIzaSyBPw5OKeXgskxW7j83KoWRjt2vYdQ55r-M",
+  authDomain: "puntos-uas.firebaseapp.com",
+  projectId: "puntos-uas",
+  storageBucket: "puntos-uas.firebasestorage.app",
+  messagingSenderId: "536411777813",
+  appId: "1:536411777813:web:c15bf526d58a3a7de4971c"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
