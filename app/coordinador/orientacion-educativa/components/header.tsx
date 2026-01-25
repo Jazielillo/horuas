@@ -1,15 +1,4 @@
-// components/ActivityHeader.tsx
-
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
-  ArrowLeft,
-  Calendar,
-  Award,
-  Trophy,
-  Volleyball,
-  Guitar,
-  Users,
   Heart,
   Briefcase,
 } from "lucide-react";

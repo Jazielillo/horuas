@@ -1,7 +1,7 @@
 // utils/pointsCalculator.ts
 
-import { Alumno } from "@/app/models";
-import { ActivityPrize } from "@/app/models/activity";
+import { Alumno } from "@/lib/models";
+import { ActivityPrize } from "@/lib/models/activity";
 
 export const calculateNewTotal = (
   currentPoints: number,

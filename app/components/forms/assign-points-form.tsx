@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   assignPointsFormRefined,
   type AssignPointsForm,
-} from "@/schemas/assign-points-schema";
+} from "@/lib/schemas/assign-points-schema";
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SmartComboBox } from "@/components/ui/searchable-combobox";
-import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+import { usePointsAssignmentStore } from "@/lib/store/use-points-assignment-store";
 import {
   Select,
   SelectContent,
@@ -23,14 +23,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Alumno } from "@/app/models";
+import { Activity, Alumno } from "@/lib/models";
 import { Button } from "@/components/ui/button";
-import { useActivityStore } from "@/store/use-activity-store";
 
 export default function AssignPointsForm({
   onValueChange,
+  activitySelected
 }: {
   onValueChange?: (value: boolean) => void;
+  activitySelected?: Activity;
 }) {
   const {
     selectedYear,
@@ -49,10 +50,9 @@ export default function AssignPointsForm({
     reset,
   } = usePointsAssignmentStore();
 
-  const { activitySelected } = useActivityStore();
 
   const selectedStudent = students.find(
-    (s) => s.id_usuario === selectedStudentId
+    (s) => s.id_usuario === selectedStudentId,
   );
 
   const handleSelectStudent = async (student: Alumno | null) => {
@@ -60,7 +60,7 @@ export default function AssignPointsForm({
       loadSingleStudent(student);
       try {
         const res = await fetch(
-          `/api/alumno-actividad/check?alumno=${student.id_usuario}&actividad=${activityId}`
+          `/api/alumno-actividad/check?alumno=${student.id_usuario}&actividad=${activityId}`,
         );
         const hasActivity = await res.json();
 
@@ -75,8 +75,6 @@ export default function AssignPointsForm({
     const load = async () => {
       if (selectedGroup) {
         await loadStudentsByGroup(selectedGroup.id_grupo.toString());
-        console.log("Students loaded for group:", selectedGroup.nombre);
-        console.log("Students:", students);
       }
     };
     load();
@@ -162,7 +160,7 @@ export default function AssignPointsForm({
                   value={selectedGroup?.id_grupo.toString() || ""}
                   onValueChange={(group) => {
                     setGroup(
-                      groups.find((g) => g.id_grupo.toString() === group)!
+                      groups.find((g) => g.id_grupo.toString() === group)!,
                     );
                   }}
                   disabled={!selectedYear}

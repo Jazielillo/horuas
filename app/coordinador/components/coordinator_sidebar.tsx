@@ -1,17 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  LayoutDashboard,
-  Calendar,
-  UserPlus,
-  FileText,
-  LogOut,
-  Award,
-  Heart,
-  Briefcase,
-  Users,
-} from "lucide-react";
+import { Calendar, FileText, Award, Heart, Briefcase } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -25,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import { LogOutButton } from "./log-out-button";
 import { useState, useEffect } from "react";
-import { getSession } from "@/lib/session";
+import { useUserStore } from "@/lib/store/use-user-store";
 
 type NavigationItem = {
   title: string;
@@ -72,28 +61,19 @@ const allNavigationItems: NavigationItem[] = [
   // { title: "Gestión de Alumnos", url: "/coordinador/gestion-alumnos", icon: Users, roles: ["COORDINADOR"] },
 ];
 
-export function CoordinatorSidebar() {
+export function CoordinatorSidebar({ role }: { role: string }) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [navigationItems, setNavigationItems] = useState<NavigationItem[]>([]);
-  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadUserRole() {
-      const session = await getSession();
-      const role = session?.role || null;
-      setUserRole(role);
-
-      if (role) {
-        const filteredItems = allNavigationItems.filter((item) =>
-          item.roles.includes(role)
-        );
-        setNavigationItems(filteredItems);
-      }
+    if (role) {
+      const filteredItems = allNavigationItems.filter((item) =>
+        item.roles.includes(role),
+      );
+      setNavigationItems(filteredItems);
     }
-
-    loadUserRole();
-  }, []);
+  }, [role]);
 
   return (
     <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
@@ -109,13 +89,12 @@ export function CoordinatorSidebar() {
                   Coordinador
                 </p>
                 <p className="text-xs text-sidebar-foreground/70 truncate">
-                  {userRole === "COORDINADOR_DEPORTES" && "Deportes"}
-                  {userRole === "COORDINADOR_CULTURA" && "Cultura"}
-                  {userRole === "COORDINADOR_ORIENTACION" && "Orientación"}
-                  {userRole === "COORDINADOR_SERVICIO_SOCIAL" &&
-                    "Servicio Social"}
-                  {(userRole === "COORDINADOR" ||
-                    userRole === "COORDINADOR_AUXILIAR") &&
+                  {role === "COORDINADOR_DEPORTES" && "Deportes"}
+                  {role === "COORDINADOR_CULTURA" && "Cultura"}
+                  {role === "COORDINADOR_ORIENTACION" && "Orientación"}
+                  {role === "COORDINADOR_SERVICIO_SOCIAL" && "Servicio Social"}
+                  {(role === "COORDINADOR" ||
+                    role === "COORDINADOR_AUXILIAR") &&
                     "General"}
                 </p>
               </div>

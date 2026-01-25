@@ -34,7 +34,6 @@ export default async function proxy(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  console.log(isProtectedRoute && session?.id_usuario === undefined);
   // 1. Si no hay sesión y la ruta es protegida → login
   if (isProtectedRoute && session?.id_usuario === undefined) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
@@ -45,7 +44,6 @@ export default async function proxy(req: NextRequest) {
     if (role === "COORDINADOR") {
       return NextResponse.redirect(new URL("/coordinador/actividades", req.nextUrl));
     }
-    console.log(role);
     if (role === "ALUMNO") {
       return NextResponse.redirect(new URL("/alumno", req.nextUrl));
     }

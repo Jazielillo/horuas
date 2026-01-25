@@ -14,6 +14,7 @@ export const DeleteActivityDialog = ({
   reason,
   setReason,
   onConfirm,
+  deleteLoading,
 }: any) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent className="max-w-md">
@@ -34,15 +35,21 @@ export const DeleteActivityDialog = ({
         <Button variant="outline" onClick={() => onOpenChange(false)}>
           Cancelar
         </Button>
-        <Button variant="destructive" onClick={() => {
-          if(reason.trim() === "") {
-            alert("Por favor, proporciona una razón para eliminar la actividad.");
-            return;
-          }
-          onConfirm(reason);
-          onOpenChange(false);
-        }}>
-          Confirmar Eliminación
+        <Button
+          variant="destructive"
+          disabled={deleteLoading}
+          onClick={() => {
+            if (reason.trim() === "") {
+              alert(
+                "Por favor, proporciona una razón para eliminar la actividad.",
+              );
+              return;
+            }
+            onConfirm(reason);
+            onOpenChange(false);
+          }}
+        >
+          {deleteLoading ? "Eliminando..." : "Confirmar Eliminación "}
         </Button>
       </DialogFooter>
     </DialogContent>

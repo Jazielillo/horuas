@@ -1,5 +1,5 @@
 import { getStudentPoints } from "@/app/api/utils/getPoints";
-import { Alumno } from "@/app/models";
+import { Alumno } from "@/lib/models";
 import { Button } from "@/components/ui/button";
 import {
   DialogHeader,

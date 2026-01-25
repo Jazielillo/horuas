@@ -5,7 +5,7 @@ import {
   activityFullSchema,
   activitySchema,
   ActivitySchema,
-} from "@/schemas/activity-schema";
+} from "@/lib/schemas/activity-schema";
 import { Activity } from "../models";
 import z from "zod";
 
@@ -67,6 +67,7 @@ export async function createActivityAction(formData: ActivitySchema) {
   await sendNewActivityNotification(
     "Nueva Actividad Disponible",
     `Se ha creado la actividad: ${activity.nombre}. ¡Consulta los detalles y participa!`,
+    activity.id_actividad.toString(),
   );
   return { ok: true, activity };
 }
@@ -164,6 +165,7 @@ export async function updateActivityAction(
 import { revalidatePath } from "next/cache";
 import { checkIdUsuario } from "@/lib/check-id-usuario";
 import { NotificationService } from "../helpers/notification-helper";
+import { getSession } from "../session";
 
 // --- 1. FUNCIÓN MAPPER (EL SECRETO) ---
 // Esta función convierte CUALQUIER resultado de Prisma al tipo Activity limpio
@@ -209,6 +211,7 @@ export async function getAllActivitiesAction({
   ciclo_id?: number;
   departamento_id?: number;
 }): Promise<Activity[]> {
+  let role = await getSession().then((session) => session?.role);
   const where: any = {
     id_departamento: {
       not: 4, // Excluir departamento 4
@@ -217,6 +220,12 @@ export async function getAllActivitiesAction({
   if (ciclo_id != null) where.id_ciclo = ciclo_id;
   if (departamento_id != null) where.id_departamento = departamento_id;
   if (onlyClubs) where.actividad_grupal = true;
+
+  if (role === "COORDINADOR_DEPORTES") {
+    where.id_departamento = 1;
+  } else if (role === "COORDINADOR_CULTURA") {
+    where.id_departamento = 2;
+  }
 
   const activities = await prisma.actividad.findMany({
     where,
@@ -304,8 +313,6 @@ export async function updatePrizeAction(
   actividadId: number,
 ) {
   if (prizeId === 0) {
-    // Si prizeId es 0, significa que se está removiendo el premio
-    console.log("VOY A REMOVERRRRRRRRRRRRRRRR");
     await prisma.ganadorActividad.deleteMany({
       where: {
         alumnoId: alumnoId,
@@ -337,7 +344,6 @@ export async function updatePrizeAction(
     });
   } else {
     // 3. Si no existe, creamos un nuevo registro
-    console.log("VOY A CREARRRRRRRRRRRRRRRR");
     await prisma.ganadorActividad.create({
       data: {
         alumnoId: alumnoId,

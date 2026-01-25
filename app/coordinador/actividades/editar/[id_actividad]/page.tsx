@@ -1,5 +1,6 @@
-import { getActivityByIdAction } from "@/app/actions/activity-actions";
+
 import CoordinatorActivityForm from "@/app/coordinador/components/coordinator-activity-form";
+import { getActivityByIdAction } from "@/lib/actions/activity-actions";
 import { notFound } from "next/navigation";
 
 interface PageProps {
@@ -8,7 +9,7 @@ interface PageProps {
 
 export default async function EditActivityPage({ params }: PageProps) {
   // 1. Obtenemos el ID de la URL
-  const { id_actividad } = await params;
+  const { id_actividad } = params;
 
   // 2. Buscamos la data en el servidor
   const activity = await getActivityByIdAction(Number(id_actividad));

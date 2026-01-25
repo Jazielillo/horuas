@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAlumnoStore } from "@/store/use-alumno-store";
-import { useActivityStore } from "@/store/use-activity-store";
-import { Activity } from "@/app/models/activity";
+import { useAlumnoStore } from "@/lib/store/use-alumno-store";
+import { useActivityStore } from "@/lib/store/use-activity-store";
+import { Activity } from "@/lib/models/activity";
 import {
   ActivitiesTable,
   DeleteActivityDialog,
@@ -30,6 +30,14 @@ import {
   StudentInfoCard,
 } from "@/app/coordinador/components/student-detail";
 import { getSession } from "@/lib/session";
+import CoordinatorContext from "@/app/coordinador/context/coordinator-context";
+import { useActivitiesPage } from "@/features/activities/hooks/useActivitiesPage";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  deleteActivityStudentAction,
+  getActivitiesPrizesAction,
+  updatePrizeAction,
+} from "@/lib/actions/activity-actions";
 
 const CoordinatorStudentDetail = ({
   seeDataInfo = true,
@@ -47,33 +55,17 @@ const CoordinatorStudentDetail = ({
     changePrizeInActivity,
   } = useAlumnoStore();
 
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const { role } = useContext(CoordinatorContext);
 
-  useEffect(() => {
-    async function loadUserRole() {
-      const session = await getSession();
-      const role = session?.role || null;
-      setUserRole(role);
-    }
-    loadUserRole();
-  }, []);
-
-  const {
-    ciclos,
-    loadCiclos,
-    loadPrizesActivities,
-    activitiesPrizes,
-    updatePrizeActivity,
-    newActivity,
-    deleteActivityStudent,
-  } = useActivityStore();
+  const { ciclos } = useActivitiesPage();
 
   // --- Local State ---
   const [deleteReason, setDeleteReason] = useState<string>("");
   const [filterCycle, setFilterCycle] = useState("all");
   const [filterDepartment, setFilterDepartment] = useState("all");
   const [lugarPremio, setLugarPremio] = useState<string>("participation");
-
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [activitiesPrizes, setActivitiesPrizes] = useState<any[]>([]);
   // Dialog States
   const [editActivityId, setEditActivityId] = useState<number>(0);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
@@ -84,38 +76,39 @@ const CoordinatorStudentDetail = ({
     if (seeDataInfo) {
       const init = async () => {
         await loadAlumnoCompleto(Number(id));
-        await loadCiclos();
-      };
-      init();
-    } else {
-      const init = async () => {
-        await loadCiclos();
       };
       init();
     }
-  }, [id, loadAlumnoCompleto, loadCiclos]);
+  }, [id, loadAlumnoCompleto]);
 
   useEffect(() => {
-    if (editActivityId) loadPrizesActivities(editActivityId);
-  }, [editActivityId, loadPrizesActivities]);
+    const loadPrizesActivities = async () => {
+      setActivitiesPrizes(await getActivitiesPrizesAction(editActivityId));
+    };
+    if (editActivityId) loadPrizesActivities();
+  }, [editActivityId]);
 
-  useEffect(() => {
-    if (newActivity) changeActivityInAlumnoCompleto(newActivity);
-  }, [newActivity]);
+  // useEffect(() => {
+  //   if (newActivity) changeActivityInAlumnoCompleto(newActivity);
+  // }, [newActivity]);
 
   // --- Logic & Handlers ---
   const filteredActivities = selectedAlumnoCompleto?.actividades.filter(
     (activity) => {
       const matchesCycle =
         filterCycle === "all" || activity.ciclo === filterCycle;
-      const matchesDepartment =
-        userRole === "COORDINADOR_DEPORTES"
-          ? "Deportes"
-          : userRole === "COORDINADOR_CULTURA"
-          ? "Cultura"
-          : filterDepartment === "all";
+      let matchesDepartment = true;
+      if (role === "COORDINADOR_DEPORTES") {
+        matchesDepartment = activity.departamento === "Deportes";
+      } else if (role === "COORDINADOR_CULTURA") {
+        matchesDepartment = activity.departamento === "Cultura";
+      } else {
+        matchesDepartment =
+          filterDepartment === "all" ||
+          activity.departamento === filterDepartment;
+      }
       return matchesCycle && matchesDepartment;
-    }
+    },
   );
 
   // Calculations
@@ -128,7 +121,7 @@ const CoordinatorStudentDetail = ({
   const totalPointsFiltered =
     filteredActivities?.reduce(
       (sum, act) => sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
-      0
+      0,
     ) || 0;
 
   const orientationPointsFiltered =
@@ -137,7 +130,7 @@ const CoordinatorStudentDetail = ({
       .reduce(
         (sum, act) =>
           sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
-        0
+        0,
       ) || 0;
 
   const serviceSocialPointsFiltered =
@@ -146,7 +139,7 @@ const CoordinatorStudentDetail = ({
       .reduce(
         (sum, act) =>
           sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
-        0
+        0,
       ) || 0;
 
   const sportsPointsFiltered =
@@ -155,7 +148,7 @@ const CoordinatorStudentDetail = ({
       .reduce(
         (sum, act) =>
           sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
-        0
+        0,
       ) || 0;
 
   const culturePointsFiltered =
@@ -164,46 +157,64 @@ const CoordinatorStudentDetail = ({
       .reduce(
         (sum, act) =>
           sum + (act.puntos_participacion ?? 0) + getPrizePoints(act),
-        0
+        0,
       ) || 0;
   // Handlers
   const openEditDialog = (activity: Activity) => {
     setEditActivityId(activity.id_actividad as number);
     setLugarPremio(
       activity.premio != null
-        ? activity.premio[0]?.lugar?.toString() ?? "participation"
-        : "participation"
+        ? (activity.premio[0]?.lugar?.toString() ?? "participation")
+        : "participation",
     );
     setEditDialogOpen(true);
   };
 
   const handleSaveEdit = async () => {
+    console.log(activitiesPrizes, lugarPremio);
     const idPrize = activitiesPrizes.find(
       (prize) =>
         prize?.lugar?.toString() === lugarPremio &&
-        lugarPremio !== "participation"
+        lugarPremio !== "participation",
     )?.id;
-    const { premio } = await updatePrizeActivity(
+    console.log("ID PREMIO SELECCIONADO:", idPrize);
+    const premio = await updatePrizeAction(
       idPrize || 0,
       selectedAlumnoCompleto!.alumno.id_usuario,
-      editActivityId
+      editActivityId,
     );
-    changePrizeInActivity(premio, editActivityId);
+    if (!premio) return;
+    changePrizeInActivity(
+      premio.premio.find((el) => el?.id === idPrize),
+      editActivityId,
+    );
     setEditDialogOpen(false);
   };
 
-  const handleDeleteConfirm = () => {
-    deleteActivityStudent(
+  const handleDeleteConfirm = async () => {
+    setDeleteLoading(true);
+    const result = await deleteActivityStudentAction(
       editActivityId,
       selectedAlumnoCompleto!.alumno.id_usuario,
-      deleteReason
+      deleteReason,
     );
-    deleteActivityInAlumnoCompleto(editActivityId);
-    setEditActivityId(0);
-    setRemoveDialogOpen(false);
+    if (result?.ok) {
+      deleteActivityInAlumnoCompleto(editActivityId);
+      setEditActivityId(0);
+      setRemoveDialogOpen(false);
+      setDeleteLoading(false);
+    }
   };
 
-  if (!selectedAlumnoCompleto) return <div>Cargando...</div>;
+  if (!selectedAlumnoCompleto)
+    return (
+      <div className="h-[50vh] flex flex-col items-center justify-center space-y-4">
+        <Spinner className="w-10 h-10 text-primary animate-spin" />
+        <p className="text-muted-foreground animate-pulse">
+          Cargando perfil...
+        </p>
+      </div>
+    );
 
   return (
     <div className="space-y-6">
@@ -240,13 +251,15 @@ const CoordinatorStudentDetail = ({
                 getPrizePoints({ departamento: "Deportes" }) +
                 getPrizePoints({ departamento: "Cultura" }),
             }}
-            userRole={userRole || ""}
+            userRole={role || ""}
           />
         </>
       ) : (
         <div className="flex items-center gap-4">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-1">Detalle del Alumno</h1>
+            <h1 className="text-3xl font-bold mb-1">
+              Historial de Actividades
+            </h1>
             <p className="text-muted-foreground">
               Información completa y historial
             </p>
@@ -273,7 +286,7 @@ const CoordinatorStudentDetail = ({
                 <div className="space-y-2 w-full">
                   <Label>Ciclo Escolar</Label>
                   <Select value={filterCycle} onValueChange={setFilterCycle}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full ">
                       <SelectValue placeholder="Todos" />
                     </SelectTrigger>
                     <SelectContent>
@@ -286,15 +299,15 @@ const CoordinatorStudentDetail = ({
                     </SelectContent>
                   </Select>
                 </div>
-                {userRole !== "COORDINADOR_CULTURA" &&
-                  userRole !== "COORDINADOR_DEPORTES" && (
-                    <div className="space-y-2">
+                {role !== "COORDINADOR_CULTURA" &&
+                  role !== "COORDINADOR_DEPORTES" && (
+                    <div className="space-y-2 w-full">
                       <Label>Departamento</Label>
                       <Select
                         value={filterDepartment}
                         onValueChange={setFilterDepartment}
                       >
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full ">
                           <SelectValue placeholder="Todos" />
                         </SelectTrigger>
                         <SelectContent>
@@ -390,6 +403,7 @@ const CoordinatorStudentDetail = ({
       <DeleteActivityDialog
         open={removeDialogOpen}
         onOpenChange={setRemoveDialogOpen}
+        deleteLoading={deleteLoading}
         reason={deleteReason}
         setReason={setDeleteReason}
         onConfirm={handleDeleteConfirm}

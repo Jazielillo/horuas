@@ -1,62 +1,112 @@
 // hooks/useActivityLoader.ts
 
-import { useActivityStore } from "@/store/use-activity-store";
-import { useEffect } from "react";
+import {
+  getFutureActivitiesAction,
+  getOrientacionActivitiesAction,
+  getServicioSocialActivitiesAction,
+} from "@/lib/actions/activity-actions";
+import { Activity } from "@/lib/models/activity";
+import { useActivityStore } from "@/lib/store/use-activity-store";
+import { useEffect, useState } from "react";
 export const useActivityLoader = (activityId: string | undefined) => {
-  const {
-    getActivityById,
-    loadActivityById,
-    activitySelected,
-    setActivitySelected,
-  } = useActivityStore();
+  const { fetchActivityById, loading, activities } = useActivityStore();
+  const activitySelected = activities.find((act) => act.id_actividad === Number(activityId)) ?? null;
 
   useEffect(() => {
     if (!activityId) return;
 
     const id = Number(activityId);
 
-    // 1. Intentar obtener de cache (Zustand)
-    const cachedActivity = getActivityById(id);
-
-    if (cachedActivity) {
-      // Si está en cache, usarla directamente
-      setActivitySelected(cachedActivity);
-    } else {
-      // Si no está en cache, cargarla desde la API
-      loadActivityById(id);
-    }
-  }, [activityId, getActivityById, loadActivityById, setActivitySelected]);
+    fetchActivityById(id);
+  }, [activityId, fetchActivityById]);
 
   return {
     activitySelected,
-    isLoading: !activitySelected && !!activityId,
+    isLoading: loading,
   };
 };
 
 export const useActivityOrientationLoader = () => {
-  const { getOrientacionActivities, activityList } = useActivityStore();
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const load = async () => {
+    try {
+      setLoading(true);
+      const data = await getOrientacionActivitiesAction();
+      setActivities(data);
+    } catch (err) {
+      setError("Error al cargar actividades futuras");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Cargar actividades de orientación educativa al montar el hook
-    getOrientacionActivities();
-  }, [getOrientacionActivities]);
-
+    load();
+  }, []);
   return {
-    activityList,
-    isLoading: !activityList.length,
+    activities,
+    loading,
+    error,
+    reload: load,
   };
 };
 
 export const useActivityServicioSocialLoader = () => {
-  const { getServicioSocialActivities, activityList } = useActivityStore();
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = async () => {
+    try {
+      setLoading(true);
+      const data = await getServicioSocialActivitiesAction();
+      setActivities(data);
+    } catch (err) {
+      setError("Error al cargar actividades futuras");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Cargar actividades de servicio social al montar el hook
-    getServicioSocialActivities();
-  }, [getServicioSocialActivities]);
+    load();
+  }, []);
 
   return {
-    activityList,
-    isLoading: !activityList.length,
+    activities,
+    loading,
+    error,
+    reload: load,
   };
 };
+
+export function useFutureActivities() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = async () => {
+    try {
+      setLoading(true);
+      const data = await getFutureActivitiesAction();
+      setActivities(data);
+    } catch (err) {
+      setError("Error al cargar actividades futuras");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  return {
+    activities,
+    loading,
+    error,
+    reload: load,
+  };
+}

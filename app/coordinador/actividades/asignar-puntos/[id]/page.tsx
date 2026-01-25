@@ -9,10 +9,10 @@ import {
   StudentHasActivityState,
 } from "@/app/coordinador/components/empty-state";
 import { StudentsTable } from "@/app/coordinador/components/student-table";
-import { ActivityPrize } from "@/app/models/activity";
+import { ActivityPrize } from "@/lib/models/activity";
 import { useActivityLoader } from "@/hooks/use-activity-loader";
 import { useStudentSelection } from "@/hooks/use-student-selection";
-import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+import { usePointsAssignmentStore } from "@/lib/store/use-points-assignment-store";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -34,27 +34,25 @@ const CoordinatorAssign = () => {
   } = usePointsAssignmentStore();
 
   useEffect(() => {
-    return () => {
-      reset();
-    };
-  }, [reset]);
+    reset();
+  }, []);
 
   useEffect(() => {
     const activityId = Array.isArray(id)
       ? parseInt(id[0])
       : id
-      ? parseInt(id as string)
-      : null;
+        ? parseInt(id as string)
+        : null;
     setActivity(activityId);
   }, [id, setActivity]);
 
   const [studentHasActivity, setStudentHasActivity] = useState<boolean | null>(
-    null
+    null,
   );
 
   // Hook para cargar la actividad
   const { activitySelected, isLoading: isLoadingActivity } = useActivityLoader(
-    Array.isArray(id) ? id[0] : id
+    Array.isArray(id) ? id[0] : id,
   );
 
   // Hook para manejar selección de estudiantes
@@ -79,7 +77,7 @@ const CoordinatorAssign = () => {
     studentId: number,
     prizeId: number,
     awardType: string,
-    puntos_otorgados: number
+    puntos_otorgados: number,
   ) => {
     setStudentAwards((prev) => ({
       ...prev,
@@ -125,7 +123,7 @@ const CoordinatorAssign = () => {
   };
 
   const selectedStudentsObjects = students.filter((s) =>
-    selectedStudentIds.includes(s.id_usuario)
+    selectedStudentIds.includes(s.id_usuario),
   );
 
   // // Determinar qué mostrar
@@ -167,7 +165,7 @@ const CoordinatorAssign = () => {
       {/* Estado: No hay selección */}
       {!shouldShowTable && !loadingStudents && <NoSelectionState />}
 
-      {loadingStudents && <LoadingStudentState />}
+      {loadingStudents && students.length === 0 && <LoadingStudentState />}
 
       {/* Diálogo de confirmación */}
       <SummaryDetailsPoints

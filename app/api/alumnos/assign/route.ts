@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { assignPointsFormRefined, assignPointsFullSchema } from "@/schemas/assign-points-schema";
+import { assignPointsFormRefined, assignPointsFullSchema } from "@/lib/schemas/assign-points-schema";
 import { assignPointsAction as assignPointsInternal } from "@/app/actions/assign-points-action";
 
 export async function POST(req: Request) {

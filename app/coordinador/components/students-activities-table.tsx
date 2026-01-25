@@ -20,7 +20,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Check, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import { Activity, Alumno } from "@/app/models";
+import { Activity, Alumno } from "@/lib/models";
 import { useEffect } from "react";
 
 interface StudentsActivitiesTableProps {
@@ -124,7 +124,7 @@ export const StudentsActivitiesTable = ({
           </div>
 
           {/* Barra de búsqueda (solo para modo grupo) */}
-          {!isSingleStudent && students.length > 0 && (
+          {!isSingleStudent  && (
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input

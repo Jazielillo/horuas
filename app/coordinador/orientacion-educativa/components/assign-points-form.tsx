@@ -1,5 +1,5 @@
-import { getStudents } from "@/app/actions/students-actions";
-import { Alumno } from "@/app/models";
+
+import { Alumno } from "@/lib/models";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,11 +19,12 @@ import {
 import {
   type AssignPointsForm,
   assignPointsFormRefined,
-} from "@/schemas/assign-points-schema";
-import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+} from "@/lib/schemas/assign-points-schema";
+import { usePointsAssignmentStore } from "@/lib/store/use-points-assignment-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { getStudents } from "@/lib/actions/students-actions";
 
 export default function AssignPointsForm({
   onValueChange,

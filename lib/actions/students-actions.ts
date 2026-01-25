@@ -1,8 +1,8 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { getStudentPoints } from "../api/utils/getPoints";
 import { map } from "zod";
 import { AlumnoCompleto } from "../models/alumno-completo";
+import { getStudentPoints } from "@/app/api/utils/getPoints";
 
 type GetStudentsParams = {
   groupId?: string | number | null;

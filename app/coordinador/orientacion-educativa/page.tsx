@@ -1,19 +1,15 @@
 "use client";
 import { useActivityOrientationLoader } from "@/hooks/use-activity-loader";
 import { useStudentSelection } from "@/hooks/use-student-selection";
-import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+import { usePointsAssignmentStore } from "@/lib/store/use-points-assignment-store";
 import { act, useEffect, useState } from "react";
 import { ActivityHeader } from "./components/header";
 import { StudentsActivitiesTable } from "../components/students-activities-table";
-import {
-  LoadingStudentState,
-  StudentHasActivityState,
-} from "../components/empty-state";
-import { fetchActivitiesModule } from "@/app/actions/activity-actions";
+import { LoadingStudentState } from "../components/empty-state";
 import AssignPointsForm from "./components/assign-points-form";
 import { buildSelectedIdsMap } from "./utils/utils";
-import { bulkAssignPointsModuleAction } from "@/app/actions/assign-points-action";
 import { toast } from "sonner";
+import { fetchActivitiesModule } from "@/lib/actions/activity-actions";
 
 const OrientacionEducativa = () => {
   // Store de Zustand
@@ -28,14 +24,14 @@ const OrientacionEducativa = () => {
   } = usePointsAssignmentStore();
 
   // Hook para cargar la actividad
-  const { activityList, isLoading: isLoadingActivity } =
+  const { activities: activityList, loading: isLoadingActivity } =
     useActivityOrientationLoader();
 
   const { filteredStudents, searchTerm, setSearchTerm } =
     useStudentSelection(students);
 
   const [selectedIds, setSelectedIds] = useState<Map<number, Set<number>>>(
-    new Map()
+    new Map(),
   );
   const [oldSelectedIds, setOldSelectedIds] = useState<
     Map<number, Set<number>>
@@ -70,13 +66,11 @@ const OrientacionEducativa = () => {
     reset();
   }, [reset]);
 
-  // Handler para asignar puntos
-  const handleAssignPoints = async () => {};
 
   // Toggle selección individual (alumno + actividad específica)
   const handleToggleStudentActivity = (
     studentId: number,
-    activityId: number
+    activityId: number,
   ) => {
     setSelectedIds((prev) => {
       const newMap = new Map(prev);
@@ -165,7 +159,7 @@ const OrientacionEducativa = () => {
   // Función para comparar si los Maps son iguales
   const areMapsEqual = (
     map1: Map<number, Set<number>>,
-    map2: Map<number, Set<number>>
+    map2: Map<number, Set<number>>,
   ): boolean => {
     if (map1.size !== map2.size) return false;
 
@@ -187,7 +181,7 @@ const OrientacionEducativa = () => {
   return (
     <div className="space-y-6">
       {/* Header con información de la actividad */}
-      <ActivityHeader name="Orientación Educativa"/>
+      <ActivityHeader name="Orientación Educativa" />
 
       {/* Formulario de selección (Año, Grupo, Alumno) */}
       <AssignPointsForm />
@@ -204,14 +198,14 @@ const OrientacionEducativa = () => {
           onToggleAllActivitiesForStudent={handleToggleAllActivitiesForStudent}
           onToggleActivityForAllStudents={handleToggleActivityForAllStudents}
           loading={loadingStudents}
-          isSingleStudent={false}
+          isSingleStudent={!!selectedStudentId}
           disabled={!hasChanges || submitting}
           submitting={submitting}
           onAssign={async () => {
             const result = await submitPointsAssignmentModules(
               selectedIds,
               activityList.map((a) => a.id_actividad),
-              students.map((s) => s.id_usuario)
+              filteredStudents.map((s) => s.id_usuario),
             );
             if (result?.ok) {
               setOldSelectedIds(new Map(selectedIds));
@@ -224,23 +218,6 @@ const OrientacionEducativa = () => {
       )}
 
       {loadingStudents && <LoadingStudentState />}
-
-      {/* Estado: Alumno ya tiene actividad */}
-      {/* {studentHasActivity && <StudentHasActivityState />} */}
-
-      {/* Estado: No hay selección */}
-      {/* {shouldShowEmptySelection && <NoSelectionState />} */}
-
-      {/* Diálogo de confirmación */}
-      {/* <SummaryDetailsPoints
-        open={confirmDialogOpen}
-        onOpenChange={setConfirmDialogOpen}
-        onConfirm={handleAssignPoints}
-        selectedActivityData={activitySelected}
-        selectedStudents={selectedStudents}
-        students={studentsOfGroup}
-        studentsAwards={studentAwards}
-      /> */}
     </div>
   );
 };

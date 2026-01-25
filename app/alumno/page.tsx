@@ -1,145 +1,19 @@
 "use client";
 import { Spinner } from "@/components/ui/spinner";
-import { ProgressChart } from "../components/progress-chart";
-import { useAlumnoStore } from "@/store/use-alumno-store";
+import { useAlumnoStore } from "@/lib/store/use-alumno-store";
 import { useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Calendar, CalendarDays, Clock, MapPin } from "lucide-react";
-import { useActivityStore } from "@/store/use-activity-store";
-import { Badge } from "@/components/ui/badge";
-import { AllActivities } from "../coordinador/components/all-activities";
+import { Calendar } from "lucide-react";
 import { CategoryProgressCard } from "./components/category-card";
 import { ActivityCard } from "./components/activity-card";
-import { solicitarPermiso } from "../helpers/request-permission";
-import { onMessageListener } from "@/lib/firebase";
-
-// export const Student = () => {
-//   // Mock data - in production, this would come from API
-//   const { selectedAlumnoCompleto, loading } = useAlumnoStore();
-//   const {
-//       setActivitySelected,
-//     } = useActivityStore();
-//   const {
-//     nextActivities,
-//     loadFutureActivities,
-//     loading: loadingActivities,
-//   } = useActivityStore();
-
-//   useEffect(() => {
-//     setActivitySelected(null);
-//     loadFutureActivities();
-//   }, [loadFutureActivities]);
-
-//   return (
-//     <div className="space-y-6">
-//       {/* Header */}
-//       <div className="space-y-3">
-//         <h1 className="text-3xl font-bold">Mi Progreso</h1>
-
-//         {loading ? (
-//           <div className="flex items-center gap-3 bg-muted/30 p-4 rounded-xl border">
-//             <Spinner className="text-primary" />
-//             <p className="text-muted-foreground">
-//               Cargando información del alumno...
-//             </p>
-//           </div>
-//         ) : (
-//           <div className="p-4 rounded-xl border bg-card shadow-sm flex items-center gap-4">
-//             {/* Avatar del alumno (iniciales) */}
-//             <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">
-//               {selectedAlumnoCompleto?.alumno.nombre?.charAt(0).toUpperCase()}
-//             </div>
-
-//             <div className="space-y-1">
-//               <p className="text-xl font-semibold">
-//                 {selectedAlumnoCompleto?.alumno.nombre}
-//               </p>
-//               <p className="text-muted-foreground">
-//                 Grupo:{" "}
-//                 <span className="font-medium text-foreground">
-//                   {selectedAlumnoCompleto?.alumno.grupo}
-//                 </span>
-//               </p>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-
-//       {/* Progress Section */}
-//       <div className="space-y-4">
-//         {loading ? (
-//           <div className="flex gap-2"></div>
-//         ) : (
-//           <ProgressChart
-//             puntos_cultura={selectedAlumnoCompleto?.puntos.cultura ?? 0}
-//             puntos_deportes={selectedAlumnoCompleto?.puntos.deportes ?? 0}
-//             puntos_orientacion_educativa={selectedAlumnoCompleto?.puntos.orientacion_educativa ?? 0}
-//             puntos_servicio_social={selectedAlumnoCompleto?.puntos.servicio_social ?? 0}
-//           />
-//         )}
-//       </div>
-
-//       {/* Upcoming Events */}
-//       <Card>
-//         <CardHeader>
-//           <div className="flex items-center justify-between">
-//             <div>
-//               <CardTitle>Eventos Próximos</CardTitle>
-//               <CardDescription>No te pierdas estas actividades</CardDescription>
-//             </div>
-//             <CalendarDays className="w-5 h-5 text-muted-foreground" />
-//           </div>
-//         </CardHeader>
-//         <CardContent>
-//           <div className="space-y-3">
-//             {loadingActivities ? (
-//               <div className="flex justify-center items-center flex-col gap-4 mt-20">
-//                 <Spinner className="size-20 text-primary" />
-//               </div>
-//             ) : nextActivities && nextActivities.length > 0 ? (
-//               <AllActivities activities={nextActivities} viewOnly={true} />
-//             ) : (
-//               <p className="text-center text-muted-foreground my-10">
-//                 No se encontraron actividades.
-//               </p>
-//             )}
-//           </div>
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// };
-
-// export default Student;
+import { solicitarPermiso } from "../../lib/helpers/request-permission";
+import { useFutureActivities } from "@/hooks/use-activity-loader";
 
 export const Student = () => {
   const { selectedAlumnoCompleto, loading } = useAlumnoStore();
-  const {
-    setActivitySelected,
-    nextActivities,
-    loadFutureActivities,
-    loading: loadingActivities,
-  } = useActivityStore();
-
-  useEffect(() => {
-    setActivitySelected(null);
-    loadFutureActivities();
-  }, [loadFutureActivities]);
+  const { activities, loading: loadingActivities } = useFutureActivities();
 
   useEffect(() => {
     solicitarPermiso();
-    onMessageListener((payload) => {
-      console.log("Mensaje recibido en primer plano:", payload);
-      alert(
-        `Nueva notificación: ${payload.notification?.title || "Sin título"}`,
-      );
-    });
   }, []);
 
   // Pantalla de carga inicial más elegante
@@ -155,7 +29,6 @@ export const Student = () => {
   }
 
   const alumno = selectedAlumnoCompleto?.alumno;
-  const puntos = selectedAlumnoCompleto?.puntos;
 
   return (
     <div className="space-y-8 pb-10">
@@ -169,14 +42,15 @@ export const Student = () => {
 
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight">
-              Hola, {alumno?.nombre?.split(" ")[0]} 👋
+              Hola, {alumno?.nombre?.split(" ")[0]}{" "}
+              {alumno?.nombre?.split(" ")[1]} 👋
             </h1>
-            <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-              <span className="bg-secondary px-2 py-1 rounded-md text-foreground font-medium">
+            <div className="flex flex-wrap gap-2 text-sm ">
+              <span className="dark:bg-card px-2 py-1 rounded-md text-foreground font-medium">
                 Grupo {alumno?.grupo}
               </span>
-              <span className="flex items-center gap-1">
-                Matrícula: {alumno?.id_usuario || "----"}
+              <span className="flex items-center gap-1 dark:bg-card px-2 py-1 rounded-md text-foreground font-medium">
+                Número de cuenta: {alumno?.num_cuenta || "----"}
               </span>
             </div>
           </div>
@@ -187,7 +61,7 @@ export const Student = () => {
       {/* Progress Section */}
       <div className="space-y-4">
         <h2 className="text-xl font-semibold tracking-tight text-foreground/90">
-          Tu Tablero de Metas
+          Progreso Global
         </h2>
 
         {loading ? (
@@ -247,9 +121,9 @@ export const Student = () => {
             <div className="flex justify-center p-10">
               <Spinner />
             </div>
-          ) : nextActivities && nextActivities.length > 0 ? (
+          ) : activities && activities.length > 0 ? (
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {nextActivities.map((activity) => (
+              {activities.map((activity) => (
                 // Tarjeta de actividad individual (Simplificada para el ejemplo)
                 <ActivityCard
                   key={activity.id_actividad}
@@ -268,18 +142,6 @@ export const Student = () => {
           )}
         </div>
       </div>
-      {/* 4. Columna lateral (Opcional): Resumen o Avisos */}
-      {/* <div className="md:col-span-7 lg:col-span-2 space-y-4">
-          <Card className="bg-primary text-primary-foreground border-none">
-            <CardHeader>
-              <CardTitle className="text-lg">¿Sabías que?</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm opacity-90">
-              Necesitas completar los 4 módulos al 100% antes de tu 6to semestre
-              para liberar tu certificado sin retrasos.
-            </CardContent>
-          </Card>
-        </div> */}
     </div>
   );
 };

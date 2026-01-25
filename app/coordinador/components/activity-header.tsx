@@ -11,7 +11,7 @@ import {
   Guitar,
   Users 
 } from "lucide-react";
-import { Activity } from "@/app/models";
+import { Activity } from "@/lib/models";
 import { formatFechaLarga } from "./all-activities";
 
 interface ActivityHeaderProps {

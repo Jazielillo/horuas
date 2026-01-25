@@ -21,15 +21,13 @@ const messaging = firebase.messaging();
 // Este evento es opcional, sirve para manejar qué pasa cuando
 // recibes la notificación en segundo plano.
 messaging.onBackgroundMessage((payload) => {
-  console.log('Mensaje en segundo plano:', payload);
-
   const notificationTitle = payload.notification.title || "Nueva Notificación";
   const notificationOptions = {
     body: payload.notification.body || "Tienes un mensaje nuevo.",
-    icon: '/logo.png', // USA EL MISMO DE TU MANIFEST
-    badge: '/logo.png', // Este es el iconito pequeño que sale en la barra de estado
+    icon: '/icons/icon-192x192.png', // USA EL MISMO DE TU MANIFEST
+    badge: '/icons/icon-72x72.png', // Este es el iconito pequeño que sale en la barra de estado
     data: {
-      url: payload.data?.url || '/' // Puedes enviar una URL para que al dar click abra esa página
+      url: payload.data?.url || payload.fcmOptions?.link || '/' // Toma la URL del data o del fcmOptions
     }
   };
 
@@ -40,14 +38,15 @@ messaging.onBackgroundMessage((payload) => {
 // EVENTO EXTRA: Qué pasa cuando el usuario hace CLICK en la notificación
 self.addEventListener('notificationclick', (event) => {
   event.notification.close(); // Cierra la notificación
-  const urlToOpen = event.notification.data.url;
+  const urlToOpen = new URL(event.notification.data.url, self.location.origin).href;
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
-      // Si la app está abierta, enfocarla
+      // Si la app está abierta en cualquier URL, enfocarla y navegar
       for (let client of windowClients) {
-        if (client.url === urlToOpen && 'focus' in client) {
-          return client.focus();
+        if ('focus' in client) {
+          client.focus();
+          return client.navigate(urlToOpen);
         }
       }
       // Si no está abierta, abrir una nueva pestaña

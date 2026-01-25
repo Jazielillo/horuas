@@ -16,10 +16,9 @@
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib",
-    "hooks": "@/hooks",
-    "schemas": "@/schemas",
-    "actions": "@/app/actions",
-    "store": "@/store"
+    "hooks": "@/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@aceternity": "https://ui.aceternity.com/registry/{name}.json"
+  }
 }

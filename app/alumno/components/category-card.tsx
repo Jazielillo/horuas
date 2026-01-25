@@ -64,7 +64,7 @@ const categoriesConfig = {
 };
 
 interface CategoryProgressCardProps {
-  type: keyof typeof categoriesConfig;
+  type: "cultura" | "deportes" | "orientacion_educativa" | "servicio_social";
   points: number;
   // Opcional: si quieres pasar el GIF desde fuera, sino usa el default del config
   customGif?: string;

@@ -1,9 +1,10 @@
-import { getAlumnoInfo } from "@/app/actions/students-actions";
-import { Activity, Alumno } from "@/app/models";
-import { ActivityPrize } from "@/app/models/activity";
-import { AlumnoCompleto } from "@/app/models/alumno-completo";
+
+import { Activity, Alumno } from "@/lib/models";
+import { ActivityPrize } from "@/lib/models/activity";
+import { AlumnoCompleto } from "@/lib/models/alumno-completo";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
+import { getAlumnoInfo } from "../actions/students-actions";
 interface AlumnoState {
   selectedAlumno: Alumno | null;
   activityList: Activity[];

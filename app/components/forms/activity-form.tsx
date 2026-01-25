@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  createActivityAction,
-  updateActivityAction,
-} from "@/app/actions/activity-actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,13 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -29,8 +18,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { activitySchema, type ActivitySchema } from "@/schemas/activity-schema";
-import { useActivityStore } from "@/store/use-activity-store";
+import {
+  createActivityAction,
+  updateActivityAction,
+} from "@/lib/actions/activity-actions";
+import {
+  activitySchema,
+  type ActivitySchema,
+} from "@/lib/schemas/activity-schema";
+import { useActivityStore } from "@/lib/store/use-activity-store";
+import { useCatalogStore } from "@/lib/store/use-catalog-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select } from "@radix-ui/react-select";
 import { Plus, Save, Trash2, Trophy, X } from "lucide-react";
@@ -38,138 +35,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { activityFormSchema, ActivitySchema } from "@/schemas/activity-schema";
-// import {
-//   createActivityAction,
-//   updateActivityAction,
-// } from "@/app/actions/activity-actions";
-
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/ui/textarea";
-// import {
-//   Select,
-//   SelectTrigger,
-//   SelectContent,
-//   SelectItem,
-//   SelectValue,
-// } from "@/components/ui/select";
-// import { Switch } from "@/components/ui/switch";
-// import { Button } from "@/components/ui/button";
-// import { Label } from "@/components/ui/label";
-// import { useActivityStore } from "@/store/use-activity-store";
-// import { Activity } from "@/app/models";
-// import { useEffect } from "react";
-
-// export default function ActivityForm({
-//   defaultValues,
-//   onSuccess,
-// }: {
-//   defaultValues?: Partial<ActivitySchema>;
-//   onSuccess?: (activity: any) => void;
-// }) {
-//   const { addActivity, activitySelected, updateActivity } = useActivityStore();
-//   const form = useForm<ActivitySchema>({
-//     resolver: zodResolver(activityFormSchema),
-//     defaultValues: defaultValues || {
-//       name: "",
-//       description: "",
-//       date: "",
-//       points: 0,
-//     },
-//   });
-
-//   useEffect(() => {
-//     if (activitySelected) {
-//       form.reset({
-//         name: activitySelected.nombre,
-//         description: activitySelected.descripcion,
-//         date: activitySelected.fecha
-//           ? new Date(activitySelected.fecha).toISOString().split("T")[0]
-//           : "",
-//         points: activitySelected.puntos,
-//       });
-//     }
-//   }, [activitySelected]);
-
-//   async function onSubmit(values: ActivitySchema) {
-//     if (activitySelected) {
-//       console.log("Updating activity...", values);
-//       //EDIT
-//       const updated = await updateActivityAction(
-//         values,
-//         activitySelected.id_actividad
-//       );
-//       //borrar la activitySelected, y actualizar mi estado
-//       updateActivity({
-//         ...updated.updatedActivity,
-//         descripcion: updated.updatedActivity.descripcion ?? undefined,
-//       });
-//       onSuccess?.(updated.updatedActivity);
-//     } else {
-//       console.log("Creating activity...", values);
-//       const res = await createActivityAction(values);
-
-//       if (!res.ok) {
-//         console.log("Errores =>", res.errors);
-//         return;
-//       }
-//       if (res.activity) {
-//         addActivity({
-//           ...res.activity,
-//           descripcion: res.activity.descripcion ?? undefined,
-//         });
-//       }
-//       onSuccess?.(res.activity);
-//     }
-//   }
-
-//   return (
-//     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
-//       {/* Nombre */}
-//       <div className="flex gap-2 flex-col">
-//         <Label>Nombre de la Actividad *</Label>
-//         <Input {...form.register("name")} placeholder="Ej: Torneo de Fútbol" />
-//         {form.formState.errors.name && (
-//           <p className="text-red-600 text-sm">
-//             {form.formState.errors.name.message}
-//           </p>
-//         )}
-//       </div>
-
-//       {/* Descripción */}
-//       <div className="flex gap-2 flex-col ">
-//         <Label>Descripción</Label>
-//         <Textarea
-//           {...form.register("description")}
-//           rows={3}
-//           className="max-h-[100px] resize-none wrap-break-word max-w-[447px]"
-//         />
-//       </div>
-
-//       {/* Fecha */}
-//       <div className="flex gap-2 flex-col">
-//         <Label>Fecha de realización *</Label>
-//         <Input type="date" {...form.register("date")} />
-//       </div>
-
-//       {/*Puntos */}
-//       <div className="flex gap-2 flex-col">
-//         <Label>Puntos *</Label>
-//         <Input
-//           type="number"
-//           min={1}
-//           {...form.register("points", { valueAsNumber: true })}
-//         />
-//       </div>
-
-//       <div className="flex justify-end gap-3 pt-4">
-//         <Button type="submit">Guardar</Button>
-//       </div>
-//     </form>
-//   );
-// }
 interface Award {
   id: string;
   place: number;
@@ -183,13 +48,13 @@ export const ActivityForm = ({
   isEditing?: boolean;
 }) => {
   const router = useRouter();
-  const { departaments, loadDepartaments, activitySelected } =
-    useActivityStore();
+  const { selectedActivityId } = useActivityStore();
+  const { departamentos, fetchDepartamentos } = useCatalogStore();
   useEffect(() => {
-    if (departaments?.length === 0) {
-      loadDepartaments();
+    if (departamentos?.length === 0) {
+      fetchDepartamentos();
     }
-  }, [departaments]);
+  }, [departamentos]);
   const form = useForm<ActivitySchema>({
     resolver: zodResolver(activitySchema),
     defaultValues: initialData || {
@@ -230,7 +95,7 @@ export const ActivityForm = ({
     console.log("Formulario enviado con datos:", data);
     if (isEditing) {
       // Lógica para actualizar la actividad
-      await updateActivityAction(data, activitySelected?.id_actividad ?? 0);
+      await updateActivityAction(data, selectedActivityId ?? 0);
     } else {
       // Lógica para crear una nueva actividad
       await createActivityAction(data);
@@ -381,7 +246,7 @@ export const ActivityForm = ({
                         <SelectValue placeholder="Selecciona un departamento" />
                       </SelectTrigger>
                       <SelectContent>
-                        {departaments?.map((dept) => (
+                        {departamentos?.map((dept) => (
                           <SelectItem
                             key={dept.id_departamento}
                             value={dept.nombre}
@@ -553,7 +418,7 @@ export const ActivityForm = ({
                       "Renderizando premio:",
                       field,
                       "en índice:",
-                      index
+                      index,
                     );
                     return (
                       <div
@@ -573,10 +438,10 @@ export const ActivityForm = ({
                               (index === 0
                                 ? "font-bold bg-yellow-400 text-black shadow-md"
                                 : index === 1
-                                ? "font-semibold bg-gray-300 text-black shadow-sm"
-                                : index === 2
-                                ? "font-semibold bg-amber-700 text-white shadow-sm"
-                                : "")
+                                  ? "font-semibold bg-gray-300 text-black shadow-sm"
+                                  : index === 2
+                                    ? "font-semibold bg-amber-700 text-white shadow-sm"
+                                    : "")
                             }
                           />
 
@@ -610,7 +475,7 @@ export const ActivityForm = ({
                                   // Importante: convertir a número al cambiar
                                   onChange={(e) =>
                                     subField.onChange(
-                                      e.target.valueAsNumber || 0
+                                      e.target.valueAsNumber || 0,
                                     )
                                   }
                                   min={0}

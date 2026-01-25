@@ -1,7 +1,7 @@
 // components/AwardSelector.tsx
 
-import { Activity } from "@/app/models";
-import { ActivityPrize } from "@/app/models/activity";
+import { Activity } from "@/lib/models";
+import { ActivityPrize } from "@/lib/models/activity";
 import {
   Select,
   SelectContent,

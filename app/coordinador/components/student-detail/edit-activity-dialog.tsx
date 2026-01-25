@@ -50,7 +50,10 @@ export const EditActivityDialog = ({
                   ? "1er lugar"
                   : prize?.lugar === 2
                   ? "2do lugar"
-                  : `Lugar ${prize?.lugar}`}
+                  : prize?.lugar === 3
+                  ? "3er lugar"
+                  : `${prize?.lugar}º lugar`}
+                  
               </SelectItem>
             ))}
           </SelectContent>

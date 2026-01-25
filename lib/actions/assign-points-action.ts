@@ -3,7 +3,7 @@
 import {
   assignPointsFullSchema,
   AssignPointsForm,
-} from "@/schemas/assign-points-schema";
+} from "@/lib/schemas/assign-points-schema";
 import { prisma } from "@/lib/prisma";
 import { ActivityPrize } from "../models/activity";
 import { NotificationService } from "../helpers/notification-helper";
@@ -24,17 +24,6 @@ function getCurrentUserFromCookies() {
 
 export async function assignPointsAction(form: AssignPointsForm) {
   // 1) validar lo mínimo del form
-  const parsed = assignPointsFullSchema.safeParse({
-    ...form,
-    // estos campos los añadimos localmente pero serán *revisados* más abajo
-    coordinatorId: 1, // temporal, value replaced below
-    cycleId: 1,
-    points: 0,
-  });
-
-  // We don't strictly need parsed here; we will build fullData below.
-
-  // 2) obtener usuario actual (coordinador) y ciclo actual (lógica real)
   const user = getCurrentUserFromCookies();
   if (!user) {
     return { ok: false, error: "No autorizado" };
@@ -48,6 +37,9 @@ export async function assignPointsAction(form: AssignPointsForm) {
   // 3) obtener actividad y sus puntos (validamos que exista)
   const activity = await prisma.actividad.findUnique({
     where: { id_actividad: parseInt(form.id_actividad) },
+    include: {
+      departamento: true,
+    },
   });
   if (!activity) return { ok: false, error: "Actividad no encontrada" };
 
@@ -112,7 +104,11 @@ export async function assignPointsAction(form: AssignPointsForm) {
 
   const tokensList = tokens.map((t) => t.token);
 
-  await sendPointsAssignedNotification(tokensList, pointsValue);
+  await sendPointsAssignedNotification(
+    tokensList,
+    pointsValue,
+    activity.departamento.nombre,
+  );
 
   return { ok: true, count: created.length, created };
 }
@@ -289,7 +285,11 @@ export async function bulkAssignPointsAction(data: {
       },
       include: {
         alumno: true,
-        actividad: true,
+        actividad: {
+          include: {
+            departamento: true,
+          },
+        },
         coordinador: true,
       },
     });
@@ -327,6 +327,7 @@ export async function bulkAssignPointsAction(data: {
     await sendPointsAssignedNotification(
       tokensList,
       registros[0].actividad.puntos_participacion,
+      registros[0].actividad.departamento.nombre,
     );
 
     return {

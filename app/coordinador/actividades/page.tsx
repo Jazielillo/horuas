@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { ArrowDownToDotIcon, Plus, Search, TicketPlus } from "lucide-react";
+import { useContext, useState } from "react";
+import { ArrowDownToDotIcon, Plus, Search } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { AllActivities } from "../components/all-activities";
-import { useActivityStore } from "@/store/use-activity-store";
 import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -23,64 +22,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { getUserRole } from "@/app/actions/auth";
+import { Departamento } from "@/prisma/generated/client/browser";
+import { useActivitiesPage } from "@/features/activities/hooks/useActivitiesPage";
+import CoordinatorContext from "../context/coordinator-context";
 
 const CoordinatorActivities = () => {
-  const [role, setRole] = useState<string | null>(null);
+  const { role } = useContext(CoordinatorContext);
+  const [departamentSelected, setDepartamentSelected] =
+    useState<Departamento | null>(null);
 
-  useEffect(() => {
-    getUserRole().then(setRole);
-    console.log("User role in activities page:", role);
-  }, []);
+  const { toast } = useToast();
+
   const {
-    activityList,
-    setActivitySelected,
-    loadActivities,
-    loadCiclos,
-    setCicloSelected,
+    activities,
+    loading: loadingActivities,
     cicloSelected,
     ciclos,
-    departamentSelected,
+    onlyClubs,
+    setCicloSelected,
     setOnlyClubs,
-    onlyClubs,
-    departaments,
-    loadDepartaments,
-    setDepartamentSelected,
-    cleanStore,
-  } = useActivityStore();
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(true);
-  const [loadingActivities, setLoadingActivities] = useState(false);
-
-  useEffect(() => {
-    setLoadingActivities(true);
-    if (ciclos === undefined || ciclos.length === 0) {
-      loadCiclos();
-    }
-    if (departaments === undefined || departaments.length === 0) {
-      loadDepartaments();
-    }
-    loadActivities().then(() => setLoadingActivities(false));
-    setLoading(false);
-  }, [
-    loadActivities,
-    loadCiclos,
-    activityList.length,
-    cicloSelected,
-    loadDepartaments,
-    departaments,
-    departamentSelected,
-    onlyClubs,
-  ]);
+  } = useActivitiesPage();
 
   const handleEditActivity = (activity: any) => {
-    setActivitySelected(activity);
+    // setActivitySelected(activity);
   };
 
   const [activitieSearch, setActivitieSearch] = useState("");
 
   // 2. Variable que contiene SIEMPRE la lista filtrada
-  const filteredActivites = activityList.filter((activity) => {
+  const filteredActivites = activities.filter((activity) => {
     // Convertimos a minúsculas para que la búsqueda no sea sensible a mayúsculas
     const searchLower = activitieSearch.toLowerCase();
     const activitieName = activity.nombre.toLowerCase();
@@ -113,7 +83,7 @@ const CoordinatorActivities = () => {
               asChild
               size="lg"
               className="bg-blue-900 hover:bg-primary text-white"
-              onClick={() => setActivitySelected(null)}
+              onClick={() => {}}
             >
               <Link href="/coordinador/actividades/nuevo">
                 <Plus className="w-4 h-4 mr-2" />
@@ -149,40 +119,13 @@ const CoordinatorActivities = () => {
 
             {/* Filtros */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Departamento */}
-              {/* <Select
-                value={departamentSelected?.id_departamento.toString() || ""}
-                onValueChange={(dept) => {
-                  setDepartamentSelected(
-                    departaments?.find(
-                      (d) => d.id_departamento.toString() === dept
-                    ) || null
-                  );
-                }}
-              >
-                <SelectTrigger className="w-full cursor-pointer">
-                  <SelectValue placeholder="Seleccionar departamento" />
-                </SelectTrigger>
-                <SelectContent>
-                  {departaments?.map((departament) => (
-                    <SelectItem
-                      key={departament.id_departamento}
-                      value={departament.id_departamento.toString()}
-                    >
-                      {departament.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select> */}
-
-              {/* Ciclo */}
               <Select
                 value={cicloSelected?.id_ciclo.toString() || ""}
                 onValueChange={(cicloId) => {
-                  setCicloSelected(
-                    ciclos?.find((c) => c.id_ciclo.toString() === cicloId) ||
-                      null
+                  const selected = ciclos?.find(
+                    (ciclo) => ciclo.id_ciclo.toString() === cicloId,
                   );
+                  if (selected) setCicloSelected(selected as any);
                 }}
               >
                 <SelectTrigger className="w-full cursor-pointer">
@@ -267,6 +210,8 @@ const CoordinatorActivities = () => {
                 activities={filteredActivites}
                 handleEditActivity={handleEditActivity}
                 handleDeleteActivity={handleDeleteActivity}
+                viewOnly={role !== "COORDINADOR"}
+                role={role}
               />
             ) : (
               <p className="text-center text-muted-foreground my-10">

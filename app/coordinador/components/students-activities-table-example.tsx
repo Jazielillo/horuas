@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { StudentsActivitiesTable } from "./students-activities-table";
-import { Activity, Alumno } from "@/app/models";
+import { Activity, Alumno } from "@/lib/models";
 
 export function StudentsActivitiesTableExample() {
   // Estados

@@ -20,31 +20,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
-import { useActivityStore } from "@/store/use-activity-store";
+import { useActivityStore } from "@/lib/store/use-activity-store";
 
 export default function ActivityDetailPage() {
   const { id } = useParams();
-  const {
-    loadActivityById,
-    setActivitySelected,
-    getActivityById,
-    activitySelected,
-  } = useActivityStore();
+  const { activities, selectedActivityId, fetchActivityById } =
+    useActivityStore();
 
   useEffect(() => {
-    if (!id) return;
+    fetchActivityById(Number(id));
+  }, [id, fetchActivityById]);
 
-    const cached = getActivityById(Number(id));
-
-    if (cached) {
-      setActivitySelected(cached);
-    } else {
-      loadActivityById(Number(id));
-    }
-  }, [id, getActivityById, loadActivityById, setActivitySelected]);
+  const activitySelected = activities.find(
+    (a) => a.id_actividad === Number(id),
+  );
 
   const isLoading = !activitySelected;
-  const isSports = activitySelected?.departamento === "Deportes";
+  const isSports = activitySelected?.departamento.toLowerCase() === "deportes";
   const isClub = activitySelected?.actividad_grupal;
 
   const formattedDate = activitySelected
@@ -227,7 +219,7 @@ export default function ActivityDetailPage() {
                       </p>
                       <p className="text-muted-foreground text-sm">
                         {new Date(
-                          `2000-01-01 ${activitySelected?.hora_actividad}`
+                          `2000-01-01 ${activitySelected?.hora_actividad}`,
                         ).toLocaleTimeString("es-MX", {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -334,8 +326,8 @@ export default function ActivityDetailPage() {
                                   index === 0
                                     ? "text-yellow-600"
                                     : index === 1
-                                    ? "text-gray-500"
-                                    : "text-orange-600"
+                                      ? "text-gray-500"
+                                      : "text-orange-600"
                                 }`}
                               />
                               <p className="font-bold text-lg">
@@ -349,8 +341,8 @@ export default function ActivityDetailPage() {
                               index === 0
                                 ? "bg-yellow-500/20 text-yellow-700 dark:text-yellow-500"
                                 : index === 1
-                                ? "bg-gray-500/20 text-gray-700 dark:text-gray-400"
-                                : "bg-orange-500/20 text-orange-700 dark:text-orange-500"
+                                  ? "bg-gray-500/20 text-gray-700 dark:text-gray-400"
+                                  : "bg-orange-500/20 text-orange-700 dark:text-orange-500"
                             }`}
                           >
                             +{award?.puntos_otorgados} pts

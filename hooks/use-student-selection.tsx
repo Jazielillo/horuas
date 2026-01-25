@@ -1,7 +1,7 @@
 // hooks/useStudentSelection.ts
 
-import { Alumno } from "@/app/models";
-import { usePointsAssignmentStore } from "@/store/use-points-assignment-store";
+import { Alumno } from "@/lib/models";
+import { usePointsAssignmentStore } from "@/lib/store/use-points-assignment-store";
 import { useState, useMemo, useEffect } from "react";
 
 export const useStudentSelection = (students: Alumno[]) => {

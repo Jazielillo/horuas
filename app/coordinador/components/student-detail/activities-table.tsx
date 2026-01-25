@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Activity } from "@/app/models/activity";
+import { Activity } from "@/lib/models/activity";
 
 interface ActivitiesTableProps {
   activities: Activity[];

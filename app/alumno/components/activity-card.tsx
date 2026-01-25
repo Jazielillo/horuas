@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Activity } from "@/app/models/activity";
+import { Activity } from "@/lib/models/activity";
 
 type ActivityCardProps = {
   activity: Activity;
@@ -36,10 +36,6 @@ export function ActivityCard({ activity, href }: ActivityCardProps) {
           <h3 className="font-semibold leading-tight group-hover:text-primary transition-colors">
             {activity.nombre}
           </h3>
-
-          <p className="text-xs text-muted-foreground">
-            {activity.departamento}
-          </p>
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
             {activity.hora_actividad && (
@@ -79,10 +75,10 @@ export function ActivityCard({ activity, href }: ActivityCardProps) {
                 activity.departamento === "Deportes"
                   ? "bg-orange-50 dark:bg-orange-950"
                   : activity.departamento === "Cultura"
-                  ? "bg-purple-50 dark:bg-purple-950"
-                  : activity.departamento === "Orientación"
-                  ? "bg-blue-50 dark:bg-blue-950"
-                  : "bg-emerald-50 dark:bg-emerald-950"
+                    ? "bg-purple-50 dark:bg-purple-950"
+                    : activity.departamento === "Orientación"
+                      ? "bg-blue-50 dark:bg-blue-950"
+                      : "bg-emerald-50 dark:bg-emerald-950"
               }
             >
               {activity.departamento}

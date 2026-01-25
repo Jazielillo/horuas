@@ -19,8 +19,8 @@ import {
 } from "@/components/ui/table";
 import { Check, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import { Activity, Alumno } from "@/app/models";
-import { ActivityPrize } from "@/app/models/activity";
+import { Activity, Alumno } from "@/lib/models";
+import { ActivityPrize } from "@/lib/models/activity";
 import { StudentRow } from "./student-row";
 
 interface StudentsTableProps {
@@ -106,7 +106,7 @@ export const StudentsTable = ({
                 onClick={onAssign}
                 disabled={loading || selectedCount === 0}
               >
-                {loading ? (
+                {loading && selectedCount > 0 ? (
                   <Spinner className="h-5 w-5 animate-spin text-white" />
                 ) : (
                   <>

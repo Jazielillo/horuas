@@ -2,10 +2,10 @@
 
 import { Checkbox } from '@/components/ui/checkbox';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { Activity, Alumno } from '@/app/models';
-import { ActivityPrize } from '@/app/models/activity';
+import { Activity, Alumno } from '@/lib/models';
+import { ActivityPrize } from '@/lib/models/activity';
 import { AwardSelector } from './award-selector';
-import { calculateNewTotal, getAwardBonus, getCurrentPoints } from '@/utils/points-calculator';
+import { calculateNewTotal, getAwardBonus, getCurrentPoints } from '@/lib/utils/points-calculator';
 
 interface StudentRowProps {
   student: Alumno;
@@ -24,6 +24,7 @@ export const StudentRow = ({
   studentAward,
   onAwardChange
 }: StudentRowProps) => {
+  console.log("Rendering StudentRow for:", student.nombre, activity);
   const currentPoints = getCurrentPoints(student, activity.departamento);
   const awardBonus = getAwardBonus(studentAward ? { [student.id_usuario]: studentAward } : {}, student.id_usuario, activity.premio);
   const newTotal = calculateNewTotal(currentPoints, activity.puntos_participacion, isSelected ? awardBonus : 0);
