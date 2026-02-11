@@ -1,5 +1,5 @@
 "use client";
-
+//nashe
 import AssignPointsForm from "@/app/components/forms/assign-points-form";
 import { ActivityHeader } from "@/app/coordinador/components/activity-header";
 import { SummaryDetailsPoints } from "@/app/coordinador/components/assign-points/summary-details-points";
